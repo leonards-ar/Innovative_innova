@@ -15,6 +15,8 @@ class Client {
         email(email:true)
     }
 
+    static hasMany = [patients:Patient]
+
     static mapping = {
         table 'clients'
         phone column:'telephone'
