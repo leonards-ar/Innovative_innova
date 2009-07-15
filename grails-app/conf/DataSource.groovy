@@ -21,13 +21,13 @@ environments {
 	test {
 		dataSource {
 			dbCreate = "update"
-			url = "jdbc:hsqldb:mem:testDb"
+                        url = "jdbc:mysql://localhost/vitaflo_sistema"
 		}
 	}
 	production {
 		dataSource {
 			dbCreate = "update"
-			url = "jdbc:hsqldb:file:prodDb;shutdown=true"
+                        url = "jdbc:mysql://localhost/vitaflo_sistema"
 		}
 	}
 }
