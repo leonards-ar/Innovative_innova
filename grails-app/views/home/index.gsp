@@ -12,6 +12,12 @@
           <span class="menuButton">
             <g:link controller="patient" action="list"><g:message code="innova.bar.patient"/></g:link>
           </span>
+          <span class="menuButton">
+            <g:link controller="drug" action="list"><g:message code="innova.bar.drug"/></g:link>
+          </span>
+          <span class="menuButton">
+            <g:link controller="supplier" action="list"><g:message code="innova.bar.supplier"/></g:link>
+          </span>
         </div>
        </g:if>
     <g:else>

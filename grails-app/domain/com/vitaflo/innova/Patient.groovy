@@ -16,8 +16,6 @@ class Patient {
         client(blank:false)
     }
 
-    static belongsTo = [client:Client]
-
     static mapping = {
         table 'patients'
         phone column:'telephone'
