@@ -40,8 +40,8 @@
                                 <td valign="top" class="name">
                                     <label for="password"><g:message code="user.password" default="Password" />:</label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'password', 'errors')}">
-                                    <g:textField name="password" value="${fieldValue(bean: userInstance, field: 'password')}" />
+                                <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'passwd', 'errors')}">
+                                    <g:textField name="password" value="${fieldValue(bean: userInstance, field: 'passwd')}" />
 
                                 </td>
                             </tr>

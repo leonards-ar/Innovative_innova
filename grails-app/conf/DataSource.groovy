@@ -15,7 +15,7 @@ environments {
 		dataSource {
 			//dbCreate = "create-drop" // one of 'create', 'create-drop','update'
                     dbCreate = 'update'
-                    url = "jdbc:mysql://spmdb/vitaflo_sistema"
+                    url = "jdbc:mysql://192.168.1.5/vitaflo_sistema"
 		}
 	}
 	test {

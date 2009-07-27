@@ -42,7 +42,7 @@
                                     <label for="password"><g:message code="user.password" default="Password" />:</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'password', 'errors')}">
-                                    <g:textField name="password" value="${fieldValue(bean: userInstance, field: 'password')}" />
+                                    <g:passwordField name="password" value="${fieldValue(bean: userInstance, field: 'passwd')}" />
 
                                 </td>
                             </tr>
@@ -50,7 +50,7 @@
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="email"><g:message code="user.email" default="Email" />:</label>
-                                </td>
+                                </td> 
                                 <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'email', 'errors')}">
                                     <g:textField name="email" value="${fieldValue(bean: userInstance, field: 'email')}" />
 
@@ -63,9 +63,9 @@
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'countries', 'errors')}">
                                     <g:select name="countries"
-from="${com.vitaflo.innova.Country.list()}"
-size="5" multiple="yes" optionKey="id"
-value="${userInstance?.countries}" />
+                                          from="${com.vitaflo.innova.Country.list()}"
+                                          size="5" multiple="yes" optionKey="id"
+                                          value="${userInstance?.countries}" />
 
 
                                 </td>

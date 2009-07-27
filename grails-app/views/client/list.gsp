@@ -9,7 +9,9 @@
     <body>
         <div class="nav">
             <span class="menuButton"><a class="home" href="${createLinkTo(dir: '')}"><g:message code="home" default="Home" /></a></span>
-            <span class="menuButton"><g:link class="create" action="create"><g:message code="client.new" default="New Client" /></g:link></span>
+            <g:ifAnyGranted role="ROLE_ADMIN">
+              <span class="menuButton"><g:link class="create" action="create"><g:message code="client.new" default="New Client" /></g:link></span>
+            </g:ifAnyGranted>
         </div>
         <div class="body">
             <h1><g:message code="client.list" default="Client List" /></h1>

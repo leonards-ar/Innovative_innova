@@ -1,28 +1,9 @@
 package com.vitaflo.innova
 
 class UserController {
+    def authenticateService
 
-    def login = { LoginCommand cmd ->
-        if(request.method == 'POST') {
-            if(!cmd.hasErrors()) {
-                session.user = cmd.getUser()
-                redirect(controller:'home')
-            }
-            else {
-                render(view:'/home/index', model:[loginCmd:cmd])
-            }
-        }
-        else {
-            render(view:'/home/index')
-        }
-    }
-
-    def logout = {
-            session.invalidate()
-            redirect(controller:"home")
-    }
-
-    // the delete, save and update actions only accept POST requests
+   // the delete, save and update actions only accept POST requests
     static allowedMethods = [update: "POST"]
 
     def show = {
@@ -32,16 +13,23 @@ class UserController {
             flash.args = [params.id]
             flash.defaultMessage = "User not found with id ${params.id}"
             redirect(action: "list")
+            return
         }
-        else {
-            return [userInstance: userInstance]
-        }
+
+        List roleNames = []
+		for (role in userInstance.authorities) {
+			roleNames << role.authority
+		}
+		roleNames.sort { n1, n2 ->
+			n1 <=> n2
+		}
+        return [userInstance: userInstance, roleNames: roleNames]
     }
 
     def edit = {
         def userInstance = User.get(params.id)
         if (!userInstance) {
-            redirect(action: "logout")
+            redirect(controller: "logout")
         }
         else {
             return [userInstance: userInstance]
@@ -50,6 +38,7 @@ class UserController {
 
     def update = {
         def userInstance = User.get(params.id)
+
         if (userInstance) {
             if (params.version) {
                 def version = params.version.toLong()
@@ -61,6 +50,7 @@ class UserController {
                 }
             }
             userInstance.properties = params
+            userInstance.passwd = authenticateService.encodePassword(params.passwd)
             if (!userInstance.hasErrors() && userInstance.save()) {
                 flash.message = "user.updated"
                 flash.args = [params.id]
@@ -72,33 +62,8 @@ class UserController {
             }
         }
         else {
-            redirect(action: "logout")
+            redirect(controller: "logout")
         }
     }
 
-}
-
-class LoginCommand {
-    String username
-    String password
-    private userToLogin
-
-    User getUser() {
-        if(!userToLogin && username)
-            userToLogin = User.findByUsername(username)
-
-        return userToLogin
-    }
-
-    static constraints = {
-        username(blank:false, validator:{ val, cmd ->
-            if(!cmd.user)
-                return "user.not.found"
-        })
-
-        password (blank:false, validator:{ val, cmd ->
-            if(cmd.user && cmd.user.password != val)
-                return "user.password.invalid"
-        })
-    }
 }

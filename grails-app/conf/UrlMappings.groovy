@@ -6,7 +6,7 @@ class UrlMappings {
 			 // apply constraints here
 		  }
 	  }
-      "/"(controller:"home"){lang='es'}
+      "/"(view:"/index"){lang='es'}
 
       "500"(view:'/error')
     }

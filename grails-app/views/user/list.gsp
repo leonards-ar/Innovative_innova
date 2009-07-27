@@ -25,7 +25,7 @@
                         
                    	    <g:sortableColumn property="username" title="Username" titleKey="user.username" />
                         
-                   	    <g:sortableColumn property="password" title="Password" titleKey="user.password" />
+                   	    <g:sortableColumn property="password" title="Password" titleKey="user.passwd" />
                         
                    	    <g:sortableColumn property="email" title="Email" titleKey="user.email" />
                         

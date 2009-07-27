@@ -34,7 +34,7 @@
                                     <label for="name"><g:message code="client.name" default="Name" />:</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: clientInstance, field: 'name', 'errors')}">
-                                    <g:textField name="name" value="${fieldValue(bean: clientInstance, field: 'name')}" />
+                                    <g:textField name="name" value="${clientInstance.name}" />
 
                                 </td>
                             </tr>
