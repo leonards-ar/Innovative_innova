@@ -17,6 +17,9 @@
           <span class="menuButton">
             <g:link controller="supplier" action="list"><g:message code="innova.bar.supplier"/></g:link>
           </span>
+          <span class="menuButton">
+            <g:link controller="product" action="list"><g:message code="innova.bar.product"/></g:link>
+          </span>
         </div>
     </body>
 </html>

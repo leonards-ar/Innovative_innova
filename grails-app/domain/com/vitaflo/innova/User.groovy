@@ -18,7 +18,6 @@ class User {
         username(blank:false, unique:true)
         passwd(blank:false)
         email(email:true)
-        enabled()
     }
 
     static mapping = {
