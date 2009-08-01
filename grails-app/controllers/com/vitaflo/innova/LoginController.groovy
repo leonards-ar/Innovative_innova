@@ -155,7 +155,6 @@ class LoginController {
 			render "{error: '${msg}'}"
 		}
 		else {
-                        print username
                         flash.args = [username]
 			flash.message = msg
 			redirect action: auth, params: params
