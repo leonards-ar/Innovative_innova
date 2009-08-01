@@ -1,6 +1,7 @@
 package com.vitaflo.innova
 
 class UserController {
+    static final ROLE_ADMIN = "ROLE_ADMIN"
     def authenticateService
 
     // the delete, save and update actions only accept POST requests
@@ -105,10 +106,14 @@ class UserController {
                 userInstance.passwd = authenticateService.encodePassword(params.passwd)
             }
             if (!userInstance.hasErrors() && userInstance.save()) {
-                Country.findAll().each {userInstance.removeFromCountries(it)}
-                Role.findAll().each {userInstance.removeFromAuthorities(it)}
-                addCountries(userInstance)
-                addRoles(userInstance)
+                if(isAdmin(userInstance)) {
+                    Country.findAll().each {userInstance.removeFromCountries(it)}
+                    Role.findAll().each {userInstance.removeFromAuthorities(it)}
+                    addCountries(userInstance)
+                    addRoles(userInstance)
+                } else {
+                    print "estoy aca\n"
+                }
                 flash.message = "user.updated"
                 flash.args = [params.id]
                 flash.defaultMessage = "User ${params.id} updated"
@@ -134,6 +139,13 @@ class UserController {
             person.addToCountries(Country.findById(key))
         }
        
+    }
+
+    private boolean isAdmin(person) {
+        for(role in person.authorities){
+            if(role.authority == ROLE_ADMIN) return true
+        }
+        return false;
     }
 
 }
