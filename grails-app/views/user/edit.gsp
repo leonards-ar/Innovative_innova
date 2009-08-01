@@ -9,6 +9,7 @@
     <body>
         <div class="nav">
             <span class="menuButton"><a class="home" href="${createLinkTo(dir: '')}"><g:message code="home" default="Home" /></a></span>
+            <span class="menuButton"><g:link class="list" action="list"><g:message code="user.list" default="User List" /></g:link></span>
         </div>
         <div class="body">
             <h1><g:message code="user.edit" default="Edit User" /></h1>
@@ -26,13 +27,33 @@
                 <div class="dialog">
                     <table>
                         <tbody>
-                        
+
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="firstName"><g:message code="user.firstName" default="First Name" />:</label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'firstName', 'errors')}">
+                                    <g:textField name="firstName" value="${userInstance?.firstName}" />
+
+                                </td>
+                            </tr>
+
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="lastName"><g:message code="user.lastName" default="Last Name" />:</label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'lastName', 'errors')}">
+                                    <g:textField name="lastName" value="${userInstance?.lastName}" />
+
+                                </td>
+                            </tr>
+
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="username"><g:message code="user.username" default="Username" />:</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'username', 'errors')}">
-                                    <g:textField name="username" value="${fieldValue(bean: userInstance, field: 'username')}" />
+                                    <g:textField name="username" value="${userInstance?.username}" />
 
                                 </td>
                             </tr>
@@ -42,54 +63,58 @@
                                     <label for="password"><g:message code="user.password" default="Password" />:</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'password', 'errors')}">
-                                    <g:passwordField name="password" value="${fieldValue(bean: userInstance, field: 'passwd')}" />
+                                    <g:passwordField name="passwd" size="40" value="${userInstance?.passwd}" />
 
                                 </td>
                             </tr>
-                        
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="email"><g:message code="user.email" default="Email" />:</label>
                                 </td> 
                                 <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'email', 'errors')}">
-                                    <g:textField name="email" value="${fieldValue(bean: userInstance, field: 'email')}" />
+                                    <g:textField name="email" value="${userInstance?.email}" />
 
                                 </td>
                             </tr>
-                        
+
+                            <g:ifAllGranted role="ROLE_ADMIN">
+                              <tr class="prop">
+                                  <td valign="top" class="name">
+                                      <label for="countries"><g:message code="user.countries" default="Countries" />:</label>
+                                  </td>
+                                  <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'countries', 'errors')}">
+                                      <g:select name="selectedCountries"
+                                            from="${com.vitaflo.innova.Country.list()}"
+                                            size="5" multiple="yes" optionKey="id"
+                                            value="${userInstance?.countries?.id}" />
+                                  </td>
+                              </tr>
+                            </g:ifAllGranted>
+
+                            <g:ifAllGranted role="ROLE_ADMIN">
+                              <tr class="prop">
+                                  <td valign="top" class="name">
+                                      <label for="authorities"><g:message code="user.roles" default="Roles" />:</label>
+                                  </td>
+                                  <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'authorities', 'errors')}">
+                                      <g:select name="selectedAuthorities"
+                                            from="${com.vitaflo.innova.Role.list()}"
+                                            size="3" multiple="yes" optionKey="id"
+                                            value="${userInstance?.authorities?.id}" />
+                                  </td>
+                              </tr>
+                            </g:ifAllGranted>
+
+                            <g:if test="${userInstance.username != loggedInUserInfo(field:'username')}">
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="countries"><g:message code="user.countries" default="Countries" />:</label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'countries', 'errors')}">
-                                    <g:select name="countries"
-                                          from="${com.vitaflo.innova.Country.list()}"
-                                          size="5" multiple="yes" optionKey="id"
-                                          value="${userInstance?.countries}" />
-
-
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="firstName"><g:message code="user.firstName" default="First Name" />:</label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'firstName', 'errors')}">
-                                    <g:textField name="firstName" value="${fieldValue(bean: userInstance, field: 'firstName')}" />
-
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="lastName"><g:message code="user.lastName" default="Last Name" />:</label>
+                                    <label for="lastName"><g:message code="user.enabled" default="Enabled" />:</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'lastName', 'errors')}">
-                                    <g:textField name="lastName" value="${fieldValue(bean: userInstance, field: 'lastName')}" />
-
+                                    <g:checkBox name="enabled" value="${userInstance?.enabled}" />
                                 </td>
                             </tr>
+                            </g:if>
                         
                         </tbody>
                     </table>

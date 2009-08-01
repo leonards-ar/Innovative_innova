@@ -21,17 +21,17 @@
                     <thead>
                         <tr>
                         
-                   	    <g:sortableColumn property="id" title="Id" titleKey="user.id" />
-                        
-                   	    <g:sortableColumn property="username" title="Username" titleKey="user.username" />
-                        
-                   	    <g:sortableColumn property="password" title="Password" titleKey="user.passwd" />
+                            <g:sortableColumn property="username" title="Username" titleKey="user.username" />
+
+                            <g:sortableColumn property="lastName" title="Last Name" titleKey="user.lastName" />
+
+                   	    <g:sortableColumn property="firstName" title="First Name" titleKey="user.firstName" />
+                            
+                   	    
                         
                    	    <g:sortableColumn property="email" title="Email" titleKey="user.email" />
                         
-                   	    <g:sortableColumn property="firstName" title="First Name" titleKey="user.firstName" />
-                        
-                   	    <g:sortableColumn property="lastName" title="Last Name" titleKey="user.lastName" />
+
                         
                         </tr>
                     </thead>
@@ -39,17 +39,16 @@
                     <g:each in="${userInstanceList}" status="i" var="userInstance">
                         <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                         
-                            <td><g:link action="show" id="${userInstance.id}">${fieldValue(bean: userInstance, field: "id")}</g:link></td>
-                        
-                            <td>${fieldValue(bean: userInstance, field: "username")}</td>
-                        
-                            <td>${fieldValue(bean: userInstance, field: "password")}</td>
+                            <td><g:link action="show" id="${userInstance.id}">${fieldValue(bean: userInstance, field: "username")}</g:link></td>
+
+                            <td>${fieldValue(bean: userInstance, field: "lastName")}</td>
+
+                            <td>${fieldValue(bean: userInstance, field: "firstName")}</td>
+
+
                         
                             <td>${fieldValue(bean: userInstance, field: "email")}</td>
                         
-                            <td>${fieldValue(bean: userInstance, field: "firstName")}</td>
-                        
-                            <td>${fieldValue(bean: userInstance, field: "lastName")}</td>
                         
                         </tr>
                     </g:each>

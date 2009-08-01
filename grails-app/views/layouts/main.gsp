@@ -15,7 +15,7 @@
         <g:isLoggedIn>
         <p>  </p>
             <div class="welcomeBox">
-                <g:link controller="user" action="show" id="${loggedInUserInfo(field:'id')}"><g:message code="login.bar.profile"/></g:link> | <g:link controller="logout"><g:message code="logout"/></g:link>
+                <g:link controller="user" action="showProfile" id="${loggedInUserInfo(field:'id')}"><g:message code="login.bar.profile"/></g:link> | <g:link controller="logout"><g:message code="logout"/></g:link>
                 <br/><br/>
                 <g:message code="login.bar.welcomeback" args="${[loggedInUserInfo(field:'firstName')]}"/>
             </div>

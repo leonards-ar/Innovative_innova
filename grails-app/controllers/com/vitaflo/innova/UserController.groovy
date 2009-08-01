@@ -3,8 +3,42 @@ package com.vitaflo.innova
 class UserController {
     def authenticateService
 
-   // the delete, save and update actions only accept POST requests
-    static allowedMethods = [update: "POST"]
+    // the delete, save and update actions only accept POST requests
+    static allowedMethods = [save: "POST", update: "POST"]
+
+    def list = {
+        params.max = Math.min(params.max ? params.max.toInteger() : 10,  100)
+
+        if (!params.sort) params.sort = "username"
+        if (!params.order) params.order = "asc"
+
+        [userInstanceList: User.list(params), userInstanceTotal: User.count()]
+    }
+
+    def create = {
+        def userInstance = new User()
+        userInstance.properties = params
+        return ['userInstance':userInstance]
+    }
+
+    def save = {
+        def userInstance = new User(params)
+        if(params.passwd != null && params.passwd !='') {
+            userInstance.passwd = authenticateService.encodePassword(params.passwd)
+        }
+
+        if(!userInstance.hasErrors() && userInstance.save()) {
+            addRoles(userInstance)
+            addCountries(userInstance)
+            flash.message = "User ${userInstance.id} created"
+            redirect(action: show, id: userInstance.id)
+        }
+        else {
+            addRoles(person)
+            addCountries(person)
+            render view: 'create', model: [userInstance: person]
+        }
+    }
 
     def show = {
         def userInstance = User.get(params.id)
@@ -16,17 +50,33 @@ class UserController {
             return
         }
 
-        List roleNames = []
-		for (role in userInstance.authorities) {
-			roleNames << role.authority
-		}
-		roleNames.sort { n1, n2 ->
-			n1 <=> n2
-		}
-        return [userInstance: userInstance, roleNames: roleNames]
+        return [userInstance: userInstance]
     }
 
+    def showProfile = {
+        def userInstance = User.get(params.id)
+        if (!userInstance) {
+            flash.message = "user.not.found"
+            flash.args = [params.id]
+            flash.defaultMessage = "User not found with id ${params.id}"
+            redirect(action: "list")
+            return
+        }
+
+        return [userInstance: userInstance]
+    }
+    
     def edit = {
+        def userInstance = User.get(params.id)
+        if (!userInstance) {
+            redirect(controller: "logout")
+        }
+        else {
+            return [userInstance: userInstance]
+        }
+    }
+
+    def editProfile = {
         def userInstance = User.get(params.id)
         if (!userInstance) {
             redirect(controller: "logout")
@@ -49,9 +99,16 @@ class UserController {
                     return
                 }
             }
+            def tmpPass = userInstance.passwd
             userInstance.properties = params
-            userInstance.passwd = authenticateService.encodePassword(params.passwd)
+            if(tmpPass != params.passwd) {
+                userInstance.passwd = authenticateService.encodePassword(params.passwd)
+            }
             if (!userInstance.hasErrors() && userInstance.save()) {
+                Country.findAll().each {userInstance.removeFromCountries(it)}
+                Role.findAll().each {userInstance.removeFromAuthorities(it)}
+                addCountries(userInstance)
+                addRoles(userInstance)
                 flash.message = "user.updated"
                 flash.args = [params.id]
                 flash.defaultMessage = "User ${params.id} updated"
@@ -64,6 +121,19 @@ class UserController {
         else {
             redirect(controller: "logout")
         }
+    }
+
+    private void addRoles(person) {
+        for (String key in params.selectedAuthorities) {
+            person.addToAuthorities(Role.findById(key))
+        }
+    }
+
+    private void addCountries(person){
+        for(String key: params.selectedCountries) {
+            person.addToCountries(Country.findById(key))
+        }
+       
     }
 
 }
