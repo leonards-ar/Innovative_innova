@@ -144,11 +144,10 @@ class LoginController {
 		def exception = session[AbstractProcessingFilter.SPRING_SECURITY_LAST_EXCEPTION_KEY]
 		if (exception) {
 			if (exception instanceof DisabledException) {
-				msg = "[$username] is disabled."
+				msg = "login.user.disabled"
 			}
 			else {
-                            println authenticateService.encodePassword('edu')
-				msg = "[$username] wrong username/password."
+				msg = "login.user.incorrect"
 			}
 		}
 
@@ -156,6 +155,8 @@ class LoginController {
 			render "{error: '${msg}'}"
 		}
 		else {
+                        print username
+                        flash.args = [username]
 			flash.message = msg
 			redirect action: auth, params: params
 		}

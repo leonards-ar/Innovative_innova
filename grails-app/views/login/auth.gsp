@@ -1,5 +1,6 @@
 <head>
   <meta name='layout' content='main' />
+  <link rel="stylesheet" href="${resource(dir:'css',file:'vitaflo.css')}" />
   <title>Innovative</title>
 </head>
 
@@ -7,7 +8,7 @@
   <div class="nav">&nbsp;</div>
   <div id="loginBox" class="loginBox">
     <g:if test='${flash.message}'>
-      <div class='login_message'>${flash.message}</div>
+      <div class='login_message'><g:message code="${flash.message}" args="${flash.args}" default="${flash.defaultMessage}" /></div>
     </g:if>
     <form action='${postUrl}' method='POST' id='loginForm' >
       <p>
