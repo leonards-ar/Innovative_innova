@@ -4,7 +4,7 @@ class Product {
 
     String name
     String description
-    Double price
+    Double price=0.0
     Double presentation
     
     Supplier supplier
