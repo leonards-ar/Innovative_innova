@@ -12,29 +12,31 @@
     </g:if>
     <form action='${postUrl}' method='POST' id='loginForm' >
       <p>
-        <div class="form_label"><g:message code="user.username"/></div>
+      <div class="form_label"><g:message code="user.username"/></div>
       <g:textField name='j_username' id='j_username' value='${request.remoteUser}' />
       </p>
       <p>
-        <div class="form_label"><g:message code="user.password"/></div>
-        <g:passwordField name='j_password' id='j_password' />
+      <div class="form_label"><g:message code="user.password"/></div>
+      <g:passwordField name='j_password' id='j_password' />
       </p>
       <p>
-        <label for='remember_me'>Remember me</label>
-        <input type='checkbox' class='chk' name='_spring_security_remember_me' id='remember_me'
-      <g:if test='${hasCookie}'>checked='checked'</g:if> />
+      <div class="form_label"><g:message code="login.rememberme"/>  </div>
+      <input type='checkbox' class='chk' name='_spring_security_remember_me' id='remember_me'
+
+             <g:if test='${hasCookie}'>checked='checked'</g:if> />
+
       </p>
       <p>
-        <input type='submit' class="button" value='Login' />
+        <input type='submit' class="button" value='${message(code: 'login', 'default': 'Login')}' />
       </p>
     </form>
   </div>
 
-<script type='text/javascript'>
-<!--
-(function(){
-        document.forms['loginForm'].elements['j_username'].focus();
-})();
-// -->
-</script>
+  <script type='text/javascript'>
+  <!--
+  (function(){
+          document.forms['loginForm'].elements['j_username'].focus();
+  })();
+  // -->
+  </script>
 </body>
