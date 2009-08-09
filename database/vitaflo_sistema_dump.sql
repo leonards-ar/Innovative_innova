@@ -256,7 +256,7 @@ CREATE TABLE `proformadetails` (
   `product_id` int(10) unsigned NOT NULL default '0',
   `description` text NOT NULL,
   `proforma_id` int(10) unsigned NOT NULL default '0',
-  `lot` varchar(45) NOT NULL,
+  `lot` varchar(45) default NULL,
   `version` bigint(20) default NULL,
   PRIMARY KEY  (`id`),
   KEY `FK928612B28E8C9EED` (`proforma_id`),

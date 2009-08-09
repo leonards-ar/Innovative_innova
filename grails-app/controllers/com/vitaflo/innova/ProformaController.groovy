@@ -15,6 +15,9 @@ class ProformaController {
     def create = {
         def proformaInstance = new Proforma()
         proformaInstance.properties = params
+
+        def cmd = UpdateProformaDetailsListCommand
+
         return [proformaInstance: proformaInstance]
     }
 
@@ -124,4 +127,88 @@ class ProformaController {
 
         render clientName
     }
+
+    def addDetail = { UpdateProformaDetailsListCommand updateCommand, AddProformaDetailsListCommand addCommand ->
+        List proformaDetailList = updateCommand.createProformaDetailsList()
+        
+        if (!addCommand.hasErrors()){
+            def proformaDetail = addCommand.createNewProformaDetail()
+            proformaDetailList.add(proformaDetail)
+            render (template:"proformaDetailList", model:[proformaDetailList:proformaDetailList])
+        }else{
+            addCommand.updateAddProductPrice()
+            render (template:"proformaDetailList", model:[addCommand:addCommand, proformaDetailList:proformaDetailList])
+        }
+    }
+
+
+    def removeDetail = { UpdateProformaDetailsListCommand updateCommand ->
+        List proformaDetailList = updateCommand.createProformaDetailsList()
+        int i = params.id.toInteger()
+        proformaDetailList.remove(i)
+        render (template:"proformaDetailList", model:[proformaDetailList:proformaDetailList])
+    }
+
+
+    def updatePrice ={
+        double price = 0d
+        if (params.addProductId != ''){
+            def auxProduct = Product.get(params.addProductId)
+            price = auxProduct.getPrice()
+        }
+        
+        render formatNumber(number:price)
+    }
+}
+
+class AddProformaDetailsListCommand {
+    Long addProductId
+    Integer addQuantity
+    Double addDailyDose
+    Double addProductPrice = 0d
+
+
+    static constraints = {
+        addProductId(nullable:false)
+        addQuantity(nullable:false, min:1)
+        addDailyDose(nullable:false, min:0.1d)
+    }
+
+    ProformaDetail createNewProformaDetail(){
+        def auxProduct = Product.get(addProductId)
+        def proformaDetail = new ProformaDetail(product:auxProduct, quantity:addQuantity, dailyDose:addDailyDose)
+
+        return proformaDetail
+    }
+
+    void updateAddProductPrice(){
+
+        addProductPrice = 0d
+
+        if (addProductId != null && addProductId != ''){
+            def auxProduct = Product.get(addProductId)
+            addProductPrice = auxProduct.getPrice()
+        }
+    }
+
+}
+
+
+class UpdateProformaDetailsListCommand {
+    List productIds = []
+    List quantities = []
+    List dailyDoses = []
+    
+
+    List createProformaDetailsList(){
+         List proformaDetailList = []
+         productIds.eachWithIndex(){ productId, i->
+            def auxProduct = Product.get(productId)
+            def proformaDetail = new ProformaDetail(product:auxProduct, quantity:quantities[i], dailyDose:dailyDoses[i])
+            proformaDetailList.add(proformaDetail)
+        }
+
+        return proformaDetailList
+    }
+
 }

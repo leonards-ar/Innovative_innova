@@ -12,6 +12,8 @@ class Proforma {
 
     static final def STATUS_LIST = ['Creada','Aprobada','Rechazada','Anulada']
 
+    static hasMany = [details:ProformaDetail]
+
     static constraints = {
         patient(nullable:false)
         status(inList:STATUS_LIST)
