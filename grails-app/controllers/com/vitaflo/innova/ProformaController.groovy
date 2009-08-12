@@ -16,22 +16,30 @@ class ProformaController {
         def proformaInstance = new Proforma()
         proformaInstance.properties = params
 
-        def cmd = UpdateProformaDetailsListCommand
-
         return [proformaInstance: proformaInstance]
     }
 
-    def save = {
+    def save = { UpdateProformaDetailsListCommand updateCommand ->
+
         def proformaInstance = new Proforma(params)
-        if (!proformaInstance.hasErrors() && proformaInstance.save()) {
-            flash.message = "proforma.created"
-            flash.args = [proformaInstance.id]
-            flash.defaultMessage = "Proforma ${proformaInstance.id} created"
-            redirect(action: "show", id: proformaInstance.id)
+        List proformaDetailList = updateCommand.createProformaDetailsList()
+
+        proformaDetailList.each {proformaDetail ->
+            proformaInstance.addToDetails(proformaDetail)
         }
-        else {
-            render(view: "create", model: [proformaInstance: proformaInstance])
+
+        if (!proformaInstance.hasErrors()){
+
+            if (proformaInstance.save()){
+                flash.message = "proforma.created"
+                flash.args = [proformaInstance.id]
+                flash.defaultMessage = "Proforma ${proformaInstance.id} created"
+                redirect(action: "show", id: proformaInstance.id)
+            }
         }
+
+        render(view: "create", model: [proformaInstance: proformaInstance, proformaDetailList: proformaDetailList])
+        
     }
 
     def show = {
@@ -56,11 +64,13 @@ class ProformaController {
             redirect(action: "list")
         }
         else {
-            return [proformaInstance: proformaInstance]
+            List proformaDetailList = proformaInstance.details
+            return [proformaInstance: proformaInstance, proformaDetailList:proformaDetailList]
         }
     }
 
-    def update = {
+    def update = {UpdateProformaDetailsListCommand updateCommand ->
+        
         def proformaInstance = Proforma.get(params.id)
         if (proformaInstance) {
             if (params.version) {
@@ -73,6 +83,9 @@ class ProformaController {
                 }
             }
             proformaInstance.properties = params
+
+            
+
             if (!proformaInstance.hasErrors() && proformaInstance.save()) {
                 flash.message = "proforma.updated"
                 flash.args = [params.id]
@@ -198,17 +211,17 @@ class UpdateProformaDetailsListCommand {
     List productIds = []
     List quantities = []
     List dailyDoses = []
+    List detailsIds = []
     
 
     List createProformaDetailsList(){
          List proformaDetailList = []
          productIds.eachWithIndex(){ productId, i->
             def auxProduct = Product.get(productId)
-            def proformaDetail = new ProformaDetail(product:auxProduct, quantity:quantities[i], dailyDose:dailyDoses[i])
+            def proformaDetail = new ProformaDetail(id:detailsIds[i],product:auxProduct, quantity:quantities[i], dailyDose:dailyDoses[i])
             proformaDetailList.add(proformaDetail)
         }
 
         return proformaDetailList
     }
-
 }

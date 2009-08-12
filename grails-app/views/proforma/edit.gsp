@@ -6,6 +6,23 @@
         <meta name="layout" content="main" />
         <title><g:message code="proforma.edit" default="Edit Proforma" /></title>
         <g:javascript library="prototype" />
+        <script type="text/javascript" language="JavaScript">
+          function submitForm(name)
+          {
+            document.editProforma.action = name;
+            document.editProforma.submit();
+          }
+
+          function submitDeleteForm()
+          {
+           if (confirm('${message(code: 'delete.confirm', 'default': 'Are you sure?')}'))
+           {
+             submitForm('delete');
+           }else{
+             return false;
+           }
+          }
+        </script>
     </head>
     <body>
         <div class="nav">
@@ -23,7 +40,7 @@
                 <g:renderErrors bean="${proformaInstance}" as="list" />
             </div>
             </g:hasErrors>
-            <g:form method="post" >
+            <g:form name="editProforma" method="post" onSubmit="return onSubmitForm();">
                 <g:hiddenField name="id" value="${proformaInstance?.id}" />
                 <g:hiddenField name="version" value="${proformaInstance?.version}" />
                 <div class="dialog">
@@ -84,9 +101,12 @@
                         </tbody>
                     </table>
                 </div>
+
+                <div id="detailListPanel"><g:render template="proformaDetailList" model="[proformaDetailList:proformaDetailList]"/></div>
+
                 <div class="buttons">
-                    <span class="button"><g:actionSubmit class="save" action="update" value="${message(code: 'update', 'default': 'Update')}" /></span>
-                    <span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'delete', 'default': 'Delete')}" onclick="return confirm('${message(code: 'delete.confirm', 'default': 'Are you sure?')}');" /></span>
+                    <span class="button"><g:submitButton name="update" class="save" value="${message(code: 'update', 'default': 'Update')}" onclick="submitForm('update')"/></span>
+                    <span class="button"><g:submitButton name="delete" class="delete" value="${message(code: 'delete', 'default': 'Delete')}" onclick="return submitDeleteForm()"/></span>
                 </div>
             </g:form>
         </div>

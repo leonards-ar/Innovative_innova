@@ -10,6 +10,8 @@ class Proforma {
 
     Patient patient
 
+    List details
+    
     static final def STATUS_LIST = ['Creada','Aprobada','Rechazada','Anulada']
 
     static hasMany = [details:ProformaDetail]
@@ -17,6 +19,7 @@ class Proforma {
     static constraints = {
         patient(nullable:false)
         status(inList:STATUS_LIST)
+        details(nullable:false,minSize:1)
     }
 
     static mapping = {

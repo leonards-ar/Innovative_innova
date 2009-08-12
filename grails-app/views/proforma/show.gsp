@@ -71,46 +71,45 @@
                                 <td valign="top" class="value">${fieldValue(bean: proformaInstance, field: "discount")}</td>
 
                             </tr>
-                            <tr class="prop"><td colspan="2">
-                                <div class="list">
-                                    <table>
-                                        <thead>
-                                            <tr>
-
-                                                <th><g:message code="proformaDetail.product" default="Product" /></th>
-
-                                                <th><g:message code="proformaDetail.quantity" default="Quantity" /></th>
-
-                                                <th><g:message code="proformaDetail.dailyDose" default="Daily Dose" /></th>
-
-                                                <th><g:message code="product.price" default="Price" /></th>
-
-                                                <th><g:message code="proformaDetail.total" default="Total" /></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        <g:each in="${proformaInstance.details}" status="i" var="proformaDetail">
-                                            <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
-
-                                                <td>${fieldValue(bean:proformaDetail, field: "productName")}</td>
-
-                                                <td>${fieldValue(bean:proformaDetail, field: "quantity")}</td>
-
-                                                <td>${fieldValue(bean: proformaDetail, field: "dailyDose")}</td>
-
-                                                <td>${fieldValue(bean:proformaDetail, field: "productPrice")}</td>
-
-                                                <td>${fieldValue(bean: proformaDetail, field: "total")}</td>
-                                            </tr>
-                                        </g:each>
-                                        </tbody>
-                                    </table>
-                                </div>
-                              </td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
+
+                <div id="detailListPanel" class="list">
+                  <table style="margin-top: 5px;">
+                    <thead>
+                        <tr>
+
+                            <th><g:message code="proformaDetail.product" default="Product" /></th>
+
+                            <th><g:message code="proformaDetail.quantity" default="Quantity" /></th>
+
+                            <th><g:message code="proformaDetail.dailyDose" default="Daily Dose" /></th>
+
+                            <th><g:message code="product.price" default="Price" /></th>
+
+                            <th><g:message code="proformaDetail.total" default="Total" /></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <g:each in="${proformaInstance.details}" status="i" var="proformaDetail">
+                        <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
+
+                            <td>${fieldValue(bean:proformaDetail, field: "productName")}</td>
+
+                            <td>${fieldValue(bean:proformaDetail, field: "quantity")}</td>
+
+                            <td>${fieldValue(bean: proformaDetail, field: "dailyDose")}</td>
+
+                            <td>${fieldValue(bean:proformaDetail, field: "productPrice")}</td>
+
+                            <td>${fieldValue(bean: proformaDetail, field: "total")}</td>
+                        </tr>
+                    </g:each>
+                    </tbody>
+                   </table>
+                </div>
+
                 <div class="buttons">
                     <span class="button"><g:actionSubmit class="edit" action="edit" value="${message(code: 'edit', 'default': 'Edit')}" /></span>
                     <span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'delete', 'default': 'Delete')}" onclick="return confirm('${message(code: 'delete.confirm', 'default': 'Are you sure?')}');" /></span>

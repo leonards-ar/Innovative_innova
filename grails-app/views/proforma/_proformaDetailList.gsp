@@ -31,7 +31,7 @@
                   />
       </td>
 
-      <td valign="top" class="value ${hasErrors(field: 'addQuantity', 'errors')}"">
+      <td valign="top" class="value ${hasErrors(field: 'addQuantity', 'errors')}">
         <g:textField name="addQuantity" value="${fieldValue(bean: addCommand, field: 'addQuantity')}"/>
       </td>
 
@@ -49,8 +49,9 @@
     <g:each in="${proformaDetailList}" status="i" var="proformaDetail">
       <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
       <td valign="top" class="value">
+      <g:hiddenField name="detailsIds[${i}]" value="${fieldValue(bean: proformaDetail, field: 'id')}"/>
       <g:select name="productIds[${i}]" from="${com.vitaflo.innova.Product.list()}" optionKey="id"
-                value="${proformaDetail?.product?.id}"
+                value="${proformaDetail.product?.id}"
                 noSelection="['':'Seleccione...']"
                 onchange="${remoteFunction(controller:'proforma', action:'updatePrice',update:'addPrice_'+i, params:'\'addProductId=\'  + this.value')}"
                 />
@@ -65,7 +66,7 @@
       </td>
       <td class="value" style="vertical-align:middle;">
         <div id="addPrice_${i}" style="text-align:center;vertical-align:text-bottom">
-          ${fieldValue(bean: proformaDetail, field: 'productPrice')}
+          ${proformaDetail.product?fieldValue(bean: proformaDetail, field: 'productPrice'):''}
         </div></td>
       <td>&nbsp;</td>
       <td><g:submitToRemote controller="proforma" update="detailListPanel" action="removeDetail" id="${i}" value="${message(code: 'remove', 'default': 'Remove')}"/></td>
