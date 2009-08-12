@@ -84,8 +84,24 @@ class ProformaController {
             }
             proformaInstance.properties = params
 
-            
+            List updatedDetailList = updateCommand.createProformaDetailsList()
 
+
+            updatedDetailList.each {proformaDetail ->
+                if (proformaDetail.id){
+                    def auxProformaDetail = proformaInstance.details.find{it.id == proformaDetail.id}
+                    auxProformaDetail.quantity = proformaDetail.quantity
+                    auxProformaDetail.dailyDose = proformaDetail.dailyDose
+                    auxProformaDetail.product = proformaDetail.product
+                }
+            }
+
+            updatedDetailList.each {proformaDetail ->
+                if (proformaDetail.id == null){
+                    proformaInstance.addToDetails(proformaDetail)
+                }
+            }
+            
             if (!proformaInstance.hasErrors() && proformaInstance.save()) {
                 flash.message = "proforma.updated"
                 flash.args = [params.id]
@@ -218,7 +234,7 @@ class UpdateProformaDetailsListCommand {
          List proformaDetailList = []
          productIds.eachWithIndex(){ productId, i->
             def auxProduct = Product.get(productId)
-            def proformaDetail = new ProformaDetail(id:detailsIds[i],product:auxProduct, quantity:quantities[i], dailyDose:dailyDoses[i])
+            def proformaDetail = new ProformaDetail(id:detailsIds[i]!=''?detailsIds[i].toLong():null,product:auxProduct, quantity:quantities[i], dailyDose:dailyDoses[i])
             proformaDetailList.add(proformaDetail)
         }
 
