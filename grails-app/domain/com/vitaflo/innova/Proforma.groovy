@@ -24,6 +24,7 @@ class Proforma {
 
     static mapping = {
         table 'proformas'
+        details cascade:'delete-orphan'
     }
 
     static transients = ['client']
