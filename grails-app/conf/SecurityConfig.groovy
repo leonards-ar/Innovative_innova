@@ -27,6 +27,8 @@ security {
     /user/create=ROLE_ADMIN
     /**/create=ROLE_ADMIN
     /**/edit=ROLE_ADMIN
+    /proforma/create=ROLE_ADMIN,ROLE_USER
+    /proforma/edit=ROLE_ADMIN,ROLE_USER
     /**=IS_AUTHENTICATED_ANONYMOUSLY
     """
 
