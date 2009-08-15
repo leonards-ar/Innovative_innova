@@ -10,7 +10,7 @@ class Proforma {
 
     Patient patient
 
-    List details
+    List details = []
     
     static final def STATUS_LIST = ['Creada','Aprobada','Rechazada','Anulada']
 
@@ -24,14 +24,34 @@ class Proforma {
 
     static mapping = {
         table 'proformas'
-        details cascade:'delete-orphan'
+        details cascade:'all, delete-orphan'
     }
 
-    static transients = ['client']
+    static transients = ['client', 'totalAmount', 'totalDetails']
 
     Client getClient(){
         this.patient.client
     }
+
+    Double getTotalAmount(){
+
+        Double totalAmount = this.courier        
+
+        totalAmount += getTotalDetails()
+
+        totalAmount *= (this.discount > 0?(100 - this.discount)/100d:1)
+
+        return totalAmount
+    }
+
+    Double getTotalDetails(){
+        return this.details.sum{it.total}
+    }
+
+    Double calculateDiscount(Double amount){
+        return amount * (this.discount/100d)
+    }
+
 
     String toString(){return "${this.patient} - ${getClient()}"}
 

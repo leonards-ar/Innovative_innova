@@ -23,9 +23,9 @@
                         
                    	    <g:sortableColumn property="id" title="Id" titleKey="proforma.id" />
 
-                   	    <th><g:message code="proforma.patient" default="Patient" /></th>
+                            <th><g:message code="proforma.client" default="Client" /></th>
 
-                   	    <th><g:message code="proforma.client" default="Client" /></th>
+                   	    <th><g:message code="proforma.patient" default="Patient" /></th>
 
                    	    <g:sortableColumn property="status" title="Status" titleKey="proforma.status" />
 
@@ -38,10 +38,10 @@
                         <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                         
                             <td><g:link action="show" id="${proformaInstance.id}">${fieldValue(bean: proformaInstance, field: "id")}</g:link></td>
-                                                
-                            <td>${fieldValue(bean: proformaInstance, field: "patient")}</td>
 
                             <td>${fieldValue(bean: proformaInstance, field: "client")}</td>
+
+                            <td>${fieldValue(bean: proformaInstance, field: "patient")}</td>
 
                             <td>${fieldValue(bean: proformaInstance, field: "status")}</td>
 

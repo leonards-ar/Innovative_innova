@@ -31,17 +31,17 @@
                             </tr>
 
                             <tr class="prop">
-                                <td valign="top" class="name"><g:message code="proforma.patient" default="Patient" />:</td>
+                                <td valign="top" class="name"><g:message code="proforma.client" default="Client" />:</td>
 
-                                <td valign="top" class="value"><g:link controller="patient" action="show" id="${proformaInstance?.patient?.id}">${proformaInstance?.patient?.encodeAsHTML()}</g:link></td>
+                                <td valign="top" class="value"><g:link controller="client" action="show" id="${proformaInstance?.client?.id}">${proformaInstance?.client?.encodeAsHTML()}</g:link></td>
 
                             </tr>
 
                             <tr class="prop">
-                                <td valign="top" class="name"><g:message code="proforma.client" default="Client" />:</td>
-                                
-                                <td valign="top" class="value"><g:link controller="client" action="show" id="${proformaInstance?.client?.id}">${proformaInstance?.client?.encodeAsHTML()}</g:link></td>
-                                
+                                <td valign="top" class="name"><g:message code="proforma.patient" default="Patient" />:</td>
+
+                                <td valign="top" class="value"><g:link controller="patient" action="show" id="${proformaInstance?.patient?.id}">${proformaInstance?.patient?.encodeAsHTML()}</g:link></td>
+
                             </tr>
 
                             <tr class="prop">
@@ -61,20 +61,21 @@
                             <tr class="prop">
                                 <td valign="top" class="name"><g:message code="proforma.courier" default="Courier" />:</td>
                                 
-                                <td valign="top" class="value">${fieldValue(bean: proformaInstance, field: "courier")}</td>
+                                <td valign="top" class="value"><g:formatNumber number="${proformaInstance?.courier}" format="#.##"/></td>
                                 
                             </tr>
 
                             <tr class="prop">
                                 <td valign="top" class="name"><g:message code="proforma.discount" default="Discount" />:</td>
 
-                                <td valign="top" class="value">${fieldValue(bean: proformaInstance, field: "discount")}</td>
+                                <td valign="top" class="value"><g:formatNumber number="${proformaInstance?.discount}" format="#.##"/></td>
 
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
+                <g:if test="${proformaInstance?.details?.size()> 0}">
                 <div id="detailListPanel" class="list">
                   <table style="margin-top: 5px;">
                     <thead>
@@ -101,15 +102,32 @@
 
                             <td>${fieldValue(bean: proformaDetail, field: "dailyDose")}</td>
 
-                            <td>${fieldValue(bean:proformaDetail, field: "productPrice")}</td>
+                            <td><g:formatNumber number="${proformaDetail?.productPrice}" format="#.##"/></td>
 
                             <td>${fieldValue(bean: proformaDetail, field: "total")}</td>
                         </tr>
                     </g:each>
-                    </tbody>
-                   </table>
+                    <g:set var="detailsSize" value="${proformaInstance.details.size()}" />
+                    <tr class="${(detailsSize % 2) == 0?'odd':'even'}" style="border-top:1px solid #ddd">
+                        <td colspan="4"><g:message code="proforma.totalproducts" default="Total Products" /></td>
+                        <td><g:formatNumber number="${totalDetails}" format="#.##"/></td>
+                      </tr>
+                    <tr class="${((detailsSize+1) % 2) == 0?'odd':'even'}">
+                    <td colspan="4"><g:message code="proforma.courier" default="Courier" /></td>
+                    <td><g:formatNumber number="${proformaInstance?.courier}" format="#.##"/></td>
+                    </tr>
+                    <tr class="${((detailsSize+2) % 2) == 0?'odd':'even'}">
+                    <td colspan="4" style="color:red"><g:message code="proforma.discountAmount" default="Discount" /> <g:formatNumber number="${proformaInstance?.discount}" format="#.##"/> %</td>
+                    <td style="color:red"><g:formatNumber number="${discountAmount}" format="#.##"/></td>
+                    </tr>
+                    <tr class="${((detailsSize+3) % 2) == 0?'odd':'even'}">
+                    <td colspan="4"><b><g:message code="proforma.totalAmount" default="Total Amount" /></b></td>
+                    <td><b><g:formatNumber number="${totalAmount}" format="#.##"/></b></td>
+                    </tr>
+                   </tbody>
+                  </table>
                 </div>
-
+                </g:if>
                 <div class="buttons">
                     <span class="button"><g:actionSubmit class="edit" action="edit" value="${message(code: 'edit', 'default': 'Edit')}" /></span>
                     <span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'delete', 'default': 'Delete')}" onclick="return confirm('${message(code: 'delete.confirm', 'default': 'Are you sure?')}');" /></span>

@@ -51,7 +51,16 @@ class ProformaController {
             redirect(action: "list")
         }
         else {
-            return [proformaInstance: proformaInstance]
+            //Total Details
+            Double totalDetails = proformaInstance.getTotalDetails();
+
+            //Total Amount
+            Double totalAmount = proformaInstance.getTotalAmount();
+
+            //Discount Amount
+            Double discountAmount = proformaInstance.calculateDiscount(totalAmount)
+
+            return [proformaInstance: proformaInstance, totalDetails:totalDetails, totalAmount:totalAmount, discountAmount: discountAmount]
         }
     }
 
@@ -72,13 +81,15 @@ class ProformaController {
     def update = {UpdateProformaDetailsListCommand updateCommand ->
         
         def proformaInstance = Proforma.get(params.id)
+
         if (proformaInstance) {
             if (params.version) {
                 def version = params.version.toLong()
                 if (proformaInstance.version > version) {
                     
                     proformaInstance.errors.rejectValue("version", "proforma.optimistic.locking.failure", "Another user has updated this Proforma while you were editing")
-                    render(view: "edit", model: [proformaInstance: proformaInstance])
+                    def proformaDetailList = proformaInstance.details
+                    render(view: "edit", model: [proformaInstance: proformaInstance, proformaDetailList: proformaDetailList])
                     return
                 }
             }
@@ -122,7 +133,7 @@ class ProformaController {
                 redirect(action: "show", id: proformaInstance.id)
             }
             else {
-                render(view: "edit", model: [proformaInstance: proformaInstance])
+                render(view: "edit", model: [proformaInstance: proformaInstance, proformaDetailList: updatedDetailList])
             }
         }
         else {
@@ -199,7 +210,7 @@ class ProformaController {
             price = auxProduct.getPrice()
         }
         
-        render formatNumber(number:price)
+        render formatNumber(number:price,format:"#.##")
     }
 }
 

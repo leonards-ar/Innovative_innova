@@ -39,9 +39,7 @@
         <g:textField name="addDailyDose" value="${fieldValue(bean: addCommand, field: 'addDailyDose')}"/>
       </td>
       <td class="value" style="vertical-align:middle;">
-        <div id="addPrice" style="text-align:center;vertical-align:text-bottom">
-          ${fieldValue(bean: addCommand, field: 'addProductPrice')}
-        </div>
+        <div id="addPrice" style="text-align:center;vertical-align:text-bottom">${formatNumber(number:addCommand?.addProductPrice, format:'#.##')}</div>
       </td>
       <td>&nbsp;</td>
       <td><g:submitToRemote controller="proforma" update="detailListPanel" action="addDetail" value="${message(code: 'add', 'default': 'Add')}"/></td>
@@ -66,7 +64,7 @@
       </td>
       <td class="value" style="vertical-align:middle;">
         <div id="addPrice_${i}" style="text-align:center;vertical-align:text-bottom">
-          ${proformaDetail.product?fieldValue(bean: proformaDetail, field: 'productPrice'):''}
+          ${proformaDetail.product?formatNumber(number:proformaDetail?.productPrice, format:'#.##'):''}
         </div></td>
       <td>&nbsp;</td>
       <td><g:submitToRemote controller="proforma" update="detailListPanel" action="removeDetail" id="${i}" value="${message(code: 'remove', 'default': 'Remove')}"/></td>

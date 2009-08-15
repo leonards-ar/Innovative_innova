@@ -83,7 +83,7 @@
                                     <label for="courier"><g:message code="proforma.courier" default="Courier" />:</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: proformaInstance, field: 'courier', 'errors')}">
-                                    <g:textField name="courier" value="${fieldValue(bean: proformaInstance, field: 'courier')}" />
+                                    <g:textField name="courier" value="${formatNumber(number:proformaInstance.courier, format:'#.##')}" />
 
                                 </td>
                             </tr>
@@ -93,7 +93,7 @@
                                     <label for="discount"><g:message code="proforma.discount" default="Discount" />:</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: proformaInstance, field: 'discount', 'errors')}">
-                                    <g:textField name="discount" value="${fieldValue(bean: proformaInstance, field: 'discount')}" />
+                                    <g:textField name="discount" value="${formatNumber(number:proformaInstance.discount, format:'#.##')}" />
 
                                 </td>
                             </tr>
