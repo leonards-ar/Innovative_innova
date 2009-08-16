@@ -68,7 +68,7 @@
                             <tr class="prop">
                                 <td valign="top" class="name"><g:message code="proforma.discount" default="Discount" />:</td>
 
-                                <td valign="top" class="value"><g:formatNumber number="${proformaInstance?.discount}" format="#.##"/></td>
+                                <td valign="top" class="value"><g:formatNumber number="${proformaInstance?.discount}"/></td>
 
                             </tr>
                         </tbody>

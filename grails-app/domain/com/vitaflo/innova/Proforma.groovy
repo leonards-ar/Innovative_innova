@@ -4,14 +4,13 @@ class Proforma {
 
     Date createdAt = new Date()
 
-    Integer discount =0.0
+    Integer discount =0
     Double courier =0.0
     String status = 'Creada'
 
     Patient patient
-
     List details = []
-    
+
     static final def STATUS_LIST = ['Creada','Aprobada','Rechazada','Anulada']
 
     static hasMany = [details:ProformaDetail]
@@ -53,6 +52,7 @@ class Proforma {
     }
 
 
-    String toString(){return "${this.patient} - ${getClient()}"}
-
+    String toString(){
+        return "${this.id} - ${getClient()} - ${this.patient}"
+    }
 }

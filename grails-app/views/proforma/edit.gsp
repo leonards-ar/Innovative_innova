@@ -93,7 +93,7 @@
                                     <label for="discount"><g:message code="proforma.discount" default="Discount" />:</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: proformaInstance, field: 'discount', 'errors')}">
-                                    <g:textField name="discount" value="${formatNumber(number:proformaInstance.discount, format:'#.##')}" />
+                                    <g:textField name="discount" value="${formatNumber(number:proformaInstance.discount)}" />
 
                                 </td>
                             </tr>
