@@ -20,6 +20,8 @@ class Invoice {
         proforma(nullable:false, unique:true)
     }
 
+    static transients = ['viewPurchase']
+
     static mapping = {
         table 'invoices'
         number column:'code'
@@ -27,5 +29,10 @@ class Invoice {
 
     String toString(){
         return this.number
+    }
+
+    //TODO: Resolve how to apply i18n without penalize performance.
+    String getViewPurchase(){
+        return "Factura de Venta: ${this.number} - Proforma: ${this.proforma}"
     }
 }
