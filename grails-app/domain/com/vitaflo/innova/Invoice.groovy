@@ -1,6 +1,6 @@
 package com.vitaflo.innova
 
-class Invoice {
+class Invoice implements Comparable {
 
     Date createdAt = new Date()
     Date date = new Date()
@@ -34,5 +34,18 @@ class Invoice {
     //TODO: Resolve how to apply i18n without penalize performance.
     String getViewPurchase(){
         return "Factura de Venta: ${this.number} - Proforma: ${this.proforma}"
+    }
+
+    int compareTo(other) {
+        if(other instanceof Invoice) {
+            if(number.isLong() && other.number.isLong()) {
+                return number.compareTo(other.number);
+            } else {
+                // Just in case one of the values is not a valid number
+                return number.compareTo(other.number);
+            }
+        } else {
+            return -1;
+        }
     }
 }

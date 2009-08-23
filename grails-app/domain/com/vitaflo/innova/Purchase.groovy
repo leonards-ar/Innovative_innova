@@ -1,6 +1,6 @@
 package com.vitaflo.innova
 
-class Purchase {
+class Purchase implements Comparable {
 
     String codeNumber
     Double amount
@@ -33,7 +33,19 @@ class Purchase {
     }
 
     String toString(){
-        return this.codeNumber
+        return this.codeNumber;
     }
 
+    int compareTo(other) {
+        if(other instanceof Purchase) {
+            if(codeNumber.isLong() && other.codeNumber.isLong()) {
+                return codeNumber.compareTo(other.codeNumber);
+            } else {
+                // Just in case one of the values is not a valid number
+                return codeNumber.compareTo(other.codeNumber);
+            }
+        } else {
+            return -1;
+        }
+    }
 }
