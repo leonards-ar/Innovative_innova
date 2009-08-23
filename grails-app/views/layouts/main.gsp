@@ -20,13 +20,13 @@
         <g:message code="login.bar.welcomeback" args="${[loggedInUserInfo(field:'firstName')]}"/>
         <br/><br/>
        <span>
-          <g:link controller="${params.controller}" action="${params.action}" params="[lang:'en']" class="menuButton"><g:message code="language.english"/></g:link>
+          <g:link controller="${params.controller}" action="${params.action}" id="${params.id}" params="[lang:'en']" class="menuButton"><g:message code="language.english"/></g:link>
         </span>
         <span>
-          <g:link controller="${params.controller}" action="${params.action}" params="[lang:'es']" class="menuButton"><g:message code="language.spanish"/></g:link>
+          <g:link controller="${params.controller}" action="${params.action}" id="${params.id}" params="[lang:'es']" class="menuButton"><g:message code="language.spanish"/></g:link>
         </span>
         <!--span>
-          <g:link controller="${params.controller}" action="${params.action}" params="[lang:'pt_BR']" class="menuButton"><g:message code="language.portuguese"/></g:link>
+          <g:link controller="${params.controller}" action="${params.action}" id="${params.id}" params="[lang:'pt_BR']" class="menuButton"><g:message code="language.portuguese"/></g:link>
         </span-->
       </div>
     </g:isLoggedIn>
