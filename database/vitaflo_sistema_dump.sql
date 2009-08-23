@@ -424,7 +424,7 @@ SET character_set_client = @saved_cs_client;
 
 LOCK TABLES `role` WRITE;
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
-INSERT INTO `role` VALUES (1,0,'ROLE_ADMIN','Admin Role'),(2,0,'ROLE_USER','Default User Role');
+INSERT INTO `role` VALUES (1,1,'ROLE_ADMIN','Admin Role'),(2,0,'ROLE_USER','Default User Role');
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -534,7 +534,7 @@ SET character_set_client = @saved_cs_client;
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'ivan','ivan','igrosny@gmail.com',0,NULL,NULL,'','a15f8b81a160b4eebe5c84e9e3b65c87b9b2f18e'),(2,'edu','edu','',3,'','','','863f8f3edbcde342a53dd30d6d00b81a90e4249d');
+INSERT INTO `users` VALUES (1,'ivan','ivan','igrosny@gmail.com',1,'Ivan','Ivan','','a15f8b81a160b4eebe5c84e9e3b65c87b9b2f18e'),(2,'edu','edu','',4,'edu','edu','','863f8f3edbcde342a53dd30d6d00b81a90e4249d');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -547,4 +547,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2009-08-23 19:54:51
+-- Dump completed on 2009-08-23 20:03:05

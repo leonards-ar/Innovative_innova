@@ -111,9 +111,8 @@ class UserController {
                     Role.findAll().each {userInstance.removeFromAuthorities(it)}
                     addCountries(userInstance)
                     addRoles(userInstance)
-                } else {
-                    print "estoy aca\n"
                 }
+                
                 flash.message = "user.updated"
                 flash.args = [params.id]
                 flash.defaultMessage = "User ${params.id} updated"
