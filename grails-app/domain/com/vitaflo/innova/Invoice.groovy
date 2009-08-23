@@ -8,6 +8,8 @@ class Invoice implements Comparable {
     String status = 'Pendiente'
     Double amount
 
+    Purchase purchase
+    
     static belongsTo = [proforma:Proforma]
 
     static final def STATUS_LIST = ['Pendiente','Pagada']
@@ -15,9 +17,10 @@ class Invoice implements Comparable {
     static constraints = {
         number(nullable:false, blank:false, unique:true)
         date(nullable:false)
-        amount(nullable:false,min:0.01d)
+        amount(nullable:false,min:0d)
         status(inList:STATUS_LIST)
         proforma(nullable:false, unique:true)
+        purchase(nullable:true)
     }
 
     static transients = ['viewPurchase']

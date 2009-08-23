@@ -73,7 +73,7 @@ class ProformaController {
             redirect(action: "list")
         }
         else {
-            List proformaDetailList = proformaInstance.details
+            def proformaDetailList = proformaInstance.details
             return [proformaInstance: proformaInstance, proformaDetailList:proformaDetailList]
         }
     }

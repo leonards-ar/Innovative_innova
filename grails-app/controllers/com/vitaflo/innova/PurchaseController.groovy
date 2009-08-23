@@ -18,8 +18,14 @@ class PurchaseController {
         return [purchaseInstance: purchaseInstance]
     }
 
-    def save = {
+    def save = { PurchaseInvoicesCommand invoicesCmd ->
         def purchaseInstance = new Purchase(params)
+
+        invoicesCmd.invoicesCommand.each { invoiceId ->
+            def invoice = Invoice.get(invoiceId)
+            purchaseInstance.addToInvoices(invoice)
+        }
+
         if (!purchaseInstance.hasErrors() && purchaseInstance.save()) {
             flash.message = "purchase.created"
             flash.args = [purchaseInstance.id]
@@ -27,6 +33,7 @@ class PurchaseController {
             redirect(action: "show", id: purchaseInstance.id)
         }
         else {
+            purchaseInstance.invoices*.discard()
             render(view: "create", model: [purchaseInstance: purchaseInstance])
         }
     }
@@ -57,8 +64,9 @@ class PurchaseController {
         }
     }
 
-    def update = {
+    def update = { PurchaseInvoicesCommand invoicesCmd ->
         def purchaseInstance = Purchase.get(params.id)
+
         if (purchaseInstance) {
             if (params.version) {
                 def version = params.version.toLong()
@@ -70,7 +78,24 @@ class PurchaseController {
                 }
             }
             purchaseInstance.properties = params
-            if (!purchaseInstance.hasErrors() && purchaseInstance.save()) {
+
+            //We need to apply the delete manually as the update provided by the scaffolding didn't work out of the box with sets.
+            def invoicesToRemove = []
+
+            purchaseInstance.invoices.each { invoice ->
+                def auxInvoiceId = invoicesCmd.invoicesCommand.find{(it.toLong()) == invoice.id}
+                if (!auxInvoiceId){
+                    invoicesToRemove.add(invoice)
+                }
+            }
+
+            invoicesToRemove.each { invoice ->
+                purchaseInstance.removeFromInvoices(auxInvoice)
+            }
+            //End of the manual removal
+            
+            if (!purchaseInstance.hasErrors() && purchaseInstance.save(flush:true)) {
+                purchaseInstance.clearErrors()
                 flash.message = "purchase.updated"
                 flash.args = [params.id]
                 flash.defaultMessage = "Purchase ${params.id} updated"
@@ -92,6 +117,16 @@ class PurchaseController {
         def purchaseInstance = Purchase.get(params.id)
         if (purchaseInstance) {
             try {
+                def invoiceList = []
+                
+                purchaseInstance.invoices.each {invoice ->
+                    invoiceList.add(invoice)
+                }
+
+                invoiceList.each {invoice ->
+                    purchaseInstance.removeFromInvoices(invoice)
+                }
+                
                 purchaseInstance.delete()
                 flash.message = "purchase.deleted"
                 flash.args = [params.id]
@@ -114,17 +149,27 @@ class PurchaseController {
     }
 
 
-    def addInvoiceForCreate = {
+    def addInvoiceForCreate = { PurchaseInvoicesCommand invoicesCmd ->
         def purchaseInstance = new Purchase(params)       
+
+        def invoicesList = invoicesCmd.createAnInvoiceList()
+        purchaseInstance.invoices = invoicesList
 
         addInvoice(purchaseInstance)
 
+        purchaseInstance.invoices*.discard()
         render(view: "create", model: [purchaseInstance: purchaseInstance])
     }
 
-    def removeInvoiceForCreate = {
+    def removeInvoiceForCreate = {PurchaseInvoicesCommand invoicesCmd ->
         def purchaseInstance = new Purchase(params)
+
+        def invoicesList = invoicesCmd.createAnInvoiceList()
+        purchaseInstance.invoices = invoicesList
+
         removeInvoice(purchaseInstance)
+
+        purchaseInstance.invoices*.discard()
         render(view: "create", model: [purchaseInstance: purchaseInstance])
     }
 
@@ -158,8 +203,7 @@ class PurchaseController {
 
    void removeInvoice(Purchase purchaseInstance){
 
-        def invoiceIndex = params.invoiceToRemove.toInteger()
-        def invoiceId = purchaseInstance.invoices[invoiceIndex].id
+        def invoiceId = params.invoiceToRemove
 
         def invoice = Invoice.get(invoiceId)
         purchaseInstance.removeFromInvoices(invoice)
@@ -167,4 +211,19 @@ class PurchaseController {
         def updatedAmount = purchaseInstance.amount?purchaseInstance.amount - invoice.amount:0
         purchaseInstance.amount = updatedAmount < 0? 0 : updatedAmount
    }
+}
+
+class PurchaseInvoicesCommand{
+    List invoicesCommand = []
+
+    List createAnInvoiceList(){
+        List invoiceList = []
+
+        invoicesCommand.each { invoiceId ->
+            def anInvoice = Invoice.get(invoiceId)
+            invoiceList.add(anInvoice)
+        }
+        
+        return invoiceList
+    }
 }

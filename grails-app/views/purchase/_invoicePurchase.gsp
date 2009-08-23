@@ -8,7 +8,7 @@
           </tr>
           <tr class="prop">
               <td valign="top" class="value ${hasErrors(bean: purchaseInstance, field: 'invoices', 'errors')}">
-                  <g:select name="invoiceSelected" from="${com.vitaflo.innova.Invoice.list()}" optionValue="viewPurchase" optionKey="id" value="${invoiceSelected}" />
+                  <g:select name="invoiceSelected" from="${com.vitaflo.innova.Invoice.findAllByPurchaseIsNull()}" optionValue="viewPurchase" optionKey="id" value="${invoiceSelected}" />
               </td>
           </tr>
           <tr class="prop">
@@ -43,7 +43,7 @@
         </thead>
         <tbody>
         <g:each in="${purchaseInstance?.invoices}" status="i" var="invoiceInstance">
-            <g:hiddenField name="invoices[${i}].id" value="${invoiceInstance.id}"/>
+            <g:hiddenField name="invoicesCommand[${i}]" value="${invoiceInstance.id}"/>
             <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                 <td>${fieldValue(bean: invoiceInstance, field: "number")}</td>
 
@@ -55,7 +55,7 @@
 
                 <td><g:formatDate date="${invoiceInstance.date}" format="dd/MM/yyyy"/></td>
 
-                <td><g:submitButton class="remove" name="removeInvoice" onclick="submitRemoveInvoice(${i})" value="${message(code: 'remove', 'default': 'Remove')}" /></td>
+                <td><g:submitButton class="remove" name="removeInvoice" onclick="submitRemoveInvoice(${invoiceInstance.id})" value="${message(code: 'remove', 'default': 'Remove')}" /></td>
             </tr>
         </g:each>
         </tbody>

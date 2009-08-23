@@ -9,7 +9,6 @@ class Proforma {
     String status = 'Creada'
 
     Patient patient
-    List details = []
 
     static final def STATUS_LIST = ['Creada','Aprobada','Rechazada','Anulada']
 

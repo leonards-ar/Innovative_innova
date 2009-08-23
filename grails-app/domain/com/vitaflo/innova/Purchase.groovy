@@ -9,7 +9,6 @@ class Purchase implements Comparable {
     String status = 'Pending'
 
     Supplier supplier
-    List invoices
 
     static hasMany = [invoices:Invoice]
 
@@ -29,7 +28,8 @@ class Purchase implements Comparable {
         table 'purchases'
         codeNumber column:'code'
         creationDate column:'date'
-        invoices joinTable:[name:'purchase_invoices', key:'purchase_id', column:'invoice_id']
+        invoices cascade: 'save-update'
+        //invoices joinTable:[name:'purchase_invoices', key:'purchase_id', column:'invoice_id']
     }
 
     String toString(){
