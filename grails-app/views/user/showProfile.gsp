@@ -54,7 +54,7 @@
                                 <td  valign="top" style="text-align: left;" class="value">
                                     <ul>
                                     <g:each in="${userInstance?.countries}" var="countryInstance">
-                                        <li><g:link controller="country" action="show" id="${countryInstance.id}">${countryInstance.encodeAsHTML()}</g:link></li>
+                                        <li>${countryInstance.encodeAsHTML()}</li>
                                     </g:each>
                                     </ul>
                                 </td>
@@ -67,7 +67,7 @@
                                 <td  valign="top" style="text-align: left;" class="value">
                                     <ul>
                                     <g:each in="${userInstance?.authorities}" var="roleInstance">
-                                        <li><g:link controller="role" action="show" id="${roleInstance.id}">${roleInstance.encodeAsHTML()}</g:link></li>
+                                        <li>${roleInstance.encodeAsHTML()}</li>
                                     </g:each>
                                     </ul>
                                 </td>
