@@ -7,12 +7,14 @@ class Client {
     String phone
     String email
     String contact
+    Country country
 
     static constraints = {
         name(blank:false)
         address(blank:false)
         phone(blank:false)
         email(email:true)
+        country(blank: false)
     }
 
     static hasMany = [patients:Patient]

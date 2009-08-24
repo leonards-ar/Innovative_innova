@@ -75,7 +75,17 @@
 
                                 </td>
                             </tr>
-                        
+
+                        <tr class="prop">
+                            <td valign="top" class="name">
+                                <label for="country"><g:message code="client.country" default="Country" />:</label>
+                            </td>
+                            <td valign="top" class="value ${hasErrors(bean: clientInstance, field: 'country', 'errors')}">
+                                <g:select name="country.id" from="${session.countries}" optionKey='id' value="${clientInstance?.country?.id}" />
+
+                            </td>
+                        </tr>
+
                         </tbody>
                     </table>
                 </div>

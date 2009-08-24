@@ -10,12 +10,49 @@ class ClientController {
   static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
   def list = {
-    params.max = Math.min(params.max ? params.max.toInteger() : 10, 100)
-
+    params.max = Math.min(params.max ? params.max.toInteger() : 15, 100)
+    
+    if (!params.offset) params.offset = 0
     if (!params.sort) params.sort = "name"
     if (!params.order) params.order = "asc"
 
-    [clientInstanceList: Client.list(params), clientInstanceTotal: Client.count()]
+    def query = {
+
+      if (params.clientName) {
+        like('name', '%' + params.clientName + '%')
+      }
+      
+      if (params.selectedCountry) {
+        country {
+          eq('code', params.selectedCountry)
+        }
+      } else {
+        inList('country', session.countries)
+      }
+    }
+
+    def criteria = Client.createCriteria();
+
+    def total = criteria.count(query);
+
+    def clients = Client.withCriteria {
+      maxResults(params.max)
+      firstResult(params.offset?.toInteger())
+      order(params.sort, params.order)
+      if (params.clientName) {
+        like('name', '%' + params.clientName + '%')
+      }
+      if (params.selectedCountry) {
+        country {
+          eq('code', params.selectedCountry)
+        }
+      } else {
+        inList('country', session.countries)
+      }
+
+    }
+
+    [clientInstanceList: clients, clientInstanceTotal: total, clientName: params.clientName]
   }
 
   def create = {
@@ -120,7 +157,7 @@ class ClientController {
   }
 
   def searchAjax = {
-    params.max = Math.min(params.max ? params.max.toInteger() : 10, 100)
+    params.max = Math.min(params.max ? params.max.toInteger() : 15, 100)
 
     if (!params.sort) params.sort = "name"
     if (!params.order) params.order = "asc"
@@ -135,7 +172,7 @@ class ClientController {
   }
 
   def search = {
-    params.max = Math.min(params.max ? params.max.toInteger() : 10, 100)
+    params.max = Math.min(params.max ? params.max.toInteger() : 15, 100)
 
     if (!params.sort) params.sort = "name"
     if (!params.order) params.order = "asc"
@@ -143,14 +180,14 @@ class ClientController {
     def clients
     def total
 
-    if(!params.clientName) {
+    if (!params.clientName) {
       clients = Client.list(params)
       total = Client.count()
     } else {
-      clients = Client.findAllByNameLike('%' + params.clientName + '%', [max:params.max, sort:params.sort, order:params.order, offset:params.offset])
+      clients = Client.findAllByNameLike('%' + params.clientName + '%', [max: params.max, sort: params.sort, order: params.order, offset: params.offset])
       total = Client.findAllByNameLike('%' + params.clientName + '%').size()
     }
-    render(view:'list', model:[clientInstanceList: clients, clientInstanceTotal: total, clientName: params.clientName])
+    render(view: 'list', model: [clientInstanceList: clients, clientInstanceTotal: total, clientName: params.clientName])
   }
 
 }

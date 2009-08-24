@@ -36,11 +36,15 @@
       <thead>
       <tr>
 
-        <g:sortableColumn property="name" action="search" params="${params}" title="Name" titleKey="client.name"/>
+        <g:sortableColumn property="name" params="${params}" title="Name" titleKey="client.name"/>
 
-        <g:sortableColumn property="phone" action="search" params="${params}" title="Phone" titleKey="client.phone"/>
+        <g:sortableColumn property="phone" params="${params}" title="Phone" titleKey="client.phone"/>
 
-        <g:sortableColumn property="contact" action="search" params="${params}" title="Contact" titleKey="client.contact"/>
+        <g:sortableColumn property="contact" params="${params}" title="Contact" titleKey="client.contact"/>
+
+        <g:if test="${session.countries.size() > 1}">
+        <th><g:message code="client.country" default="Country" /></th>
+        </g:if>
 
       </tr>
       </thead>
@@ -54,6 +58,9 @@
 
           <td>${fieldValue(bean: clientInstance, field: "contact")}</td>
 
+          <g:if test="${session.countries.size() > 1}">
+            <td>${fieldValue(bean: clientInstance, field: "country")}</td>
+        </g:if>
         </tr>
       </g:each>
       </tbody>
