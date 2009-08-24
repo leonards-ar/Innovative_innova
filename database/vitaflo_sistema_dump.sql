@@ -1,8 +1,8 @@
--- MySQL dump 10.11
+-- MySQL dump 10.13  Distrib 5.1.25-rc, for Win32 (ia32)
 --
 -- Host: localhost    Database: vitaflo_sistema
 -- ------------------------------------------------------
--- Server version	5.0.51b
+-- Server version	5.1.25-rc-community
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,14 +16,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Create schema vitaflo_sistema
---
-CREATE DATABASE IF NOT EXISTS vitaflo_sistema;
-USE vitaflo_sistema;
-
-GRANT all ON vitaflo_sistema.* TO 'vitaflo'@'localhost' IDENTIFIED BY 'java1234';
-
---
 -- Table structure for table `clients`
 --
 
@@ -31,17 +23,19 @@ DROP TABLE IF EXISTS `clients`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `clients` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `name` varchar(45) NOT NULL default '',
-  `address` varchar(45) NOT NULL default '',
-  `telephone` varchar(45) NOT NULL default '',
-  `email` varchar(45) NOT NULL default '',
-  `status` enum('Enabled','Disabled') NOT NULL default 'Enabled',
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL DEFAULT '',
+  `address` varchar(45) NOT NULL DEFAULT '',
+  `telephone` varchar(45) NOT NULL DEFAULT '',
+  `email` varchar(45) NOT NULL DEFAULT '',
+  `status` enum('Enabled','Disabled') NOT NULL DEFAULT 'Enabled',
   `contact` varchar(45) NOT NULL,
-  `version` bigint(20) default NULL,
-  `contact_name` varchar(255) default NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=49 DEFAULT CHARSET=utf8;
+  `version` bigint(20) DEFAULT NULL,
+  `contact_name` varchar(255) DEFAULT NULL,
+  `country_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK334B8608D5F7034F` (`country_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=50 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -50,7 +44,7 @@ SET character_set_client = @saved_cs_client;
 
 LOCK TABLES `clients` WRITE;
 /*!40000 ALTER TABLE `clients` DISABLE KEYS */;
-INSERT INTO `clients` VALUES (1,'OSPIA','Venezuela 2386','4383-9026','','Enabled','',0,NULL),(2,'DroguerÃ­a Itati','Gobernador Pedro FerrÃ© 1878','03783-430595/436225','','Enabled','',0,NULL),(3,'DroguerÃ­a Zeus','Avda. Cabret 1916 (Posadas)','03752-438900','','Enabled','',0,NULL),(4,'OSECAC','Moreno 648 (Capital Federal)','4332-4217','','Enabled','',0,NULL),(5,'Obra Social Jefes de Oficiales Navales','24 de Noviembre 645','4932-8079','','Enabled','',0,NULL),(6,'NÃ©stor Mainardi','Urquiza 225 (CÃ³rdoba)','03562-422502','','Disabled','',0,NULL),(7,'Droguer&Atilde;&shy;a Central','NO','NO','','Disabled','',0,NULL),(8,'Hospital FrancÃ©s','La Rioja 951','4959-1500','','Enabled','',0,NULL),(9,'DASPU OBRA SOCIAL','NO','NO','','Enabled','',0,NULL),(10,'Fundo Estadual de Saude do Parana','Rua Piquiri, 170, Reboucas. Curitiba, Parana,','NO','','Enabled','',0,NULL),(11,'DroguerÃ­a San Miguel','San Martin 2102 (Posadas)','03752-431652','','Enabled','',0,NULL),(12,'Obra Social Personal de Farmacia','ConstituciÃ³n 2066','4941-1342','','Enabled','',0,NULL),(13,'I.N.S.S.J.P','PerÃº 169 5Â°A','4344-8701','','Enabled','',0,NULL),(14,'Hospital Garrahan','Combate de los Pozos 1881','4308-4300','','Enabled','',0,NULL),(15,'CEMECO','CÃ³rdoba','NO','','Enabled','',0,NULL),(16,'Corbiet SA','C&Atilde;&sup3;rdoba','NO','','Enabled','',0,NULL),(17,'Sin Obra Social','NO','NO','','Enabled','',0,NULL),(18,'Drogueria Pharmers SRL','NO','NO','','Enabled','',0,NULL),(19,'Biofar','Lopez y Planes 551 (Resistencia, Chaco)','(03722) 441212/442772','','Enabled','',0,NULL),(20,'Secretaria de Saude de Santa Catarina','Brasil','NO','','Enabled','',0,NULL),(21,'Libra','ARROYO GRANDE 2832.CP 11800. Montevideo. Urug','00598 2200 5521','','Enabled','',0,NULL),(22,'Smata','CÃ³rdoba','NO','','Enabled','',0,NULL),(23,'Instituto de PrevisiÃ³n y Seguridad Social','TucumÃ¡n','NO','','Enabled','',0,NULL),(24,'Drogueria Mar','Chaco','03783-478400','','Enabled','',0,NULL),(25,'IOSE','NO','NO','','Enabled','',0,NULL),(26,'Instituto del niÃ±o (Ecuador)','Ecuador','NO','','Enabled','',0,NULL),(27,'OSPE','Rodriguez PeÃ±a 538','4373-5740/4371/8957','','Enabled','',0,NULL),(28,'Helio Segouras','Brazil','NO','','Enabled','',0,NULL),(29,'Rafael Elizalde','NO','NO','','Enabled','',0,NULL),(30,'Swan Medicare','Denmark','+45 33 88 10 00','','Enabled','',0,NULL),(31,'Cassia Sana','Brasil','NO','','Enabled','',0,NULL),(32,'Isabel Magnano','Brasil','NO','','Enabled','',0,NULL),(33,'Ramiro Cabrero','Brasil','NO','','Enabled','',0,NULL),(34,'ProtecciÃ³n Social de Ecuador','Ecuador','NO','','Enabled','',0,NULL),(35,'CompaÃ±ia de Servicios FarmacÃ©uticos','NO','NO','NO','Enabled','',0,NULL),(36,'Hospital Italiano','GascÃ³n 450','4959-0200','Gabriela.Fraschetti@hospitalitaliano.org.ar','Enabled','',0,NULL),(37,'Peralta','Diagonal TucumÃ¡n 1193.Martnez','4798-5152/154404-9480','','Enabled','',0,NULL),(38,'OSPECOR','NO','NO','gralbard@yahoo.com.ar','Enabled','Graciela',0,NULL),(39,'Instituto Dorrego','3 de febrero 748.Rosario','(0341)4202411','farmacia@institutodorrego.com.ar','Enabled','',0,NULL),(40,'Gina Marinho','Brasil','NO','NO','Enabled','',0,NULL),(41,'Alfonso RamÃ³n DarÃ­o','Chaco','no','no','Enabled','no',0,NULL),(42,'Consulado Paraguay','no','no','iralabernal@hotmail.com','Enabled','',0,NULL),(43,'SES','Brasil','(51) 3288-5982','ceres@saude.rs.gov.br','Enabled','Ceres Salazar',0,NULL),(44,'Ministerio de Desarrollo Social','no','4121-4604/4121-4611','no','Enabled','Dr Silvio Presa',0,NULL),(45,'Galeno ','no','no','no','Enabled','J.C.Laporta',0,NULL),(46,'Juan','test address','45454465','test@email.com','Enabled','Cirilo',0,NULL);
+INSERT INTO `clients` VALUES (1,'OSPIA','Venezuela 2386','4383-9026','','Enabled','',0,NULL,1),(2,'DroguerÃ­a Itati','Gobernador Pedro FerrÃ© 1878','03783-430595/436225','','Enabled','',0,NULL,1),(3,'DroguerÃ­a Zeus','Avda. Cabret 1916 (Posadas)','03752-438900','','Enabled','',0,NULL,1),(4,'OSECAC','Moreno 648 (Capital Federal)','4332-4217','','Enabled','',0,NULL,1),(5,'Obra Social Jefes de Oficiales Navales','24 de Noviembre 645','4932-8079','','Enabled','',0,NULL,1),(6,'NÃ©stor Mainardi','Urquiza 225 (CÃ³rdoba)','03562-422502','','Disabled','',0,NULL,1),(7,'Droguer&Atilde;&shy;a Central','NO','NO','','Disabled','',0,NULL,1),(8,'Hospital FrancÃ©s','La Rioja 951','4959-1500','','Enabled','',0,NULL,1),(9,'DASPU OBRA SOCIAL','NO','NO','','Enabled','',0,NULL,1),(10,'Fundo Estadual de Saude do Parana','Rua Piquiri, 170, Reboucas. Curitiba, Parana,','NO','','Enabled','',0,NULL,1),(11,'DroguerÃ­a San Miguel','San Martin 2102 (Posadas)','03752-431652','','Enabled','',0,NULL,1),(12,'Obra Social Personal de Farmacia','ConstituciÃ³n 2066','4941-1342','','Enabled','',0,NULL,1),(13,'I.N.S.S.J.P','PerÃº 169 5Â°A','4344-8701','','Enabled','',0,NULL,1),(14,'Hospital Garrahan','Combate de los Pozos 1881','4308-4300','','Enabled','',0,NULL,1),(15,'CEMECO','CÃ³rdoba','NO','','Enabled','',0,NULL,1),(16,'Corbiet SA','C&Atilde;&sup3;rdoba','NO','','Enabled','',0,NULL,1),(17,'Sin Obra Social','NO','NO','','Enabled','',0,NULL,1),(18,'Drogueria Pharmers SRL','NO','NO','','Enabled','',0,NULL,1),(19,'Biofar','Lopez y Planes 551 (Resistencia, Chaco)','(03722) 441212/442772','','Enabled','',1,NULL,2),(20,'Secretaria de Saude de Santa Catarina','Brasil','NO','','Enabled','',0,NULL,1),(21,'Libra','ARROYO GRANDE 2832.CP 11800. Montevideo. Urug','00598 2200 5521','','Enabled','',0,NULL,1),(22,'Smata','CÃ³rdoba','NO','','Enabled','',0,NULL,1),(23,'Instituto de PrevisiÃ³n y Seguridad Social','TucumÃ¡n','NO','','Enabled','',0,NULL,1),(24,'Drogueria Mar','Chaco','03783-478400','','Enabled','',0,NULL,1),(25,'IOSE','NO','NO','','Enabled','',0,NULL,1),(26,'Instituto del niÃ±o (Ecuador)','Ecuador','NO','','Enabled','',0,NULL,1),(27,'OSPE','Rodriguez PeÃ±a 538','4373-5740/4371/8957','','Enabled','',0,NULL,1),(28,'Helio Segouras','Brazil','NO','','Enabled','',0,NULL,1),(29,'Rafael Elizalde','NO','NO','','Enabled','',0,NULL,1),(30,'Swan Medicare','Denmark','+45 33 88 10 00','','Enabled','',0,NULL,1),(31,'Cassia Sana','Brasil','NO','','Enabled','',0,NULL,1),(32,'Isabel Magnano','Brasil','NO','','Enabled','',0,NULL,1),(33,'Ramiro Cabrero','Brasil','NO','','Enabled','',0,NULL,1),(34,'ProtecciÃ³n Social de Ecuador','Ecuador','NO','','Enabled','',0,NULL,1),(35,'CompaÃ±ia de Servicios FarmacÃ©uticos','NO','NO','NO','Enabled','',0,NULL,1),(36,'Hospital Italiano','GascÃ³n 450','4959-0200','Gabriela.Fraschetti@hospitalitaliano.org.ar','Enabled','',0,NULL,1),(37,'Peralta','Diagonal TucumÃ¡n 1193.Martnez','4798-5152/154404-9480','','Enabled','',0,NULL,1),(38,'OSPECOR','NO','NO','gralbard@yahoo.com.ar','Enabled','Graciela',0,NULL,1),(39,'Instituto Dorrego','3 de febrero 748.Rosario','(0341)4202411','farmacia@institutodorrego.com.ar','Enabled','',0,NULL,1),(40,'Gina Marinho','Brasil','NO','NO','Enabled','',0,NULL,1),(41,'Alfonso RamÃ³n DarÃ­o','Chaco','no','no','Enabled','no',0,NULL,1),(42,'Consulado Paraguay','no','no','iralabernal@hotmail.com','Enabled','',0,NULL,1),(43,'SES','Brasil','(51) 3288-5982','ceres@saude.rs.gov.br','Enabled','Ceres Salazar',0,NULL,1),(44,'Ministerio de Desarrollo Social','no','4121-4604/4121-4611','no','Enabled','Dr Silvio Presa',0,NULL,1),(45,'Galeno ','no','no','no','Enabled','J.C.Laporta',0,NULL,1),(46,'Juan','test address','45454465','test@email.com','Enabled','Cirilo',0,NULL,1),(49,'Joâo','Jobim','4452-9802','joao@jobim.com','Enabled','no',0,NULL,2);
 /*!40000 ALTER TABLE `clients` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -62,11 +56,11 @@ DROP TABLE IF EXISTS `countries`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `countries` (
-  `id` bigint(20) NOT NULL auto_increment,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `version` bigint(20) NOT NULL,
   `code` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
@@ -88,11 +82,11 @@ DROP TABLE IF EXISTS `drugs`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `drugs` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `name` varchar(45) NOT NULL default '',
-  `status` enum('Enabled','Disabled') NOT NULL default 'Enabled',
-  `version` bigint(20) default NULL,
-  PRIMARY KEY  (`id`)
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL DEFAULT '',
+  `status` enum('Enabled','Disabled') NOT NULL DEFAULT 'Enabled',
+  `version` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
@@ -114,19 +108,19 @@ DROP TABLE IF EXISTS `invoices`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `invoices` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `created_at` datetime NOT NULL default '0000-00-00 00:00:00',
-  `proforma_id` int(10) unsigned NOT NULL default '0',
-  `code` varchar(45) NOT NULL default '',
-  `client_id` int(10) unsigned NOT NULL default '0',
-  `amount` float NOT NULL default '0',
-  `date` date NOT NULL default '0000-00-00',
-  `status` enum('Pendiente','Pagada') NOT NULL default 'Pendiente',
-  `concile` int(10) unsigned NOT NULL default '0',
-  `version` bigint(20) default NULL,
-  `create_at` datetime default NULL,
-  `purchase_id` bigint(20) default NULL,
-  PRIMARY KEY  (`id`),
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `created_at` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `proforma_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `code` varchar(45) NOT NULL DEFAULT '',
+  `client_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `amount` float NOT NULL DEFAULT '0',
+  `date` date NOT NULL DEFAULT '0000-00-00',
+  `status` enum('Pendiente','Pagada') NOT NULL DEFAULT 'Pendiente',
+  `concile` int(10) unsigned NOT NULL DEFAULT '0',
+  `version` bigint(20) DEFAULT NULL,
+  `create_at` datetime DEFAULT NULL,
+  `purchase_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
   KEY `FK25F222E6250603F7` (`client_id`),
   KEY `FK25F222E68E8C9EED` (`proforma_id`),
   KEY `FK25F222E66E093105` (`proforma_id`),
@@ -152,13 +146,13 @@ DROP TABLE IF EXISTS `notes`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `notes` (
-  `id` int(10) unsigned NOT NULL auto_increment,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `patient_id` int(10) unsigned NOT NULL,
   `created_at` datetime NOT NULL,
   `text` text NOT NULL,
   `user_id` int(10) unsigned NOT NULL,
-  `version` bigint(20) default NULL,
-  PRIMARY KEY  (`id`)
+  `version` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
@@ -180,16 +174,16 @@ DROP TABLE IF EXISTS `patients`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `patients` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `first_name` varchar(45) NOT NULL default '',
-  `last_name` varchar(45) NOT NULL default '',
-  `client_id` int(10) unsigned NOT NULL default '0',
-  `status` enum('Enabled','Disabled') NOT NULL default 'Enabled',
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(45) NOT NULL DEFAULT '',
+  `last_name` varchar(45) NOT NULL DEFAULT '',
+  `client_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `status` enum('Enabled','Disabled') NOT NULL DEFAULT 'Enabled',
   `telephone` varchar(45) NOT NULL,
   `contact` varchar(45) NOT NULL,
-  `version` bigint(20) default NULL,
-  `country_id` bigint(20) default NULL,
-  PRIMARY KEY  (`id`),
+  `version` bigint(20) DEFAULT NULL,
+  `country_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
   KEY `FK49A9760E250603F7` (`client_id`),
   KEY `FK49A9760EC07819E5` (`client_id`),
   KEY `FK49A9760ED5F7034F` (`country_id`)
@@ -214,16 +208,16 @@ DROP TABLE IF EXISTS `products`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `products` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `name` varchar(45) NOT NULL default '',
-  `drug_id` int(10) unsigned NOT NULL default '0',
-  `price` float NOT NULL default '0',
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL DEFAULT '',
+  `drug_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `price` float NOT NULL DEFAULT '0',
   `description` text NOT NULL,
-  `status` enum('Enabled','Disabled') NOT NULL default 'Enabled',
+  `status` enum('Enabled','Disabled') NOT NULL DEFAULT 'Enabled',
   `supplier_id` int(10) unsigned NOT NULL,
-  `version` bigint(20) default NULL,
-  `presentation` double default NULL,
-  PRIMARY KEY  (`id`),
+  `version` bigint(20) DEFAULT NULL,
+  `presentation` double DEFAULT NULL,
+  PRIMARY KEY (`id`),
   KEY `FKC42BD16458E8F475` (`supplier_id`),
   KEY `FKC42BD164770C72CD` (`drug_id`),
   KEY `FKC42BD164D6C2F785` (`supplier_id`),
@@ -242,24 +236,56 @@ INSERT INTO `products` VALUES (2,'Cystagonpó',3,0,'Cystagon 150 mg','Enabled',1
 UNLOCK TABLES;
 
 --
--- Table structure for table `proformaDetails`
+-- Table structure for table `proforma_details`
 --
 
-DROP TABLE IF EXISTS `proformaDetails`;
+DROP TABLE IF EXISTS `proforma_details`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE TABLE `proformaDetails` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `quantity` int(10) unsigned NOT NULL default '0',
-  `price_each` decimal(10,2) NOT NULL default '0.00',
-  `amount` decimal(10,2) NOT NULL default '0.00',
-  `product_id` int(10) unsigned NOT NULL default '0',
+CREATE TABLE `proforma_details` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `version` bigint(20) NOT NULL,
+  `amount` double NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `lot` varchar(255) NOT NULL,
+  `price_each` double NOT NULL,
+  `product_id` bigint(20) NOT NULL,
+  `proforma_id` bigint(20) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK695F86938E8C9EED` (`proforma_id`),
+  KEY `FK695F86933082FFEF` (`product_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `proforma_details`
+--
+
+LOCK TABLES `proforma_details` WRITE;
+/*!40000 ALTER TABLE `proforma_details` DISABLE KEYS */;
+/*!40000 ALTER TABLE `proforma_details` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `proformadetails`
+--
+
+DROP TABLE IF EXISTS `proformadetails`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `proformadetails` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `quantity` int(10) unsigned NOT NULL DEFAULT '0',
+  `price_each` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `amount` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `product_id` int(10) unsigned NOT NULL DEFAULT '0',
   `description` text,
-  `proforma_id` int(10) unsigned NOT NULL default '0',
-  `lot` varchar(45) default NULL,
-  `version` bigint(20) default NULL,
-  `daily_dose` decimal(10,2) default NULL,
-  PRIMARY KEY  (`id`),
+  `proforma_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `lot` varchar(45) DEFAULT NULL,
+  `version` bigint(20) DEFAULT NULL,
+  `daily_dose` decimal(10,2) DEFAULT NULL,
+  PRIMARY KEY (`id`),
   KEY `FK928612B28E8C9EED` (`proforma_id`),
   KEY `FK928612B23082FFEF` (`product_id`),
   KEY `FKF5BEAA926E093105` (`proforma_id`),
@@ -268,13 +294,13 @@ CREATE TABLE `proformaDetails` (
 SET character_set_client = @saved_cs_client;
 
 --
--- Dumping data for table `proformaDetails`
+-- Dumping data for table `proformadetails`
 --
 
-LOCK TABLES `proformaDetails` WRITE;
-/*!40000 ALTER TABLE `proformaDetails` DISABLE KEYS */;
-INSERT INTO `proformaDetails` VALUES (284,30,'0.00','0.00',7,NULL,1,NULL,0,'1.00'),(2,5,'0.00','0.00',1,'Buphenyl',2,'',0,NULL),(3,2,'0.00','0.00',3,'NTBC',3,'',0,NULL),(4,3,'0.00','0.00',3,'NTBC5mg',4,'',0,NULL),(5,1,'0.00','0.00',1,'Buphenyl',5,'',0,NULL),(6,10,'0.00','0.00',4,'Betaina',6,'',0,NULL),(7,1,'0.00','0.00',1,'Buphenyl',7,'',0,NULL),(8,1,'0.00','0.00',5,'Ambutyrate',8,'',0,NULL),(9,3,'0.00','0.00',6,'AmbutyrateOral',9,'',0,NULL),(11,2,'0.00','0.00',3,'NTBC5mg',11,'',0,NULL),(12,2,'0.00','0.00',3,'NTBC5mg',12,'',0,NULL),(13,1,'0.00','0.00',8,'NTBC2mg',12,'',0,NULL),(14,1,'0.00','0.00',3,'NTBC5mg',13,'',0,NULL),(15,1,'0.00','0.00',1,'Buphenyl',14,'',0,NULL),(16,5,'0.00','0.00',9,'BuphenylTabletas',15,'',0,NULL),(17,1,'0.00','0.00',1,'BuphenylPolvo',16,'',0,NULL),(18,3,'0.00','0.00',3,'NTBC5mg',17,'',0,NULL),(19,1,'0.00','0.00',3,'NTBC5mg',18,'',0,NULL),(20,1,'0.00','0.00',4,'Betaina',19,'',0,NULL),(21,6,'0.00','0.00',8,'NTBC2mg',20,'',0,NULL),(22,6,'0.00','0.00',4,'Betaina',21,'',0,NULL),(23,3,'0.00','0.00',7,'NTBC10mg',22,'',0,NULL),(24,2,'0.00','0.00',3,'NTBC5mg',23,'',0,NULL),(25,1,'0.00','0.00',5,'Ambutyrate',24,'',0,NULL),(26,3,'0.00','0.00',3,'NTBC5mg',25,'',0,NULL),(27,1,'0.00','0.00',5,'Ambutyrate',26,'',0,NULL),(28,1,'0.00','0.00',1,'BuphenylPolvo',27,'',0,NULL),(29,1,'0.00','0.00',1,'BuphenylPolvo',28,'',0,NULL),(30,6,'0.00','0.00',2,'Cystagon',29,'',0,NULL),(31,3,'0.00','0.00',2,'Cystagon',30,'',0,NULL),(32,1,'0.00','0.00',1,'BuphenylPolvo',31,'',0,NULL),(33,1,'0.00','0.00',1,'BuphenylPolvo',32,'',0,NULL),(34,3,'0.00','0.00',3,'NTBC5mg',33,'',0,NULL),(35,1,'0.00','0.00',8,'NTBC2mg',33,'',0,NULL),(36,4,'0.00','0.00',3,'NTBC5mg',34,'',0,NULL),(37,6,'0.00','0.00',8,'NTBC2mg',34,'',0,NULL),(38,4,'0.00','0.00',4,'Betaina',35,'',0,NULL),(39,3,'0.00','0.00',7,'NTBC10mg',36,'',0,NULL),(40,1,'0.00','0.00',1,'BuphenylPolvo',37,'',0,NULL),(41,1,'0.00','0.00',1,'BuphenylPolvo',38,'',0,NULL),(42,5,'0.00','0.00',9,'BuphenylTabletas',39,'',0,NULL),(43,1,'0.00','0.00',7,'NTBC10mg',40,'',0,NULL),(44,1,'0.00','0.00',3,'NTBC5mg',40,'',0,NULL),(45,1,'0.00','0.00',8,'NTBC2mg',40,'',0,NULL),(46,1,'0.00','0.00',10,'Normosang',41,'',0,NULL),(47,6,'0.00','0.00',8,'NTBC2mg',42,'',0,NULL),(48,1,'0.00','0.00',5,'Ambutyrate',43,'',0,NULL),(49,3,'0.00','0.00',7,'NTBC10mg',44,'',0,NULL),(50,10,'0.00','0.00',4,'Betaina',45,'',0,NULL),(51,2,'0.00','0.00',6,'AmbutyrateOral',46,'',0,NULL),(52,1,'0.00','0.00',10,'Normosang',47,'',0,NULL),(53,1,'0.00','0.00',1,'BuphenylPolvo',48,'',0,NULL),(54,1,'0.00','0.00',1,'BuphenylPolvo',49,'',0,NULL),(55,2,'0.00','0.00',7,'NTBC10mg',50,'',0,NULL),(56,2,'0.00','0.00',3,'NTBC5mg',50,'',0,NULL),(57,3,'0.00','0.00',8,'NTBC2mg',50,'',0,NULL),(58,6,'0.00','0.00',3,'NTBC5mg',51,'',0,NULL),(59,10,'0.00','0.00',8,'NTBC2mg',51,'',0,NULL),(60,2,'0.00','0.00',3,'NTBC5mg',52,'',0,NULL),(61,1,'0.00','0.00',1,'BuphenylPolvo',53,'',0,NULL),(62,3,'0.00','0.00',7,'NTBC10mg',54,'',0,NULL),(63,3,'0.00','0.00',7,'NTBC10mg',55,'',0,NULL),(64,8,'0.00','0.00',2,'Cystagon',56,'',0,NULL),(65,9,'0.00','0.00',2,'Cystagon',57,'',0,NULL),(66,1,'0.00','0.00',8,'NTBC2mg',58,'',0,NULL),(67,1,'0.00','0.00',5,'Ambutyrate',59,'',0,NULL),(68,3,'0.00','0.00',3,'NTBC5mg',60,'',0,NULL),(69,1,'0.00','0.00',8,'NTBC2mg',61,'',0,NULL),(70,1,'0.00','0.00',8,'NTBC2mg',62,'',0,NULL),(71,2,'0.00','0.00',4,'Betaina',63,'',0,NULL),(72,1,'0.00','0.00',5,'Ambutyrate',64,'',0,NULL),(73,1,'0.00','0.00',1,'BuphenylPolvo',65,'',0,NULL),(74,1,'0.00','0.00',8,'NTBC2mg',66,'',0,NULL),(75,2,'0.00','0.00',4,'Betaina',67,'',0,NULL),(76,2,'0.00','0.00',7,'NTBC10mg',68,'',0,NULL),(77,4,'0.00','0.00',3,'NTBC5mg',69,'',0,NULL),(78,1,'0.00','0.00',11,'Neophe',70,'',0,NULL),(79,1,'0.00','0.00',5,'Ambutyrate',71,'',0,NULL),(80,1,'0.00','0.00',5,'Ambutyrate',72,'',0,NULL),(81,2,'0.00','0.00',5,'Ambutyrate',73,'',0,NULL),(82,2,'0.00','0.00',6,'Ambutyrate Oral',74,'',0,NULL),(83,6,'0.00','0.00',7,'NTBC10mg',75,'',0,NULL),(84,1,'0.00','0.00',1,'Buphenyl Polvo',76,'',0,NULL),(85,2,'0.00','0.00',3,'NTBC 5mg',77,'',0,NULL),(86,5,'0.00','0.00',3,'NTBC 5mg',78,'',0,NULL),(87,2,'0.00','0.00',3,'NTBC 5mg',79,'',0,NULL),(88,2,'0.00','0.00',7,'NTBC 10mg',80,'',0,NULL),(89,1,'0.00','0.00',3,'NTBC 5mg',80,'',0,NULL),(90,1,'0.00','0.00',8,'NTBC 2mg',80,'',0,NULL),(91,3,'0.00','0.00',7,'NTBC 10mg',81,'',0,NULL),(92,1,'0.00','0.00',3,'NTBC 5mg',82,'',0,NULL),(93,10,'0.00','0.00',4,'Betaina',83,'',0,NULL),(94,3,'0.00','0.00',7,'NTBC 10mg',84,'',0,NULL),(95,3,'0.00','0.00',3,'NTBC 5mg',84,'',0,NULL),(96,9,'0.00','0.00',8,'NTBC 2mg',84,'',0,NULL),(97,2,'0.00','0.00',1,'Buphenyl Polvo',85,'',0,NULL),(98,4,'0.00','0.00',6,'Ambutyrate Oral',86,'',0,NULL),(99,2,'0.00','0.00',3,'NTBC 5mg',87,'',0,NULL),(100,1,'0.00','0.00',8,'NTBC 2mg',87,'',0,NULL),(101,1,'0.00','0.00',9,'Buphenyl Tabletas',88,'',0,NULL),(102,5,'0.00','0.00',9,'Buphenyl Tabletas',89,'',0,NULL),(103,2,'0.00','0.00',6,'Ambutyrate Oral',90,'',0,NULL),(104,2,'0.00','0.00',7,'NTBC 10mg',91,'',0,NULL),(105,2,'0.00','0.00',3,'NTBC 5mg',91,'',0,NULL),(106,3,'0.00','0.00',8,'NTBC 2mg',91,'',0,NULL),(107,1,'0.00','0.00',5,'Ambutyrate',92,'',0,NULL),(108,2,'0.00','0.00',4,'Betaina',93,'',0,NULL),(109,6,'0.00','0.00',7,'NTBC 10mg',94,'',0,NULL),(110,5,'0.00','0.00',3,'NTBC 5mg',95,'',0,NULL),(111,2,'0.00','0.00',1,'Buphenyl Polvo',96,'',0,NULL),(112,4,'0.00','0.00',8,'NTBC 2mg',97,'',0,NULL),(113,8,'0.00','0.00',7,'NTBC 10mg',97,'',0,NULL),(114,10,'0.00','0.00',4,'Betaina',98,'',0,NULL),(115,2,'0.00','0.00',4,'Betaina',99,'',0,NULL),(116,2,'0.00','0.00',1,'Buphenyl Polvo',100,'',0,NULL),(117,2,'0.00','0.00',6,'Ambutyrate Oral',101,'',0,NULL),(118,1,'0.00','0.00',1,'Buphenyl Polvo',102,'',0,NULL),(119,2,'0.00','0.00',3,'NTBC 5mg',103,'',0,NULL),(120,1,'0.00','0.00',3,'NTBC 5mg',104,'',0,NULL),(121,6,'0.00','0.00',3,'NTBC 5mg',105,'',0,NULL),(122,10,'0.00','0.00',8,'NTBC 2mg',105,'',0,NULL),(123,2,'0.00','0.00',1,'Buphenyl Polvo',106,'',0,NULL),(124,2,'0.00','0.00',3,'NTBC 5mg',107,'',0,NULL),(125,1,'0.00','0.00',8,'NTBC 2mg',107,'',0,NULL),(126,4,'0.00','0.00',3,'NTBC 5mg',108,'',0,NULL),(127,10,'0.00','0.00',4,'Betaina',109,'',0,NULL),(128,1,'0.00','0.00',3,'NTBC 5mg',110,'',0,NULL),(129,1,'0.00','0.00',8,'NTBC 2mg',111,'',0,NULL),(130,2,'0.00','0.00',3,'NTBC 5mg',111,'',0,NULL),(131,2,'0.00','0.00',7,'NTBC 10mg',112,'',0,NULL),(132,1,'0.00','0.00',8,'NTBC 2mg',112,'',0,NULL),(133,2,'0.00','0.00',6,'Ambutyrate Oral',113,'',0,NULL),(134,3,'0.00','0.00',2,'Cystagon',114,'',0,NULL),(135,8,'0.00','0.00',2,'Cystagon',115,'',0,NULL),(136,2,'0.00','0.00',1,'Buphenyl Polvo',116,'',0,NULL),(137,9,'0.00','0.00',2,'Cystagon',117,'',0,NULL),(138,1,'0.00','0.00',5,'Ambutyrate',118,'',0,NULL),(139,1,'0.00','0.00',1,'Buphenyl Polvo',119,'',0,NULL),(140,5,'0.00','0.00',9,'Buphenyl Tabletas',120,'',0,NULL),(141,6,'0.00','0.00',9,'Buphenyl Tabletas',121,'',0,NULL),(142,12,'0.00','0.00',5,'Ambutyrate',122,'',0,NULL),(143,2,'0.00','0.00',1,'Buphenyl Polvo',123,'',0,NULL),(144,1,'0.00','0.00',10,'Normosang',124,'',0,NULL),(145,2,'0.00','0.00',5,'Ambutyrate',125,'',0,NULL),(146,2,'0.00','0.00',4,'Betaina',126,'',0,NULL),(147,1,'0.00','0.00',1,'Buphenyl Polvo',127,'',0,NULL),(148,1,'0.00','0.00',3,'NTBC 5mg',128,'',0,NULL),(149,2,'0.00','0.00',8,'NTBC 2mg',128,'',0,NULL),(150,8,'0.00','0.00',3,'NTBC 5mg',129,'',0,NULL),(151,1,'0.00','0.00',5,'Ambutyrate',130,'',0,NULL),(152,3,'0.00','0.00',7,'NTBC 10mg',131,'',0,NULL),(153,2,'0.00','0.00',6,'Ambutyrate Oral',132,'',0,NULL),(154,6,'0.00','0.00',2,'Cystagon',133,'',0,NULL),(155,2,'0.00','0.00',3,'NTBC 5mg',134,'',0,NULL),(156,1,'0.00','0.00',8,'NTBC 2mg',134,'',0,NULL),(157,8,'0.00','0.00',3,'NTBC 5mg',135,'',0,NULL),(158,2,'0.00','0.00',8,'NTBC 2mg',136,'',0,NULL),(159,2,'0.00','0.00',8,'NTBC 2mg',137,'',0,NULL),(160,2,'0.00','0.00',5,'Ambutyrate',138,'',0,NULL),(161,2,'0.00','0.00',5,'Ambutyrate',139,'',0,NULL),(162,6,'0.00','0.00',9,'Buphenyl Tabletas',140,'',0,NULL),(163,2,'0.00','0.00',3,'NTBC 5mg',141,'',0,NULL),(164,1,'0.00','0.00',8,'NTBC 2mg',141,'',0,NULL),(165,2,'0.00','0.00',3,'NTBC 5mg',142,'',0,NULL),(166,1,'0.00','0.00',7,'NTBC 10mg',143,'',0,NULL),(167,1,'0.00','0.00',3,'NTBC 5mg',143,'',0,NULL),(168,1,'0.00','0.00',8,'NTBC 2mg',143,'',0,NULL),(169,2,'0.00','0.00',12,'Lacrisert 5 mg',144,'',0,NULL),(170,1,'0.00','0.00',13,'Cidofovir ',144,'',0,NULL),(171,1,'0.00','0.00',7,'NTBC 10mg',145,'',0,NULL),(172,1,'0.00','0.00',3,'NTBC 5mg',145,'',0,NULL),(173,2,'0.00','0.00',6,'Ambutyrate Oral',146,'',0,NULL),(174,2,'0.00','0.00',3,'NTBC 5mg',147,'',0,NULL),(175,2,'0.00','0.00',5,'Ambutyrate',148,'',0,NULL),(176,2,'0.00','0.00',5,'Ambutyrate',149,'',0,NULL),(177,1,'0.00','0.00',5,'Ambutyrate',150,'',0,NULL),(178,2,'0.00','0.00',6,'Ambutyrate Oral',151,'',0,NULL),(179,2,'0.00','0.00',3,'NTBC 5mg',152,'',0,NULL),(180,4,'0.00','0.00',6,'Ambutyrate Oral',153,'',0,NULL),(181,1,'0.00','0.00',1,'Buphenyl Polvo',154,'',0,NULL),(182,2,'0.00','0.00',5,'Ambutyrate',155,'',0,NULL),(183,3,'0.00','0.00',8,'NTBC 2mg',156,'',0,NULL),(184,3,'0.00','0.00',8,'NTBC 2mg',157,'',0,NULL),(185,3,'0.00','0.00',8,'NTBC 2mg',158,'',0,NULL),(186,3,'0.00','0.00',8,'NTBC 2mg',159,'',0,NULL),(187,3,'0.00','0.00',8,'NTBC 2mg',160,'',0,NULL),(188,2,'0.00','0.00',5,'Ambutyrate',161,'',0,NULL),(189,6,'0.00','0.00',9,'Buphenyl Tabletas',162,'',0,NULL),(190,1,'0.00','0.00',8,'NTBC 2mg',163,'',0,NULL),(191,2,'0.00','0.00',3,'NTBC 5mg',163,'',0,NULL),(192,2,'0.00','0.00',1,'Buphenyl Polvo',164,'',0,NULL),(193,1,'0.00','0.00',8,'NTBC 2mg',165,'',0,NULL),(194,2,'0.00','0.00',3,'NTBC 5mg',165,'',0,NULL),(195,2,'0.00','0.00',4,'Betaina',166,'',0,NULL),(196,2,'0.00','0.00',6,'Ambutyrate Oral',167,'',0,NULL),(197,3,'0.00','0.00',3,'NTBC 5mg',168,'no',0,NULL),(198,2,'0.00','0.00',3,'NTBC 5mg',169,'',0,NULL),(199,2,'0.00','0.00',3,'NTBC 5mg',170,'',0,NULL),(200,10,'0.00','0.00',4,'Betaina',171,'',0,NULL),(201,2,'0.00','0.00',6,'Ambutyrate Oral',172,'',0,NULL),(202,1,'0.00','0.00',1,'Buphenyl Polvo',173,'',0,NULL),(203,5,'0.00','0.00',3,'NTBC 5mg',174,'',0,NULL),(204,1,'0.00','0.00',5,'Ambutyrate',175,'',0,NULL),(205,4,'0.00','0.00',14,'Sodium Dichloroacetate',176,'',0,NULL),(206,2,'0.00','0.00',4,'Betaina',177,'B052644',0,NULL),(207,2,'0.00','0.00',7,'NTBC 10mg',178,'',0,NULL),(208,4,'0.00','0.00',8,'NTBC 2mg',178,'',0,NULL),(209,2,'0.00','0.00',3,'NTBC 5mg',178,'',0,NULL),(210,1,'0.00','0.00',1,'Buphenyl Polvo',179,'',0,NULL),(211,10,'0.00','0.00',15,NULL,185,NULL,0,'1.00'),(221,10,'0.00','0.00',5,NULL,184,NULL,0,'1.00'),(218,10,'0.00','0.00',5,NULL,184,NULL,0,'1.00'),(219,10,'0.00','0.00',5,NULL,184,NULL,0,'1.00'),(220,10,'0.00','0.00',5,NULL,184,NULL,0,'1.00'),(222,10,'0.00','0.00',5,NULL,184,NULL,0,'1.00'),(223,10,'0.00','0.00',5,NULL,184,NULL,0,'1.00'),(224,10,'0.00','0.00',5,NULL,184,NULL,0,'1.00'),(225,10,'0.00','0.00',5,NULL,184,NULL,0,'1.00'),(226,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(227,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(228,2,'0.00','0.00',13,NULL,183,NULL,0,'20.00'),(229,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(230,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(231,2,'0.00','0.00',13,NULL,183,NULL,0,'20.00'),(232,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(233,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(234,2,'0.00','0.00',13,NULL,183,NULL,0,'20.00'),(235,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(236,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(237,2,'0.00','0.00',13,NULL,183,NULL,0,'20.00'),(238,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(239,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(240,2,'0.00','0.00',13,NULL,183,NULL,0,'20.00'),(241,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(242,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(243,2,'0.00','0.00',13,NULL,183,NULL,0,'20.00'),(244,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(245,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(246,2,'0.00','0.00',13,NULL,183,NULL,0,'20.00'),(247,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(248,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(249,2,'0.00','0.00',13,NULL,183,NULL,0,'20.00'),(250,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(251,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(252,2,'0.00','0.00',13,NULL,183,NULL,0,'20.00'),(253,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(254,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(255,2,'0.00','0.00',13,NULL,183,NULL,0,'20.00'),(256,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(257,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(258,2,'0.00','0.00',13,NULL,183,NULL,0,'20.00'),(259,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(260,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(261,2,'0.00','0.00',13,NULL,183,NULL,0,'20.00'),(262,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(263,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(264,2,'0.00','0.00',13,NULL,183,NULL,0,'20.00'),(265,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(266,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(267,2,'0.00','0.00',13,NULL,183,NULL,0,'20.00'),(268,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(269,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(270,2,'0.00','0.00',13,NULL,183,NULL,0,'20.00'),(271,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(272,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(273,2,'0.00','0.00',13,NULL,183,NULL,0,'20.00'),(282,10,'0.00','0.00',15,NULL,181,NULL,0,'1.00'),(283,20,'0.00','0.00',15,NULL,1,NULL,0,'1.00'),(285,30,'0.00','0.00',15,NULL,193,NULL,0,'1.00');
-/*!40000 ALTER TABLE `proformaDetails` ENABLE KEYS */;
+LOCK TABLES `proformadetails` WRITE;
+/*!40000 ALTER TABLE `proformadetails` DISABLE KEYS */;
+INSERT INTO `proformadetails` VALUES (284,30,'0.00','0.00',7,NULL,1,NULL,0,'1.00'),(2,5,'0.00','0.00',1,'Buphenyl',2,'',0,NULL),(3,2,'0.00','0.00',3,'NTBC',3,'',0,NULL),(4,3,'0.00','0.00',3,'NTBC5mg',4,'',0,NULL),(5,1,'0.00','0.00',1,'Buphenyl',5,'',0,NULL),(6,10,'0.00','0.00',4,'Betaina',6,'',0,NULL),(7,1,'0.00','0.00',1,'Buphenyl',7,'',0,NULL),(8,1,'0.00','0.00',5,'Ambutyrate',8,'',0,NULL),(9,3,'0.00','0.00',6,'AmbutyrateOral',9,'',0,NULL),(11,2,'0.00','0.00',3,'NTBC5mg',11,'',0,NULL),(12,2,'0.00','0.00',3,'NTBC5mg',12,'',0,NULL),(13,1,'0.00','0.00',8,'NTBC2mg',12,'',0,NULL),(14,1,'0.00','0.00',3,'NTBC5mg',13,'',0,NULL),(15,1,'0.00','0.00',1,'Buphenyl',14,'',0,NULL),(16,5,'0.00','0.00',9,'BuphenylTabletas',15,'',0,NULL),(17,1,'0.00','0.00',1,'BuphenylPolvo',16,'',0,NULL),(18,3,'0.00','0.00',3,'NTBC5mg',17,'',0,NULL),(19,1,'0.00','0.00',3,'NTBC5mg',18,'',0,NULL),(20,1,'0.00','0.00',4,'Betaina',19,'',0,NULL),(21,6,'0.00','0.00',8,'NTBC2mg',20,'',0,NULL),(22,6,'0.00','0.00',4,'Betaina',21,'',0,NULL),(23,3,'0.00','0.00',7,'NTBC10mg',22,'',0,NULL),(24,2,'0.00','0.00',3,'NTBC5mg',23,'',0,NULL),(25,1,'0.00','0.00',5,'Ambutyrate',24,'',0,NULL),(26,3,'0.00','0.00',3,'NTBC5mg',25,'',0,NULL),(27,1,'0.00','0.00',5,'Ambutyrate',26,'',0,NULL),(28,1,'0.00','0.00',1,'BuphenylPolvo',27,'',0,NULL),(29,1,'0.00','0.00',1,'BuphenylPolvo',28,'',0,NULL),(30,6,'0.00','0.00',2,'Cystagon',29,'',0,NULL),(31,3,'0.00','0.00',2,'Cystagon',30,'',0,NULL),(32,1,'0.00','0.00',1,'BuphenylPolvo',31,'',0,NULL),(33,1,'0.00','0.00',1,'BuphenylPolvo',32,'',0,NULL),(34,3,'0.00','0.00',3,'NTBC5mg',33,'',0,NULL),(35,1,'0.00','0.00',8,'NTBC2mg',33,'',0,NULL),(36,4,'0.00','0.00',3,'NTBC5mg',34,'',0,NULL),(37,6,'0.00','0.00',8,'NTBC2mg',34,'',0,NULL),(38,4,'0.00','0.00',4,'Betaina',35,'',0,NULL),(39,3,'0.00','0.00',7,'NTBC10mg',36,'',0,NULL),(40,1,'0.00','0.00',1,'BuphenylPolvo',37,'',0,NULL),(41,1,'0.00','0.00',1,'BuphenylPolvo',38,'',0,NULL),(42,5,'0.00','0.00',9,'BuphenylTabletas',39,'',0,NULL),(43,1,'0.00','0.00',7,'NTBC10mg',40,'',0,NULL),(44,1,'0.00','0.00',3,'NTBC5mg',40,'',0,NULL),(45,1,'0.00','0.00',8,'NTBC2mg',40,'',0,NULL),(46,1,'0.00','0.00',10,'Normosang',41,'',0,NULL),(47,6,'0.00','0.00',8,'NTBC2mg',42,'',0,NULL),(48,1,'0.00','0.00',5,'Ambutyrate',43,'',0,NULL),(49,3,'0.00','0.00',7,'NTBC10mg',44,'',0,NULL),(50,10,'0.00','0.00',4,'Betaina',45,'',0,NULL),(51,2,'0.00','0.00',6,'AmbutyrateOral',46,'',0,NULL),(52,1,'0.00','0.00',10,'Normosang',47,'',0,NULL),(53,1,'0.00','0.00',1,'BuphenylPolvo',48,'',0,NULL),(54,1,'0.00','0.00',1,'BuphenylPolvo',49,'',0,NULL),(55,2,'0.00','0.00',7,'NTBC10mg',50,'',0,NULL),(56,2,'0.00','0.00',3,'NTBC5mg',50,'',0,NULL),(57,3,'0.00','0.00',8,'NTBC2mg',50,'',0,NULL),(58,6,'0.00','0.00',3,'NTBC5mg',51,'',0,NULL),(59,10,'0.00','0.00',8,'NTBC2mg',51,'',0,NULL),(60,2,'0.00','0.00',3,'NTBC5mg',52,'',0,NULL),(61,1,'0.00','0.00',1,'BuphenylPolvo',53,'',0,NULL),(62,3,'0.00','0.00',7,'NTBC10mg',54,'',0,NULL),(63,3,'0.00','0.00',7,'NTBC10mg',55,'',0,NULL),(64,8,'0.00','0.00',2,'Cystagon',56,'',0,NULL),(65,9,'0.00','0.00',2,'Cystagon',57,'',0,NULL),(66,1,'0.00','0.00',8,'NTBC2mg',58,'',0,NULL),(67,1,'0.00','0.00',5,'Ambutyrate',59,'',0,NULL),(68,3,'0.00','0.00',3,'NTBC5mg',60,'',0,NULL),(69,1,'0.00','0.00',8,'NTBC2mg',61,'',0,NULL),(70,1,'0.00','0.00',8,'NTBC2mg',62,'',0,NULL),(71,2,'0.00','0.00',4,'Betaina',63,'',0,NULL),(72,1,'0.00','0.00',5,'Ambutyrate',64,'',0,NULL),(73,1,'0.00','0.00',1,'BuphenylPolvo',65,'',0,NULL),(74,1,'0.00','0.00',8,'NTBC2mg',66,'',0,NULL),(75,2,'0.00','0.00',4,'Betaina',67,'',0,NULL),(76,2,'0.00','0.00',7,'NTBC10mg',68,'',0,NULL),(77,4,'0.00','0.00',3,'NTBC5mg',69,'',0,NULL),(78,1,'0.00','0.00',11,'Neophe',70,'',0,NULL),(79,1,'0.00','0.00',5,'Ambutyrate',71,'',0,NULL),(80,1,'0.00','0.00',5,'Ambutyrate',72,'',0,NULL),(81,2,'0.00','0.00',5,'Ambutyrate',73,'',0,NULL),(82,2,'0.00','0.00',6,'Ambutyrate Oral',74,'',0,NULL),(83,6,'0.00','0.00',7,'NTBC10mg',75,'',0,NULL),(84,1,'0.00','0.00',1,'Buphenyl Polvo',76,'',0,NULL),(85,2,'0.00','0.00',3,'NTBC 5mg',77,'',0,NULL),(86,5,'0.00','0.00',3,'NTBC 5mg',78,'',0,NULL),(87,2,'0.00','0.00',3,'NTBC 5mg',79,'',0,NULL),(88,2,'0.00','0.00',7,'NTBC 10mg',80,'',0,NULL),(89,1,'0.00','0.00',3,'NTBC 5mg',80,'',0,NULL),(90,1,'0.00','0.00',8,'NTBC 2mg',80,'',0,NULL),(91,3,'0.00','0.00',7,'NTBC 10mg',81,'',0,NULL),(92,1,'0.00','0.00',3,'NTBC 5mg',82,'',0,NULL),(93,10,'0.00','0.00',4,'Betaina',83,'',0,NULL),(94,3,'0.00','0.00',7,'NTBC 10mg',84,'',0,NULL),(95,3,'0.00','0.00',3,'NTBC 5mg',84,'',0,NULL),(96,9,'0.00','0.00',8,'NTBC 2mg',84,'',0,NULL),(97,2,'0.00','0.00',1,'Buphenyl Polvo',85,'',0,NULL),(98,4,'0.00','0.00',6,'Ambutyrate Oral',86,'',0,NULL),(99,2,'0.00','0.00',3,'NTBC 5mg',87,'',0,NULL),(100,1,'0.00','0.00',8,'NTBC 2mg',87,'',0,NULL),(101,1,'0.00','0.00',9,'Buphenyl Tabletas',88,'',0,NULL),(102,5,'0.00','0.00',9,'Buphenyl Tabletas',89,'',0,NULL),(103,2,'0.00','0.00',6,'Ambutyrate Oral',90,'',0,NULL),(104,2,'0.00','0.00',7,'NTBC 10mg',91,'',0,NULL),(105,2,'0.00','0.00',3,'NTBC 5mg',91,'',0,NULL),(106,3,'0.00','0.00',8,'NTBC 2mg',91,'',0,NULL),(107,1,'0.00','0.00',5,'Ambutyrate',92,'',0,NULL),(108,2,'0.00','0.00',4,'Betaina',93,'',0,NULL),(109,6,'0.00','0.00',7,'NTBC 10mg',94,'',0,NULL),(110,5,'0.00','0.00',3,'NTBC 5mg',95,'',0,NULL),(111,2,'0.00','0.00',1,'Buphenyl Polvo',96,'',0,NULL),(112,4,'0.00','0.00',8,'NTBC 2mg',97,'',0,NULL),(113,8,'0.00','0.00',7,'NTBC 10mg',97,'',0,NULL),(114,10,'0.00','0.00',4,'Betaina',98,'',0,NULL),(115,2,'0.00','0.00',4,'Betaina',99,'',0,NULL),(116,2,'0.00','0.00',1,'Buphenyl Polvo',100,'',0,NULL),(117,2,'0.00','0.00',6,'Ambutyrate Oral',101,'',0,NULL),(118,1,'0.00','0.00',1,'Buphenyl Polvo',102,'',0,NULL),(119,2,'0.00','0.00',3,'NTBC 5mg',103,'',0,NULL),(120,1,'0.00','0.00',3,'NTBC 5mg',104,'',0,NULL),(121,6,'0.00','0.00',3,'NTBC 5mg',105,'',0,NULL),(122,10,'0.00','0.00',8,'NTBC 2mg',105,'',0,NULL),(123,2,'0.00','0.00',1,'Buphenyl Polvo',106,'',0,NULL),(124,2,'0.00','0.00',3,'NTBC 5mg',107,'',0,NULL),(125,1,'0.00','0.00',8,'NTBC 2mg',107,'',0,NULL),(126,4,'0.00','0.00',3,'NTBC 5mg',108,'',0,NULL),(127,10,'0.00','0.00',4,'Betaina',109,'',0,NULL),(128,1,'0.00','0.00',3,'NTBC 5mg',110,'',0,NULL),(129,1,'0.00','0.00',8,'NTBC 2mg',111,'',0,NULL),(130,2,'0.00','0.00',3,'NTBC 5mg',111,'',0,NULL),(131,2,'0.00','0.00',7,'NTBC 10mg',112,'',0,NULL),(132,1,'0.00','0.00',8,'NTBC 2mg',112,'',0,NULL),(133,2,'0.00','0.00',6,'Ambutyrate Oral',113,'',0,NULL),(134,3,'0.00','0.00',2,'Cystagon',114,'',0,NULL),(135,8,'0.00','0.00',2,'Cystagon',115,'',0,NULL),(136,2,'0.00','0.00',1,'Buphenyl Polvo',116,'',0,NULL),(137,9,'0.00','0.00',2,'Cystagon',117,'',0,NULL),(138,1,'0.00','0.00',5,'Ambutyrate',118,'',0,NULL),(139,1,'0.00','0.00',1,'Buphenyl Polvo',119,'',0,NULL),(140,5,'0.00','0.00',9,'Buphenyl Tabletas',120,'',0,NULL),(141,6,'0.00','0.00',9,'Buphenyl Tabletas',121,'',0,NULL),(142,12,'0.00','0.00',5,'Ambutyrate',122,'',0,NULL),(143,2,'0.00','0.00',1,'Buphenyl Polvo',123,'',0,NULL),(144,1,'0.00','0.00',10,'Normosang',124,'',0,NULL),(145,2,'0.00','0.00',5,'Ambutyrate',125,'',0,NULL),(146,2,'0.00','0.00',4,'Betaina',126,'',0,NULL),(147,1,'0.00','0.00',1,'Buphenyl Polvo',127,'',0,NULL),(148,1,'0.00','0.00',3,'NTBC 5mg',128,'',0,NULL),(149,2,'0.00','0.00',8,'NTBC 2mg',128,'',0,NULL),(150,8,'0.00','0.00',3,'NTBC 5mg',129,'',0,NULL),(151,1,'0.00','0.00',5,'Ambutyrate',130,'',0,NULL),(152,3,'0.00','0.00',7,'NTBC 10mg',131,'',0,NULL),(153,2,'0.00','0.00',6,'Ambutyrate Oral',132,'',0,NULL),(154,6,'0.00','0.00',2,'Cystagon',133,'',0,NULL),(155,2,'0.00','0.00',3,'NTBC 5mg',134,'',0,NULL),(156,1,'0.00','0.00',8,'NTBC 2mg',134,'',0,NULL),(157,8,'0.00','0.00',3,'NTBC 5mg',135,'',0,NULL),(158,2,'0.00','0.00',8,'NTBC 2mg',136,'',0,NULL),(159,2,'0.00','0.00',8,'NTBC 2mg',137,'',0,NULL),(160,2,'0.00','0.00',5,'Ambutyrate',138,'',0,NULL),(161,2,'0.00','0.00',5,'Ambutyrate',139,'',0,NULL),(162,6,'0.00','0.00',9,'Buphenyl Tabletas',140,'',0,NULL),(163,2,'0.00','0.00',3,'NTBC 5mg',141,'',0,NULL),(164,1,'0.00','0.00',8,'NTBC 2mg',141,'',0,NULL),(165,2,'0.00','0.00',3,'NTBC 5mg',142,'',0,NULL),(166,1,'0.00','0.00',7,'NTBC 10mg',143,'',0,NULL),(167,1,'0.00','0.00',3,'NTBC 5mg',143,'',0,NULL),(168,1,'0.00','0.00',8,'NTBC 2mg',143,'',0,NULL),(169,2,'0.00','0.00',12,'Lacrisert 5 mg',144,'',0,NULL),(170,1,'0.00','0.00',13,'Cidofovir ',144,'',0,NULL),(171,1,'0.00','0.00',7,'NTBC 10mg',145,'',0,NULL),(172,1,'0.00','0.00',3,'NTBC 5mg',145,'',0,NULL),(173,2,'0.00','0.00',6,'Ambutyrate Oral',146,'',0,NULL),(174,2,'0.00','0.00',3,'NTBC 5mg',147,'',0,NULL),(175,2,'0.00','0.00',5,'Ambutyrate',148,'',0,NULL),(176,2,'0.00','0.00',5,'Ambutyrate',149,'',0,NULL),(177,1,'0.00','0.00',5,'Ambutyrate',150,'',0,NULL),(178,2,'0.00','0.00',6,'Ambutyrate Oral',151,'',0,NULL),(179,2,'0.00','0.00',3,'NTBC 5mg',152,'',0,NULL),(180,4,'0.00','0.00',6,'Ambutyrate Oral',153,'',0,NULL),(181,1,'0.00','0.00',1,'Buphenyl Polvo',154,'',0,NULL),(182,2,'0.00','0.00',5,'Ambutyrate',155,'',0,NULL),(183,3,'0.00','0.00',8,'NTBC 2mg',156,'',0,NULL),(184,3,'0.00','0.00',8,'NTBC 2mg',157,'',0,NULL),(185,3,'0.00','0.00',8,'NTBC 2mg',158,'',0,NULL),(186,3,'0.00','0.00',8,'NTBC 2mg',159,'',0,NULL),(187,3,'0.00','0.00',8,'NTBC 2mg',160,'',0,NULL),(188,2,'0.00','0.00',5,'Ambutyrate',161,'',0,NULL),(189,6,'0.00','0.00',9,'Buphenyl Tabletas',162,'',0,NULL),(190,1,'0.00','0.00',8,'NTBC 2mg',163,'',0,NULL),(191,2,'0.00','0.00',3,'NTBC 5mg',163,'',0,NULL),(192,2,'0.00','0.00',1,'Buphenyl Polvo',164,'',0,NULL),(193,1,'0.00','0.00',8,'NTBC 2mg',165,'',0,NULL),(194,2,'0.00','0.00',3,'NTBC 5mg',165,'',0,NULL),(195,2,'0.00','0.00',4,'Betaina',166,'',0,NULL),(196,2,'0.00','0.00',6,'Ambutyrate Oral',167,'',0,NULL),(197,3,'0.00','0.00',3,'NTBC 5mg',168,'no',0,NULL),(198,2,'0.00','0.00',3,'NTBC 5mg',169,'',0,NULL),(199,2,'0.00','0.00',3,'NTBC 5mg',170,'',0,NULL),(200,10,'0.00','0.00',4,'Betaina',171,'',0,NULL),(201,2,'0.00','0.00',6,'Ambutyrate Oral',172,'',0,NULL),(202,1,'0.00','0.00',1,'Buphenyl Polvo',173,'',0,NULL),(203,5,'0.00','0.00',3,'NTBC 5mg',174,'',0,NULL),(204,1,'0.00','0.00',5,'Ambutyrate',175,'',0,NULL),(205,4,'0.00','0.00',14,'Sodium Dichloroacetate',176,'',0,NULL),(206,2,'0.00','0.00',4,'Betaina',177,'B052644',0,NULL),(207,2,'0.00','0.00',7,'NTBC 10mg',178,'',0,NULL),(208,4,'0.00','0.00',8,'NTBC 2mg',178,'',0,NULL),(209,2,'0.00','0.00',3,'NTBC 5mg',178,'',0,NULL),(210,1,'0.00','0.00',1,'Buphenyl Polvo',179,'',0,NULL),(211,10,'0.00','0.00',15,NULL,185,NULL,0,'1.00'),(221,10,'0.00','0.00',5,NULL,184,NULL,0,'1.00'),(218,10,'0.00','0.00',5,NULL,184,NULL,0,'1.00'),(219,10,'0.00','0.00',5,NULL,184,NULL,0,'1.00'),(220,10,'0.00','0.00',5,NULL,184,NULL,0,'1.00'),(222,10,'0.00','0.00',5,NULL,184,NULL,0,'1.00'),(223,10,'0.00','0.00',5,NULL,184,NULL,0,'1.00'),(224,10,'0.00','0.00',5,NULL,184,NULL,0,'1.00'),(225,10,'0.00','0.00',5,NULL,184,NULL,0,'1.00'),(226,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(227,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(228,2,'0.00','0.00',13,NULL,183,NULL,0,'20.00'),(229,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(230,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(231,2,'0.00','0.00',13,NULL,183,NULL,0,'20.00'),(232,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(233,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(234,2,'0.00','0.00',13,NULL,183,NULL,0,'20.00'),(235,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(236,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(237,2,'0.00','0.00',13,NULL,183,NULL,0,'20.00'),(238,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(239,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(240,2,'0.00','0.00',13,NULL,183,NULL,0,'20.00'),(241,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(242,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(243,2,'0.00','0.00',13,NULL,183,NULL,0,'20.00'),(244,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(245,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(246,2,'0.00','0.00',13,NULL,183,NULL,0,'20.00'),(247,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(248,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(249,2,'0.00','0.00',13,NULL,183,NULL,0,'20.00'),(250,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(251,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(252,2,'0.00','0.00',13,NULL,183,NULL,0,'20.00'),(253,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(254,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(255,2,'0.00','0.00',13,NULL,183,NULL,0,'20.00'),(256,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(257,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(258,2,'0.00','0.00',13,NULL,183,NULL,0,'20.00'),(259,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(260,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(261,2,'0.00','0.00',13,NULL,183,NULL,0,'20.00'),(262,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(263,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(264,2,'0.00','0.00',13,NULL,183,NULL,0,'20.00'),(265,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(266,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(267,2,'0.00','0.00',13,NULL,183,NULL,0,'20.00'),(268,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(269,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(270,2,'0.00','0.00',13,NULL,183,NULL,0,'20.00'),(271,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(272,1,'0.00','0.00',15,NULL,183,NULL,0,'10.00'),(273,2,'0.00','0.00',13,NULL,183,NULL,0,'20.00'),(282,10,'0.00','0.00',15,NULL,181,NULL,0,'1.00'),(283,20,'0.00','0.00',15,NULL,1,NULL,0,'1.00'),(285,30,'0.00','0.00',15,NULL,193,NULL,0,'1.00');
+/*!40000 ALTER TABLE `proformadetails` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -285,19 +311,19 @@ DROP TABLE IF EXISTS `proformas`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `proformas` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `user_id` int(10) unsigned NOT NULL default '0',
-  `discount` int(10) unsigned NOT NULL default '0',
-  `courier` decimal(10,2) NOT NULL default '0.00',
-  `total` decimal(10,2) NOT NULL default '0.00',
-  `created_at` datetime NOT NULL default '0000-00-00 00:00:00',
-  `patient_id` int(10) unsigned NOT NULL default '0',
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `discount` int(10) unsigned NOT NULL DEFAULT '0',
+  `courier` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `total` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `created_at` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `patient_id` int(10) unsigned NOT NULL DEFAULT '0',
   `patient_description` text,
-  `client_id` int(10) unsigned NOT NULL default '0',
+  `client_id` int(10) unsigned NOT NULL DEFAULT '0',
   `client_description` text,
-  `status` enum('Creada','Aprobada','Rechazada','Anulada') NOT NULL default 'Creada',
-  `version` bigint(20) default NULL,
-  PRIMARY KEY  (`id`),
+  `status` enum('Creada','Aprobada','Rechazada','Anulada') NOT NULL DEFAULT 'Creada',
+  `version` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
   KEY `FKC46A34E3FC1E8BF7` (`user_id`),
   KEY `FKC46A34E3250603F7` (`client_id`),
   KEY `FKC46A34E3D2A7C6C3` (`patient_id`),
@@ -324,11 +350,11 @@ DROP TABLE IF EXISTS `purchase_invoices`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `purchase_invoices` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `purchase_id` int(10) unsigned NOT NULL default '0',
-  `invoice_id` int(10) unsigned NOT NULL default '0',
-  `invoices_idx` int(11) default NULL,
-  PRIMARY KEY  (`id`),
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `purchase_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `invoice_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `invoices_idx` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
   KEY `FKFD0D6064C04FC7EF` (`invoice_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=67 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
@@ -351,15 +377,15 @@ DROP TABLE IF EXISTS `purchases`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `purchases` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `amount` decimal(10,2) NOT NULL default '0.00',
-  `date` date NOT NULL default '0000-00-00',
-  `expire_date` date NOT NULL default '0000-00-00',
-  `supplier_id` int(10) unsigned NOT NULL default '0',
-  `code` varchar(45) NOT NULL default '',
-  `status` enum('Paid','Pending','Free') NOT NULL default 'Pending',
-  `version` bigint(20) default NULL,
-  PRIMARY KEY  (`id`),
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `amount` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `date` date NOT NULL DEFAULT '0000-00-00',
+  `expire_date` date NOT NULL DEFAULT '0000-00-00',
+  `supplier_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `code` varchar(45) NOT NULL DEFAULT '',
+  `status` enum('Paid','Pending','Free') NOT NULL DEFAULT 'Pending',
+  `version` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
   KEY `FK95379B9258E8F475` (`supplier_id`),
   KEY `FK95379B92D6C2F785` (`supplier_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=91 DEFAULT CHARSET=utf8;
@@ -383,11 +409,11 @@ DROP TABLE IF EXISTS `request_map`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `request_map` (
-  `id` bigint(20) NOT NULL auto_increment,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `version` bigint(20) NOT NULL,
   `config_attribute` varchar(255) NOT NULL,
   `url` varchar(255) NOT NULL,
-  PRIMARY KEY  (`id`),
+  PRIMARY KEY (`id`),
   UNIQUE KEY `url` (`url`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 SET character_set_client = @saved_cs_client;
@@ -409,11 +435,11 @@ DROP TABLE IF EXISTS `role`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `role` (
-  `id` bigint(20) NOT NULL auto_increment,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `version` bigint(20) NOT NULL,
   `authority` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL,
-  PRIMARY KEY  (`id`),
+  PRIMARY KEY (`id`),
   UNIQUE KEY `authority` (`authority`)
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 SET character_set_client = @saved_cs_client;
@@ -424,7 +450,7 @@ SET character_set_client = @saved_cs_client;
 
 LOCK TABLES `role` WRITE;
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
-INSERT INTO `role` VALUES (1,1,'ROLE_ADMIN','Admin Role'),(2,0,'ROLE_USER','Default User Role');
+INSERT INTO `role` VALUES (1,1,'ROLE_ADMIN','Admin Role'),(2,1,'ROLE_USER','Default User Role');
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -438,7 +464,7 @@ SET character_set_client = utf8;
 CREATE TABLE `role_people` (
   `role_id` bigint(20) NOT NULL,
   `user_id` bigint(20) NOT NULL,
-  PRIMARY KEY  (`role_id`,`user_id`),
+  PRIMARY KEY (`role_id`,`user_id`),
   KEY `FK28B75E7821ABA0A5` (`user_id`),
   KEY `FK28B75E787C80DCC5` (`role_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -462,13 +488,13 @@ DROP TABLE IF EXISTS `suppliers`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `suppliers` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `name` varchar(45) NOT NULL default '',
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL DEFAULT '',
   `telephone` varchar(45) NOT NULL,
   `email` varchar(45) NOT NULL,
   `contact` varchar(45) NOT NULL,
-  `version` bigint(20) default NULL,
-  PRIMARY KEY  (`id`)
+  `version` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
@@ -490,8 +516,8 @@ DROP TABLE IF EXISTS `user_to_countries`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `user_to_countries` (
-  `user_countries_id` bigint(20) default NULL,
-  `country_id` bigint(20) default NULL,
+  `user_countries_id` bigint(20) DEFAULT NULL,
+  `country_id` bigint(20) DEFAULT NULL,
   KEY `FKC0A645E424E35D10` (`user_countries_id`),
   KEY `FKC0A645E4D5F7034F` (`country_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -503,7 +529,7 @@ SET character_set_client = @saved_cs_client;
 
 LOCK TABLES `user_to_countries` WRITE;
 /*!40000 ALTER TABLE `user_to_countries` DISABLE KEYS */;
-INSERT INTO `user_to_countries` VALUES (2,2),(2,1);
+INSERT INTO `user_to_countries` VALUES (2,2),(2,1),(1,3);
 /*!40000 ALTER TABLE `user_to_countries` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -515,16 +541,16 @@ DROP TABLE IF EXISTS `users`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `users` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `username` varchar(45) NOT NULL default '',
-  `password` varchar(45) NOT NULL default '',
-  `email` varchar(45) NOT NULL default '',
-  `version` bigint(20) default NULL,
-  `first_name` varchar(255) default NULL,
-  `last_name` varchar(255) default NULL,
-  `enabled` bit(1) default NULL,
-  `passwd` varchar(255) default NULL,
-  PRIMARY KEY  (`id`)
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(45) NOT NULL DEFAULT '',
+  `password` varchar(45) NOT NULL DEFAULT '',
+  `email` varchar(45) NOT NULL DEFAULT '',
+  `version` bigint(20) DEFAULT NULL,
+  `first_name` varchar(255) DEFAULT NULL,
+  `last_name` varchar(255) DEFAULT NULL,
+  `enabled` bit(1) DEFAULT NULL,
+  `passwd` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
@@ -534,7 +560,7 @@ SET character_set_client = @saved_cs_client;
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'ivan','ivan','igrosny@gmail.com',1,'Ivan','Ivan','','a15f8b81a160b4eebe5c84e9e3b65c87b9b2f18e'),(2,'edu','edu','',4,'edu','edu','','863f8f3edbcde342a53dd30d6d00b81a90e4249d');
+INSERT INTO `users` VALUES (1,'ivan','ivan','igrosny@gmail.com',2,'Ivan','Ivan','','a15f8b81a160b4eebe5c84e9e3b65c87b9b2f18e'),(2,'edu','edu','',4,'edu','edu','','863f8f3edbcde342a53dd30d6d00b81a90e4249d');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -547,4 +573,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2009-08-23 20:03:05
+-- Dump completed on 2009-08-24 15:19:49
