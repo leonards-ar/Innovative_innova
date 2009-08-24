@@ -1,18 +1,46 @@
 package com.vitaflo.innova
 
+import org.grails.plugins.springsecurity.service.AuthenticateService
+
 class PatientController {
 
+    def authenticateService
+    
     def index = { redirect(action: "list", params: params) }
 
     // the delete, save and update actions only accept POST requests
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def list = {
-        params.max = Math.min(params.max ? params.max.toInteger() : 10,  100)
+        params.max = Math.min(params.max ? params.max.toInteger() : 15,  100)
 
         if (!params.offset) params.offset = 0
         if (!params.sort) params.sort = "lastName"
         if (!params.order) params.order = "asc"
+
+        def query = {
+            if(params.patientName) {
+                like('lastName', '%' + params.patientName + '%')
+            }
+
+            if(params.selectedCountry){
+                country{
+                    eq('code', params.selectedCountry)
+                }
+            } else {
+                inList('country', session.countries)
+            }
+
+            if(params.clientName) {
+                client{
+                    like('name', '%' + params.clientName + '%')
+                }
+            }
+        }
+
+        def criteria = Patient.createCriteria()
+
+        def total = criteria.count(query)
 
         def patients = Patient.withCriteria {
             maxResults(params.max)
@@ -22,9 +50,28 @@ class PatientController {
             } else{
                 order(params.sort, params.order)
             }
+
+            if(params.patientName) {
+                like('lastName', '%' + params.patientName + '%')
+            }
+
+            if(params.selectedCountry){
+                country{
+                    eq('code', params.selectedCountry)
+                }
+
+            } else {
+                inList('country',session.countries)
+            }
+
+            if(params.clientName) {
+                client{
+                    like('name', '%' + params.clientName + '%')
+                }
+            }
         }
 
-        [patientInstanceList: patients, patientInstanceTotal: Patient.count()]
+        [patientInstanceList: patients, patientInstanceTotal: total, countryList:session.countries, clientName: params.clientName, patientName:params.patientName, selectedCountry: params.selectedCountry]
     }
 
     def create = {

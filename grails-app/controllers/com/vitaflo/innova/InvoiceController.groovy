@@ -8,7 +8,7 @@ class InvoiceController {
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def list = {
-        params.max = Math.min(params.max ? params.max.toInteger() : 10,  100)
+        params.max = Math.min(params.max ? params.max.toInteger() : 15,  100)
         [invoiceInstanceList: Invoice.list(params), invoiceInstanceTotal: Invoice.count()]
     }
 

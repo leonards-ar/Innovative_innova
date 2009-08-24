@@ -8,7 +8,7 @@ class UserController {
     static allowedMethods = [save: "POST", update: "POST"]
 
     def list = {
-        params.max = Math.min(params.max ? params.max.toInteger() : 10,  100)
+        params.max = Math.min(params.max ? params.max.toInteger() : 15,  100)
 
         if (!params.sort) params.sort = "username"
         if (!params.order) params.order = "asc"
@@ -105,13 +105,12 @@ class UserController {
             if(tmpPass != params.passwd) {
                 userInstance.passwd = authenticateService.encodePassword(params.passwd)
             }
+
             if (!userInstance.hasErrors() && userInstance.save()) {
-                if(isAdmin(userInstance)) {
-                    Country.findAll().each {userInstance.removeFromCountries(it)}
-                    Role.findAll().each {userInstance.removeFromAuthorities(it)}
-                    addCountries(userInstance)
-                    addRoles(userInstance)
-                }
+                Country.findAll().each {userInstance.removeFromCountries(it)}
+                Role.findAll().each {userInstance.removeFromAuthorities(it)}
+                addCountries(userInstance)
+                addRoles(userInstance)
                 
                 flash.message = "user.updated"
                 flash.args = [params.id]
