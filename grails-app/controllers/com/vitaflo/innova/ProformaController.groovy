@@ -19,6 +19,7 @@ class ProformaController {
         return [proformaInstance: proformaInstance]
     }
 
+
     def save = { UpdateProformaDetailsListCommand updateCommand ->
 
         def proformaInstance = new Proforma(params)
@@ -38,8 +39,7 @@ class ProformaController {
             }
         }
 
-        render(view: "create", model: [proformaInstance: proformaInstance, proformaDetailList: proformaDetailList])
-        
+        render(view: "create", model: [proformaInstance: proformaInstance, proformaDetailList: proformaDetailList])        
     }
 
     def show = {
@@ -63,6 +63,63 @@ class ProformaController {
             return [proformaInstance: proformaInstance, totalDetails:totalDetails, totalAmount:totalAmount, discountAmount: discountAmount]
         }
     }
+
+    def proformaEmail = {
+        def proformaInstance = Proforma.get(params.id)
+
+        if (!proformaInstance) {
+            flash.message = "proforma.not.found"
+            flash.args = [params.id]
+            flash.defaultMessage = "Proforma not found with id ${params.id}"
+            redirect(action: "list")
+        }
+
+        //Total Details
+        def totalDetails = proformaInstance.getTotalDetails();
+
+        //Total Amount
+        def totalAmount = proformaInstance.getTotalAmount();
+
+        //Discount Amount
+        def discountAmount = proformaInstance.calculateDiscount(totalAmount)
+
+        //Cliente email
+        def clientEmail = proformaInstance.patient.client.email
+
+        render(view:'sendEmail', model:[proformaInstance: proformaInstance, totalDetails:totalDetails,
+                totalAmount:totalAmount, discountAmount: discountAmount, clientEmail:clientEmail])
+        
+    }
+
+    def sendProformaEmail = {SendEmailCommand emailCmd ->
+
+        def proformaInstance = Proforma.get(params.id)
+
+        if (!emailCmd.hasErrors()){
+
+            //Send the email
+
+            //
+            
+            flash.message = "proforma.emailsent"
+            flash.args = [proformaInstance.id, emailCmd.clientEmail]
+            flash.defaultMessage = "Proforma ${proformaInstance.id} was sent to ${emailCmd.clientEmail}"
+            redirect(action: "show", id: proformaInstance.id)
+        }
+
+        //Total Details
+        def totalDetails = proformaInstance.getTotalDetails();
+
+        //Total Amount
+        def totalAmount = proformaInstance.getTotalAmount();
+
+        //Discount Amount
+        def discountAmount = proformaInstance.calculateDiscount(totalAmount)
+
+        render(view:'sendEmail', model:[proformaInstance: proformaInstance, totalDetails:totalDetails,
+                totalAmount:totalAmount, discountAmount: discountAmount, clientEmail:emailCmd.clientEmail])
+    }
+
 
     def edit = {
         def proformaInstance = Proforma.get(params.id)
@@ -267,4 +324,14 @@ class UpdateProformaDetailsListCommand {
 
         return proformaDetailList
     }
+}
+
+
+class SendEmailCommand {
+    String clientEmail
+
+    static constraints = {
+        clientEmail(email:true, blank:false)
+    }
+
 }

@@ -4,7 +4,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="layout" content="main" />
-        <title><g:message code="proforma.show" default="Show Proforma" /></title>
+        <title><g:message code="proforma.send" default="Send Proforma" /></title>
     </head>
     <body>
         <div class="nav">
@@ -13,14 +13,36 @@
             <span class="menuButton"><g:link class="create" action="create"><g:message code="proforma.new" default="New Proforma" /></g:link></span>
         </div>
         <div class="body">
-            <h1><g:message code="proforma.show" default="Show Proforma" /></h1>
+            <h1><g:message code="proforma.send" default="Send Proforma" /></h1>
             <g:if test="${flash.message}">
-            <div class="message"><g:message code="${flash.message}" args="${flash.args}" default="${flash.defaultMessage}" /></div>
+              <div class="message"><g:message code="${flash.message}" args="${flash.args}" default="${flash.defaultMessage}" /></div>
             </g:if>
+            <g:hasErrors field="clientEmail">
+              <div class="errors">
+                <g:renderErrors field="clientEmail" as="list" />
+              </div>
+            </g:hasErrors>
             <g:form>
                 <g:hiddenField name="id" value="${proformaInstance?.id}" />
                 <div class="dialog">
-                    <table>
+                  <table>
+                    <tbody>
+                        <tr class="prop">
+                            <td valign="baseline" class="name" style="vertical-align:middle;"><g:message code="proforma.clientEmail" default="Client email" />:</td>
+                            <td valign="baseline" style="vertical-align:middle;" class="value ${hasErrors(field: 'clientEmail', 'errors')}">
+                              <g:textField name="clientEmail" value="${clientEmail}"/>
+                            </td>
+                            <td style="vertical-align:middle;">
+                                <div class="buttons">
+                                  <span class="button"><g:actionSubmit class="edit" action="sendProformaEmail" value="${message(code: 'send', 'default': 'send')}" /></span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="dialog">
+                    <table style="margin-top: 5px;">
                         <tbody>
                         
                             <tr class="prop">
@@ -45,32 +67,12 @@
                             </tr>
 
                             <tr class="prop">
-                                <td valign="top" class="name"><g:message code="proforma.status" default="Status" />:</td>
-
-                                <td valign="top" class="value">${fieldValue(bean: proformaInstance, field: "status")}</td>
-
-                            </tr>
-
-                            <tr class="prop">
                                 <td valign="top" class="name"><g:message code="proforma.createdAt" default="Created At" />:</td>
 
                                 <td valign="top" class="value"><g:formatDate format="dd-MM-yyyy" date="${proformaInstance?.createdAt}" /></td>
 
                             </tr>
 
-                            <tr class="prop">
-                                <td valign="top" class="name"><g:message code="proforma.courier" default="Courier" />:</td>
-                                
-                                <td valign="top" class="value"><g:formatNumber number="${proformaInstance?.courier}" format="#.##"/></td>
-                                
-                            </tr>
-
-                            <tr class="prop">
-                                <td valign="top" class="name"><g:message code="proforma.discount" default="Discount" />:</td>
-
-                                <td valign="top" class="value"><g:formatNumber number="${proformaInstance?.discount}"/></td>
-
-                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -128,11 +130,6 @@
                   </table>
                 </div>
                 </g:if>
-                <div class="buttons">
-                    <span class="button"><g:actionSubmit class="edit" action="edit" value="${message(code: 'edit', 'default': 'Edit')}" /></span>
-                    <span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'delete', 'default': 'Delete')}" onclick="return confirm('${message(code: 'delete.confirm', 'default': 'Are you sure?')}');" /></span>
-                    <span class="button"><g:actionSubmit class="edit" action="proformaEmail" value="${message(code: 'sendEmailToClient', 'default': 'Send to client')}" /></span>
-                </div>
             </g:form>
         </div>
     </body>

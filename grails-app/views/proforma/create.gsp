@@ -33,7 +33,7 @@
               </td>
               <td valign="top" class="value ${hasErrors(bean: proformaInstance, field: 'patient', 'errors')}">
           <g:select name="patient.id" from="${com.vitaflo.innova.Patient.list()}" optionKey="id" value="${proformaInstance?.patient?.id}"
-                    noSelection="['null':'Seleccione...']"
+                    noSelection="${['null':message(code:'noselect')]}"
                     onchange="${remoteFunction(controller:'proforma', action:'lookUpClient',update:'clientName', params:'\'patientId=\'  + this.value')}"/>
           </td>
           </tr>

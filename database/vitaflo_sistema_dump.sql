@@ -16,6 +16,15 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Create schema vitaflo_sistema
+--
+CREATE DATABASE IF NOT EXISTS vitaflo_sistema;
+USE vitaflo_sistema;
+
+GRANT all ON vitaflo_sistema.* TO 'vitaflo'@'localhost' IDENTIFIED BY 'java1234';
+
+
+--
 -- Table structure for table `clients`
 --
 
