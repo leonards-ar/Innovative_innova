@@ -1,46 +1,13 @@
 
-<%@ page import="com.vitaflo.innova.Proforma" %>
+<%@ page contentType="text/html" %>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name="layout" content="main" />
-        <title><g:message code="proforma.send" default="Send Proforma" /></title>
-    </head>
-    <body>
-        <div class="nav">
-            <span class="menuButton"><a class="home" href="${createLinkTo(dir: '')}"><g:message code="home" default="Home" /></a></span>
-            <span class="menuButton"><g:link class="list" action="list"><g:message code="proforma.list" default="Proforma List" /></g:link></span>
-            <span class="menuButton"><g:link class="create" action="create"><g:message code="proforma.new" default="New Proforma" /></g:link></span>
-        </div>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html">
+     <title><g:message code="proforma.notification" default="Proforma Notification" /></title>
+  </head>
+  <body>
         <div class="body">
-            <h1><g:message code="proforma.send" default="Send Proforma" /></h1>
-            <g:if test="${flash.message}">
-              <div class="message"><g:message code="${flash.message}" args="${flash.args}" default="${flash.defaultMessage}" /></div>
-            </g:if>
-            <g:hasErrors>
-              <div class="errors">
-                <g:renderErrors bean="${proformaInstance}" as="list" />
-              </div>
-            </g:hasErrors>
-            <g:form>
-                <g:hiddenField name="id" value="${proformaInstance?.id}" />
-                <div class="dialog">
-                  <table>
-                    <tbody>
-                        <tr class="prop">
-                            <td valign="baseline" class="name" style="vertical-align:middle;"><g:message code="proforma.clientEmail" default="Client email" />:</td>
-                            <td valign="baseline" style="vertical-align:middle;" class="value ${hasErrors(field: 'clientEmail', 'errors')}">
-                              <g:textField name="clientEmail" value="${clientEmail}"/>
-                            </td>
-                            <td style="vertical-align:middle;">
-                                <div class="buttons">
-                                  <span class="button"><g:actionSubmit class="edit" action="sendProformaEmail" value="${message(code: 'send', 'default': 'send')}" /></span>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                  </table>
-                </div>
+            <h3><g:message code="proforma.notification" default="Proforma Notification"/></h3>
                 <div class="dialog">
                     <table style="margin-top: 5px;">
                         <tbody>
@@ -55,14 +22,14 @@
                             <tr class="prop">
                                 <td valign="top" class="name"><g:message code="proforma.client" default="Client" />:</td>
 
-                                <td valign="top" class="value"><g:link controller="client" action="show" id="${proformaInstance?.client?.id}">${proformaInstance?.client?.encodeAsHTML()}</g:link></td>
+                                <td valign="top" class="value">${proformaInstance?.client?.encodeAsHTML()}</td>
 
                             </tr>
 
                             <tr class="prop">
                                 <td valign="top" class="name"><g:message code="proforma.patient" default="Patient" />:</td>
 
-                                <td valign="top" class="value"><g:link controller="patient" action="show" id="${proformaInstance?.patient?.id}">${proformaInstance?.patient?.encodeAsHTML()}</g:link></td>
+                                <td valign="top" class="value">${proformaInstance?.patient?.encodeAsHTML()}</td>
 
                             </tr>
 
@@ -130,7 +97,6 @@
                   </table>
                 </div>
                 </g:if>
-            </g:form>
         </div>
-    </body>
+  </body>
 </html>

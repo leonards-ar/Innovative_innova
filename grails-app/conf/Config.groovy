@@ -75,7 +75,18 @@ log4j = {
     warn   'org.mortbay.log'
 }
 
-
-     
-
 //log4j.logger.org.springframework.security='off,stdout'
+
+//Mail Plugin Configuration
+grails {
+   mail {
+     host = "hp31.hostpapa.com"
+     port = 465
+     username = "labs+mindpool.com.ar"
+     password = "java1234"
+     props = ["mail.smtp.auth":"true", 					   
+              "mail.smtp.socketFactory.port":"465",
+              "mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
+              "mail.smtp.socketFactory.fallback":"false"]
+
+} }

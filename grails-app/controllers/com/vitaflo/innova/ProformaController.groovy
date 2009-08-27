@@ -2,10 +2,12 @@ package com.vitaflo.innova
 
 class ProformaController {
 
-    def index = { redirect(action: "list", params: params) }
-
     // the delete, save and update actions only accept POST requests
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+
+    def mailService
+
+    def index = { redirect(action: "list", params: params) }
 
     def list = {
         params.max = Math.min(params.max ? params.max.toInteger() : 15,  100)
@@ -82,7 +84,7 @@ class ProformaController {
 
         //Discount Amount
         def discountAmount = proformaInstance.calculateDiscount(totalAmount)
-
+        
         //Cliente email
         def clientEmail = proformaInstance.patient.client.email
 
@@ -95,26 +97,34 @@ class ProformaController {
 
         def proformaInstance = Proforma.get(params.id)
 
-        if (!emailCmd.hasErrors()){
-
-            //Send the email
-
-            //
-            
-            flash.message = "proforma.emailsent"
-            flash.args = [proformaInstance.id, emailCmd.clientEmail]
-            flash.defaultMessage = "Proforma ${proformaInstance.id} was sent to ${emailCmd.clientEmail}"
-            redirect(action: "show", id: proformaInstance.id)
-        }
-
         //Total Details
         def totalDetails = proformaInstance.getTotalDetails();
-
         //Total Amount
         def totalAmount = proformaInstance.getTotalAmount();
-
         //Discount Amount
         def discountAmount = proformaInstance.calculateDiscount(totalAmount)
+
+        if (!emailCmd.hasErrors()){
+            try{
+                mailService.sendMail {
+                    to emailCmd.clientEmail
+                    subject "Proforma ${proformaInstance.id}"
+                    body (view:"/emails/proforma", model:[proformaInstance:proformaInstance, totalDetails:totalDetails, totalAmount:totalAmount,
+                        discountAmount: discountAmount])
+
+                    flash.message = "proforma.emailsent"
+                    flash.args = [proformaInstance.id, emailCmd.clientEmail]
+                    flash.defaultMessage = "Proforma ${proformaInstance.id} was sent to ${emailCmd.clientEmail}"
+                    redirect(action: "show", id: proformaInstance.id)
+                }
+            }catch(Exception e){
+                log.error "Problem sending email $e.message", e
+                def args = [proformaInstance.id, emailCmd.clientEmail].toArray()
+                def defaultMsg = "There was a problem sending Proforma ${proformaInstance.id} to ${emailCmd.clientEmail}"
+
+                proformaInstance.errors.reject("proforma.emailsent.problem",args, defaultMsg)
+            }
+        }
 
         render(view:'sendEmail', model:[proformaInstance: proformaInstance, totalDetails:totalDetails,
                 totalAmount:totalAmount, discountAmount: discountAmount, clientEmail:emailCmd.clientEmail])
