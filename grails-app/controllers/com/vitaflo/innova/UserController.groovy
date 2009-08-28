@@ -126,6 +126,46 @@ class UserController {
         }
     }
 
+  def updateProfile = {
+      def userInstance = User.get(params.id)
+
+      if (userInstance) {
+          if (params.version) {
+              def version = params.version.toLong()
+              if (userInstance.version > version) {
+
+                  userInstance.errors.rejectValue("version", "user.optimistic.locking.failure", "Another user has updated this User while you were editing")
+                  render(view: "edit", model: [userInstance: userInstance])
+                  return
+              }
+          }
+          def tmpPass = userInstance.passwd
+          userInstance.properties = params
+          if(tmpPass != params.passwd) {
+              userInstance.passwd = authenticateService.encodePassword(params.passwd)
+          }
+
+          if (!userInstance.hasErrors() && userInstance.save()) {
+            if(isAdmin(userInstance)){
+              Country.findAll().each {userInstance.removeFromCountries(it)}
+              Role.findAll().each {userInstance.removeFromAuthorities(it)}
+              addCountries(userInstance)
+              addRoles(userInstance)
+            }
+              flash.message = "user.updated"
+              flash.args = [params.id]
+              flash.defaultMessage = "User ${params.id} updated"
+              redirect(action: "show", id: userInstance.id)
+          }
+          else {
+              render(view: "edit", model: [userInstance: userInstance])
+          }
+      }
+      else {
+          redirect(controller: "logout")
+      }
+  }
+
     private void addRoles(person) {
         for (String key in params.selectedAuthorities) {
             person.addToAuthorities(Role.findById(key))
