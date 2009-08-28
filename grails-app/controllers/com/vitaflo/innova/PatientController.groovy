@@ -115,7 +115,8 @@ class PatientController {
             redirect(action: "list")
         }
         else {
-            return [patientInstance: patientInstance]
+            def clientList = Client.findAllByCountry(patientInstance.country, [sort:'name', order:'asc'])
+            return [patientInstance: patientInstance, clientList: clientList]
         }
     }
 
@@ -174,4 +175,5 @@ class PatientController {
             redirect(action: "list")
         }
     }
+
 }

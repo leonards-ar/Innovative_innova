@@ -5,6 +5,17 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="layout" content="main" />
         <title><g:message code="patient.create" default="Create Patient" /></title>
+          <g:javascript library="prototype"/>
+          <g:javascript>
+            function updateClients(e) {
+            var clients = e.responseText.evalJSON();
+            $('client.id').options.length=clients.size();
+            for(i=0;i < clients.size();i++){
+              $('client.id').options[i] = new Option(clients[i].name, clients[i].id);
+            }
+
+           }
+          </g:javascript>
     </head>
     <body>
         <div class="nav">
@@ -61,7 +72,7 @@
                                     <label for="country"><g:message code="patient.country" default="Country" />:</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: patientInstance, field: 'country', 'errors')}">
-                                    <g:select name="country.id" from="${com.vitaflo.innova.Country.list()}" optionKey="id" value="${patientInstance?.country?.id}"  />
+                                    <g:select name="country.id" from="${session.countries}" optionKey="id" value="${patientInstance?.country?.id}" onchange="${remoteFunction(controller:'client', action:'searchClientsByCountry',onSuccess:'updateClients(e)', params:'\'country=\'  + this.value')}" />
 
                                 </td>
                             </tr>
