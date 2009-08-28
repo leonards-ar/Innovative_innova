@@ -15,6 +15,7 @@
             }
 
            }
+
           </g:javascript>
     </head>
     <body>
@@ -82,7 +83,7 @@
                                     <label for="client"><g:message code="patient.client" default="Client" />:</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: patientInstance, field: 'client', 'errors')}">
-                                    <g:select name="client.id" from="${com.vitaflo.innova.Client.list()}" optionKey="id" value="${patientInstance?.client?.id}"  />
+                                    <g:select name="client.id" from="${clientList}" optionKey="id" value="${patientInstance?.client?.id}"  />
 
                                 </td>
                             </tr>
