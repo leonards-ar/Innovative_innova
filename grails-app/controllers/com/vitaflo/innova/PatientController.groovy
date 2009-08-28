@@ -77,7 +77,9 @@ class PatientController {
     def create = {
         def patientInstance = new Patient()
         patientInstance.properties = params
-        return [patientInstance: patientInstance]
+
+        def clientList = Client.findAllByCountry(session.countries[0], [sort:'name', order:'asc'])
+        return [patientInstance: patientInstance, clientList: clientList]
     }
 
     def save = {
