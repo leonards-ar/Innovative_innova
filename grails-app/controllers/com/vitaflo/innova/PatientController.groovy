@@ -19,10 +19,10 @@ class PatientController {
         if (!params.order) params.order = "asc"
 
         def query = {
-            if(params.patientName) {
+            if(params.patient) {
                 or{
-                    like('lastName', '%' + params.patientName + '%')
-                    like('firstName', '%' + params.patientName + '%')
+                    like('lastName', '%' + params.patient + '%')
+                    like('firstName', '%' + params.patient + '%')
                 }
             }
 
@@ -34,9 +34,9 @@ class PatientController {
                 inList('country', session.countries)
             }
 
-            if(params.clientName) {
+            if(params.client) {
                 client{
-                    like('name', '%' + params.clientName + '%')
+                    like('name', '%' + params.client + '%')
                 }
             }
         }
@@ -54,10 +54,10 @@ class PatientController {
                 order(params.sort, params.order)
             }
 
-            if(params.patientName) {
+            if(params.patient) {
                 or{
-                    like('lastName', '%' + params.patientName + '%')
-                    like('firstName', '%' + params.patientName + '%')
+                    like('lastName', '%' + params.patient + '%')
+                    like('firstName', '%' + params.patient+ '%')
                 }
             }
 
@@ -70,9 +70,9 @@ class PatientController {
                 inList('country',session.countries)
             }
 
-            if(params.clientName) {
+            if(params.client) {
                 client{
-                    like('name', '%' + params.clientName + '%')
+                    like('name', '%' + params.client + '%')
                 }
             }
         }
