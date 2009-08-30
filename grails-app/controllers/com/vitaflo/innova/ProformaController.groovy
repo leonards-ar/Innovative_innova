@@ -10,8 +10,56 @@ class ProformaController {
     def index = { redirect(action: "list", params: params) }
 
     def list = {
+        
+        if (!params.offset) params.offset = 0
+        if (!params.sort) params.sort = "id"
+        if (!params.order) params.order = "asc"
+        
         params.max = Math.min(params.max ? params.max.toInteger() : 15,  100)
-        [proformaInstanceList: Proforma.list(params), proformaInstanceTotal: Proforma.count()]
+
+        def query = {
+
+            if(params.status) {
+                eq('status', params.status)
+            }
+            patient {
+                if(params.client) {
+                    eq('client', Client.findByName(params.client))
+                }
+                if(params.patient) {
+                    def str = params.patient.split(',')
+                    eq('lastName', str[0])
+                }
+              
+                inList('country', session.countries)
+            }
+        }
+
+        def criteria = Proforma.createCriteria()
+        def total = criteria.count(query)
+        
+        def proformas = Proforma.withCriteria {
+            maxResults(params.max)
+            firstResult(params.offset?.toInteger())
+            order(params.sort, params.order)
+            
+            if(params.status) {
+                eq('status', params.status)
+            }
+
+            patient {
+                if(params.client) {
+                    eq('client', Client.findByName(params.client))
+                }
+                if(params.patient) {
+                    def str = params.patient.split(',')
+                    eq('lastName', str[0])
+                }
+
+                inList('country', session.countries)
+            }
+        }
+        [proformaInstanceList: proformas, proformaInstanceTotal: total, client: params.client, patient: params.patient, status: params.status]
     }
 
     def create = {
@@ -110,7 +158,7 @@ class ProformaController {
                     to emailCmd.clientEmail
                     subject "Proforma ${proformaInstance.id}"
                     body (view:"/emails/proforma", model:[proformaInstance:proformaInstance, totalDetails:totalDetails, totalAmount:totalAmount,
-                        discountAmount: discountAmount])
+                            discountAmount: discountAmount])
 
                     flash.message = "proforma.emailsent"
                     flash.args = [proformaInstance.id, emailCmd.clientEmail]
@@ -177,10 +225,10 @@ class ProformaController {
             List removeDetails = []
             
             proformaInstance.details.each { proformaDetail ->
-                    def auxUpdatedDetail = updatedDetailList.find{it.id == proformaDetail.id}
-                    if (!auxUpdatedDetail){
-                        removeDetails.add(proformaDetail)
-                    }
+                def auxUpdatedDetail = updatedDetailList.find{it.id == proformaDetail.id}
+                if (!auxUpdatedDetail){
+                    removeDetails.add(proformaDetail)
+                }
             }
 
             removeDetails.each { detailToRemove ->
@@ -322,8 +370,8 @@ class UpdateProformaDetailsListCommand {
     
 
     List createProformaDetailsList(){
-         List proformaDetailList = []
-         productIds.eachWithIndex(){ productId, i->
+        List proformaDetailList = []
+        productIds.eachWithIndex(){ productId, i->
             def auxProduct = Product.get(productId)
             def proformaDetail = new ProformaDetail(product:auxProduct, quantity:quantities[i], dailyDose:dailyDoses[i])
             if(detailsIds[i]!=''){

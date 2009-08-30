@@ -4,7 +4,6 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="layout" content="main"/>
   <g:javascript library="prototype"/>
-  <!--gui:resources components="['dataTable']"/-->
   <title><g:message code="client.list" default="Client List"/></title>
 
 </head>

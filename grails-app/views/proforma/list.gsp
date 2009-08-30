@@ -1,60 +1,101 @@
 
 <%@ page import="com.vitaflo.innova.Proforma" %>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name="layout" content="main" />
-        <title><g:message code="proforma.list" default="Proforma List" /></title>
-    </head>
-    <body>
-        <div class="nav">
-            <span class="menuButton"><a class="home" href="${createLinkTo(dir: '')}"><g:message code="home" default="Home" /></a></span>
-            <span class="menuButton"><g:link class="create" action="create"><g:message code="proforma.new" default="New Proforma" /></g:link></span>
-        </div>
-        <div class="body">
-            <h1><g:message code="proforma.list" default="Proforma List" /></h1>
-            <g:if test="${flash.message}">
-            <div class="message"><g:message code="${flash.message}" args="${flash.args}" default="${flash.defaultMessage}" /></div>
-            </g:if>
-            <div class="list">
-                <table>
-                    <thead>
-                        <tr>
-                        
-                   	    <g:sortableColumn property="id" title="Id" titleKey="proforma.id" />
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="layout" content="main" />
+    <title><g:message code="proforma.list" default="Proforma List" /></title>
+  <g:javascript library="prototype" />
+  <g:javascript library="scriptaculous" />
+</head>
+<body>
+  <div class="nav">
+    <span class="menuButton"><a class="home" href="${createLinkTo(dir: '')}"><g:message code="home" default="Home" /></a></span>
+    <span class="menuButton"><g:link class="create" action="create"><g:message code="proforma.new" default="New Proforma" /></g:link></span>
+  </div>
+  <div class="body">
+    <h1><g:message code="proforma.list" default="Proforma List" /></h1>
+    <div id="searchBox">
+      <g:form
+        name="searchForm"
+        url="[controller:'proforma',action:'list']">
+        <table>
+          <tr>
+            <td></td>
+            <td>
+              <div><g:message code="proforma.client"/> </div>
 
-                            <th><g:message code="proforma.client" default="Client" /></th>
+          <g:textField id="autocompleteClient" name="client" value="${client}" size="30" />
+          <div id="client_choices" class="autocomplete"></div>
+          <g:javascript>
+            new Ajax.Autocompleter("autocompleteClient", "client_choices", "${createLink(controller:'client', action:'searchAutocomplete')}",{});
+          </g:javascript>
+          </td>
+          <td>
+            <div><g:message code="proforma.patient"/> </div>
+          <g:textField id="autocompletePatient" name="patient" value="${patient}" />
+          <div id="patient_choices" class="autocomplete"></div>
+          <g:javascript>
+            new Ajax.Autocompleter("autocompletePatient", "patient_choices", "${createLink(controller:'patient', action:'searchAutocomplete')}",{});
+          </g:javascript>
+          </td>
+          <td>
+            <div><g:message code="proforma.status"/> </div>
+            <g:select name="status" from="${com.vitaflo.innova.Proforma.STATUS_LIST}" value="${status}" noSelection="['':'']"/>
+          </td>
+          <td>
+            <div>&nbsp;</div>
+            <span class="button"><g:submitButton name="search" class="save" value="${message(code: 'find', 'default': 'Find')}" /></span>
+          </td>
+          </tr>
+        </table>
 
-                   	    <th><g:message code="proforma.patient" default="Patient" /></th>
+      </g:form>
 
-                   	    <g:sortableColumn property="status" title="Status" titleKey="proforma.status" />
+    </div>
 
-                   	    <g:sortableColumn property="createdAt" title="Created At" titleKey="proforma.createdAt" />
-                                                
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <g:each in="${proformaInstanceList}" status="i" var="proformaInstance">
-                        <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
-                        
-                            <td><g:link action="show" id="${proformaInstance.id}">${fieldValue(bean: proformaInstance, field: "id")}</g:link></td>
+    <g:if test="${flash.message}">
+      <div class="message"><g:message code="${flash.message}" args="${flash.args}" default="${flash.defaultMessage}" /></div>
+    </g:if>
+    <div class="list">
+      <table>
+        <thead>
+          <tr>
 
-                            <td>${fieldValue(bean: proformaInstance, field: "client")}</td>
+        <g:sortableColumn property="id" title="Id" titleKey="proforma.id" params="${params}"/>
 
-                            <td>${fieldValue(bean: proformaInstance, field: "patient")}</td>
+        <th><g:message code="proforma.client" default="Client" /></th>
 
-                            <td>${fieldValue(bean: proformaInstance, field: "status")}</td>
+        <th><g:message code="proforma.patient" default="Patient" /></th>
 
-                            <td><g:formatDate format="dd-MM-yyyy" date="${proformaInstance.createdAt}" /></td>
-                                                
-                        </tr>
-                    </g:each>
-                    </tbody>
-                </table>
-            </div>
-            <div class="paginateButtons">
-                <g:paginate total="${proformaInstanceTotal}" />
-            </div>
-        </div>
-    </body>
+        <g:sortableColumn property="status" title="Status" titleKey="proforma.status" params="${params}" />
+
+        <g:sortableColumn property="createdAt" title="Created At" titleKey="proforma.createdAt" params="${params}" />
+
+        </tr>
+        </thead>
+        <tbody>
+        <g:each in="${proformaInstanceList}" status="i" var="proformaInstance">
+          <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
+
+            <td><g:link action="show" id="${proformaInstance.id}">${fieldValue(bean: proformaInstance, field: "id")}</g:link></td>
+
+          <td>${fieldValue(bean: proformaInstance, field: "client")}</td>
+
+          <td>${fieldValue(bean: proformaInstance, field: "patient")}</td>
+
+          <td>${fieldValue(bean: proformaInstance, field: "status")}</td>
+
+          <td><g:formatDate format="dd-MM-yyyy" date="${proformaInstance.createdAt}" /></td>
+
+          </tr>
+        </g:each>
+        </tbody>
+      </table>
+    </div>
+    <div class="paginateButtons">
+      <g:paginate total="${proformaInstanceTotal}" params="${params}"/>
+    </div>
+  </div>
+</body>
 </html>

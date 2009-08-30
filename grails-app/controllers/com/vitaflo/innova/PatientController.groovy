@@ -20,7 +20,10 @@ class PatientController {
 
         def query = {
             if(params.patientName) {
-                like('lastName', '%' + params.patientName + '%')
+                or{
+                    like('lastName', '%' + params.patientName + '%')
+                    like('firstName', '%' + params.patientName + '%')
+                }
             }
 
             if(params.selectedCountry){
@@ -52,7 +55,10 @@ class PatientController {
             }
 
             if(params.patientName) {
-                like('lastName', '%' + params.patientName + '%')
+                or{
+                    like('lastName', '%' + params.patientName + '%')
+                    like('firstName', '%' + params.patientName + '%')
+                }
             }
 
             if(params.selectedCountry){
@@ -176,6 +182,26 @@ class PatientController {
             flash.defaultMessage = "Patient not found with id ${params.id}"
             redirect(action: "list")
         }
+    }
+
+    def searchAutocomplete = {
+        def patients = Patient.withCriteria{
+            or{
+                like('lastName', '%' + params.patient + '%')
+                like('firstName', '%' + params.patient + '%')
+            }
+            
+            inList('country', session.countries)
+        }
+
+        StringBuffer idList = new StringBuffer()
+        idList.append('<ul>')
+
+        patients?.each{p -> idList.append('<li>' + p.lastName +', ' + p.firstName + '</li>')}
+
+        idList.append('</ul')
+
+        render idList.toString()
     }
 
 }

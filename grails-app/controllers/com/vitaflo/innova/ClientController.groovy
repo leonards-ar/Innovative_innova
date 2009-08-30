@@ -157,18 +157,16 @@ class ClientController {
     }
 
     def searchAjax = {
-        params.max = Math.min(params.max ? params.max.toInteger() : 15, 100)
-
+        
         if (!params.sort) params.sort = "name"
         if (!params.order) params.order = "asc"
 
-        def clients = Client.list(params)
+        def clients = Client.withCriteria{
+            like('name', '%' + params.name + '%')
+            inList('country', session.countries)
+        }
 
-        def data = [
-            totalRecords: Client.count(),
-            results: clients
-        ]
-        render data as JSON
+        render clients as JSON
     }
 
     def search = {
@@ -195,6 +193,22 @@ class ClientController {
         def clients = Client.findAllByCountry(Country.get(params.country),[sort:'name', order:'asc'])
         
         render clients as JSON
+    }
+
+    def searchAutocomplete = {
+        def clients = Client.withCriteria{
+            like('name', '%' + params.client + '%')
+            inList('country', session.countries)
+        }
+
+        StringBuffer idList = new StringBuffer()
+        idList.append('<ul>')
+
+        clients?.each{c -> idList.append('<li>' + c.name + '</li>')}
+
+        idList.append('</ul')
+
+        render idList.toString()
     }
 
 
