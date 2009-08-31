@@ -9,7 +9,60 @@ class InvoiceController {
 
     def list = {
         params.max = Math.min(params.max ? params.max.toInteger() : 15,  100)
-        [invoiceInstanceList: Invoice.list(params), invoiceInstanceTotal: Invoice.count()]
+        if (!params.offset) params.offset = 0
+        if (!params.sort) params.sort = "number"
+        if (!params.order) params.order = "asc"
+
+        def  query = {
+
+            if(params.status){
+                eq('status', params.status)
+            }
+
+            proforma {
+                patient {
+                    if(params.client) {
+                        eq('client', Client.findByName(params.client))
+                    }
+                    if(params.patient) {
+                        def str = params.patient.split(',')
+                        eq('lastName', str[0])
+                    }
+
+                    inList('country', session.countries)
+                }
+            }
+        }
+
+        def criteria = Invoice.createCriteria()
+
+        def total = criteria.count(query)
+
+        def invoices = Invoice.withCriteria {
+            maxResults(params.max)
+            firstResult(params.offset?.toInteger())
+            order(params.sort, params.order)
+
+            if(params.status){
+                eq('status', params.status)
+            }
+            
+            proforma {
+                patient {
+                    if(params.client) {
+                        eq('client', Client.findByName(params.client))
+                    }
+                    if(params.patient) {
+                        def str = params.patient.split(',')
+                        eq('lastName', str[0])
+                    }
+
+                    inList('country', session.countries)
+                }
+            }
+        }
+        
+        [invoiceInstanceList: invoices, invoiceInstanceTotal: total, client: params.client, patient: params.patient, status: params.status]
     }
 
     def create = {
@@ -131,7 +184,15 @@ class InvoiceController {
 
     def List findAllProformasWithNoInvoice(){
         List proformasWithNoInvoice = []
-        proformasWithNoInvoice = Proforma.findAll('from Proforma as p where p not in (select distinct i.proforma from Invoice as i)')
+        proformasWithNoInvoice = Proforma.withCriteria{
+            not{
+                inList('id', Invoice.findAll().collect{it.proforma.id})
+            }
+            patient{
+                inList('country', session.countries)
+            }
+        }
+        
         proformasWithNoInvoice.sort{it.id}
         return proformasWithNoInvoice
     }

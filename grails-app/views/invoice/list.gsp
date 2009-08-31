@@ -5,6 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="layout" content="main" />
         <title><g:message code="invoice.list" default="Invoice List" /></title>
+        <g:javascript library="scriptaculous" />
     </head>
     <body>
         <div class="nav">
@@ -13,6 +14,45 @@
         </div>
         <div class="body">
             <h1><g:message code="invoice.list" default="Invoice List" /></h1>
+    <div id="searchBox">
+      <g:form
+        name="searchForm"
+        url="[controller:'invoice',action:'list']">
+        <table>
+          <tr>
+            <td></td>
+            <td>
+              <div><g:message code="proforma.client"/> </div>
+
+          <g:textField id="autocompleteClient" name="client" value="${client}" size="38" />
+          <div id="client_choices" class="autocomplete"></div>
+          <g:javascript>
+            new Ajax.Autocompleter("autocompleteClient", "client_choices", "${createLink(controller:'client', action:'searchAutocomplete')}",{});
+          </g:javascript>
+          </td>
+          <td>
+            <div><g:message code="proforma.patient"/> </div>
+          <g:textField id="autocompletePatient" name="patient" value="${patient}" />
+          <div id="patient_choices" class="autocomplete"></div>
+          <g:javascript>
+            new Ajax.Autocompleter("autocompletePatient", "patient_choices", "${createLink(controller:'patient', action:'searchAutocomplete')}",{});
+          </g:javascript>
+          </td>
+          <td>
+            <div><g:message code="invoice.status"/> </div>
+            <g:select name="status" from="${com.vitaflo.innova.Invoice.STATUS_LIST}" value="${status}" noSelection="['':'']"/>
+          </td>
+          <td>
+            <div>&nbsp;</div>
+            <span class="button"><g:submitButton name="search" class="save" value="${message(code: 'find', 'default': 'Find')}" /></span>
+          </td>
+          </tr>
+        </table>
+
+      </g:form>
+
+    </div>
+
             <g:if test="${flash.message}">
             <div class="message"><g:message code="${flash.message}" args="${flash.args}" default="${flash.defaultMessage}" /></div>
             </g:if>
@@ -20,15 +60,15 @@
                 <table>
                     <thead>
                         <tr>                                                
-                   	    <g:sortableColumn property="number" title="Number" titleKey="invoice.number" />
+                   	    <g:sortableColumn property="number" params="${params}" title="Number" titleKey="invoice.number" />
 
                             <th><g:message code="invoice.proforma" default="Proforma" /></th>
 
-                   	    <g:sortableColumn property="amount" title="Amount" titleKey="invoice.amount" />
+                   	    <g:sortableColumn property="amount" params="${params}" title="Amount" titleKey="invoice.amount" />
                         
-                   	    <g:sortableColumn property="status" title="Status" titleKey="invoice.status" />
+                   	    <g:sortableColumn property="status" params="${params}" title="Status" titleKey="invoice.status" />
 
-                            <g:sortableColumn property="date" title="Date" titleKey="invoice.date" />
+                            <g:sortableColumn property="date" params="${params}" title="Date" titleKey="invoice.date" />
                         </tr>
                     </thead>
                     <tbody>
@@ -49,7 +89,7 @@
                 </table>
             </div>
             <div class="paginateButtons">
-                <g:paginate total="${invoiceInstanceTotal}" />
+                <g:paginate total="${invoiceInstanceTotal}" params="${params}" />
             </div>
         </div>
     </body>
