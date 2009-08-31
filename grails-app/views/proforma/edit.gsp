@@ -106,7 +106,9 @@
 
                 <div class="buttons">
                     <span class="button"><g:submitButton name="update" class="save" value="${message(code: 'update', 'default': 'Update')}" onclick="submitForm('update')"/></span>
-                    <span class="button"><g:submitButton name="delete" class="delete" value="${message(code: 'delete', 'default': 'Delete')}" onclick="return submitDeleteForm()"/></span>
+                    <g:if test="${proformaInstance?.status == 'Creada'}">
+                      <span class="button"><g:submitButton name="delete" class="delete" value="${message(code: 'delete', 'default': 'Delete')}" onclick="return submitDeleteForm()"/></span>
+                    </g:if>
                 </div>
             </g:form>
         </div>

@@ -67,10 +67,12 @@
                         </tbody>
                     </table>
                 </div>
+                <g:if test="${invoiceInstance?.status == 'Pendiente'}">
                 <div class="buttons">
                     <span class="button"><g:actionSubmit class="edit" action="edit" value="${message(code: 'edit', 'default': 'Edit')}" /></span>
                     <span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'delete', 'default': 'Delete')}" onclick="return confirm('${message(code: 'delete.confirm', 'default': 'Are you sure?')}');" /></span>
                 </div>
+                </g:if>
             </g:form>
         </div>
     </body>

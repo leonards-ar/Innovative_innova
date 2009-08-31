@@ -26,6 +26,8 @@
 
           <g:sortableColumn property="presentation" title="Presentation" titleKey="product.presentation" />
 
+          <g:sortableColumn property="price" title="Price" titleKey="product.price" />
+
           <th><g:message code="product.supplier" default="Supplier" /></th>
           </tr>
           </thead>
@@ -36,6 +38,8 @@
               <td><g:link action="show" id="${productInstance.id}">${fieldValue(bean: productInstance, field: "name")}</g:link></td>
 
             <td>${fieldValue(bean: productInstance, field: "presentation")}</td>
+
+            <td>${fieldValue(bean: productInstance, field: "price")}</td>
 
             <td>${fieldValue(bean: productInstance, field: "supplier")}</td>
 

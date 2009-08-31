@@ -39,6 +39,11 @@
             </tr>
 
             <tr class="prop">
+              <td valign="top" class="name"><g:message code="product.price" default="Price" />:</td>
+              <td valign="top" class="value">${fieldValue(bean: productInstance, field: "price")}</td>
+            </tr>
+
+            <tr class="prop">
               <td valign="top" class="name"><g:message code="product.supplier" default="Supplier" />:</td>
 
             <td valign="top" class="value"><g:link controller="supplier" action="show" id="${productInstance?.supplier?.id}">${productInstance?.supplier?.encodeAsHTML()}</g:link></td>
@@ -56,13 +61,6 @@
               <td valign="top" class="name"><g:message code="product.description" default="Description" />:</td>
 
             <td valign="top" class="value"><g:textArea name="description" value="${productInstance?.description}" rows="7" cols="40" readonly="true"/></td>
-
-            </tr>
-
-            <tr class="prop">
-              <td valign="top" class="name"><g:message code="product.price" default="Price" />:</td>
-
-            <td valign="top" class="value">${fieldValue(bean: productInstance, field: "price")}</td>
 
             </tr>
 

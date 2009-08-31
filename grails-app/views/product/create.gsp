@@ -45,7 +45,17 @@
 
                                 </td>
                             </tr>
-                        
+
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="price"><g:message code="product.price" default="Price" />:</label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'price', 'errors')}">
+                                    <g:textField name="price" value="${fieldValue(bean: productInstance, field: 'price')}" />
+
+                                </td>
+                            </tr>
+
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="supplier"><g:message code="product.supplier" default="Supplier" />:</label>
@@ -65,7 +75,7 @@
 
                                 </td>
                             </tr>
-                        
+
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="description"><g:message code="product.description" default="Description" />:</label>
@@ -75,17 +85,7 @@
 
                                 </td>
                             </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="price"><g:message code="product.price" default="Price" />:</label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'price', 'errors')}">
-                                    <g:textField name="price" value="${fieldValue(bean: productInstance, field: 'price')}" />
-
-                                </td>
-                            </tr>
-                        
+                                                
                         </tbody>
                     </table>
                 </div>

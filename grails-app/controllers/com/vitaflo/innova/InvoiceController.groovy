@@ -185,6 +185,7 @@ class InvoiceController {
     def List findAllProformasWithNoInvoice(){
         List proformasWithNoInvoice = []
         proformasWithNoInvoice = Proforma.withCriteria{
+            eq('status','Aprobada')
             not{
                 inList('id', Invoice.findAll().collect{it.proforma.id})
             }
