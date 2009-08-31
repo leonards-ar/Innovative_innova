@@ -77,7 +77,8 @@ class PatientController {
             }
         }
 
-        [patientInstanceList: patients, patientInstanceTotal: total, countryList:session.countries, clientName: params.clientName, patientName:params.patientName, selectedCountry: params.selectedCountry]
+        print session.countries
+        [patientInstanceList: patients, patientInstanceTotal: total, clientName: params.clientName, patientName:params.patientName, selectedCountry: params.selectedCountry]
     }
 
     def create = {

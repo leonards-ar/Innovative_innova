@@ -29,7 +29,7 @@
           </td>
           <td>
             <div><g:message code="patient.country"/> </div>
-          <g:select name="selectedCountry" from="${countryList}" optionKey="code" optionValue="name" noSelection="['':'']"/>
+          <g:select name="selectedCountry" from="${session?.countries}" optionKey="code" optionValue="name" noSelection="['':'']"/>
           </td>
           <td>
             <div><g:message code="patient.client"/> </div>
