@@ -52,7 +52,7 @@
                                     <label for="patient"><g:message code="proforma.patient" default="Patient" />:</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: proformaInstance, field: 'patient', 'errors')}">
-                                    <g:select name="patient.id" from="${com.vitaflo.innova.Patient.list()}" optionKey="id" value="${proformaInstance?.patient?.id}"
+                                    <g:select name="patient.id" from="${patients}" optionKey="id" value="${proformaInstance?.patient?.id}"
                                                onchange="${remoteFunction(controller:'proforma', action:'lookUpClient',update:'clientName', params:'\'patientId=\'  + this.value')}"/>
 
                                 </td>

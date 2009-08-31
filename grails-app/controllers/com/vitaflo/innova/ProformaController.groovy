@@ -65,8 +65,9 @@ class ProformaController {
     def create = {
         def proformaInstance = new Proforma()
         proformaInstance.properties = params
+        def patients = Patient.findAllByCountryInList(session.countries)
 
-        return [proformaInstance: proformaInstance]
+        return [proformaInstance: proformaInstance, patients: patients]
     }
 
 
@@ -189,7 +190,8 @@ class ProformaController {
         }
         else {
             def proformaDetailList = proformaInstance.details
-            return [proformaInstance: proformaInstance, proformaDetailList:proformaDetailList]
+            def patients = Patient.findAllByCountryInList(session.countries)
+            return [proformaInstance: proformaInstance, proformaDetailList:proformaDetailList, patients: patients]
         }
     }
 
