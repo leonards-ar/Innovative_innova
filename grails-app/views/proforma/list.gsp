@@ -25,7 +25,7 @@
             <td>
               <div><g:message code="proforma.client"/> </div>
 
-          <g:textField id="autocompleteClient" name="client" value="${client}" size="30" />
+          <g:textField id="autocompleteClient" name="client" value="${client}" size="38" />
           <div id="client_choices" class="autocomplete"></div>
           <g:javascript>
             new Ajax.Autocompleter("autocompleteClient", "client_choices", "${createLink(controller:'client', action:'searchAutocomplete')}",{});
