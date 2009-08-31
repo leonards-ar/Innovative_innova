@@ -9,5 +9,6 @@ class HomeController {
                 session.countries = user.countries.sort{it.name}
             }
         }
+        println session.countries
     }
 }
