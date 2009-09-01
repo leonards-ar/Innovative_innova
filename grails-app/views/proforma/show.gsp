@@ -129,7 +129,9 @@
                 </div>
                 </g:if>
                 <div class="buttons">
+                    <g:if test="${(proformaInstance?.status == 'Creada') || (proformaInstance?.status == 'Rechazada')}">
                     <span class="button"><g:actionSubmit class="edit" action="edit" value="${message(code: 'edit', 'default': 'Edit')}" /></span>
+                    </g:if>
                     <g:if test="${proformaInstance?.status == 'Creada'}">
                       <span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'delete', 'default': 'Delete')}" onclick="return confirm('${message(code: 'delete.confirm', 'default': 'Are you sure?')}');" /></span>
                     </g:if>
