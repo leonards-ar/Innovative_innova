@@ -1,23 +1,23 @@
 security {
 
-    // see DefaultSecurityConfig.groovy for all settable/overridable properties
+  // see DefaultSecurityConfig.groovy for all settable/overridable properties
 
-    active = true
+  active = true
 
-    loginUserDomainClass = "User"
-    authorityDomainClass = "Role"
-    requestMapClass = "RequestMap"
+  loginUserDomainClass = "User"
+  authorityDomainClass = "Role"
+  requestMapClass = "RequestMap"
 
-    //Default User
-    security.defaultRole = "ROLE_USER"
-    /**
-     * useRequestMapDomainClass to false, so the application will not use the domain class
-     * we’ve created
-     */
-    useRequestMapDomainClass = false
+  //Default User
+  security.defaultRole = "ROLE_USER"
+  /**
+   * useRequestMapDomainClass to false, so the application will not use the domain class
+   * we’ve created
+   */
+  useRequestMapDomainClass = false
 
-    // Sets the URL permissions
-    requestMapString = """
+  // Sets the URL permissions
+  requestMapString = """
     CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
     PATTERN_TYPE_APACHE_ANT
     /home/**=ROLE_ADMIN,ROLE_USER
@@ -38,5 +38,18 @@ security {
     /**/edit=ROLE_ADMIN
     /**=IS_AUTHENTICATED_ANONYMOUSLY
     """
+
+  useSecurityEventListener = true
+
+
+  onInteractiveAuthenticationSuccessEvent = {e, appCtx ->
+    com.vitaflo.innova.User.withTransaction {
+        def user = com.vitaflo.innova.User.findByUsername(e.source.principal.username)
+        def attr = org.springframework.web.context.request.RequestContextHolder?.getRequestAttributes()
+        attr.session.countries = user.countries.sort {it.name}
+        println(attr.session.countries)
+    }
+  }
+
 
 }
