@@ -34,6 +34,12 @@ security {
     /proforma/create=ROLE_ADMIN,ROLE_USER
     /proforma/edit=ROLE_ADMIN,ROLE_USER
     /supplier/**=ROLE_ADMIN,ROLE_USER
+    /invoice/**=ROLE_ADMIN,ROLE_USER
+    /invoice/create=ROLE_ADMIN,ROLE_USER
+    /invoice/edit=ROLE_ADMIN,ROLE_USER
+    /purchase/**=ROLE_ADMIN,ROLE_USER
+    /purchase/create=ROLE_ADMIN,ROLE_USER
+    /purchase/edit=ROLE_ADMIN,ROLE_USER
     /**/create=ROLE_ADMIN
     /**/edit=ROLE_ADMIN
     /**=IS_AUTHENTICATED_ANONYMOUSLY
