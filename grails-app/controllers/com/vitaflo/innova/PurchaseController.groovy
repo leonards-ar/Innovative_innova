@@ -8,8 +8,53 @@ class PurchaseController {
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def list = {
-        params.max = Math.min(params.max ? params.max.toInteger() : 10,  100)
-        [purchaseInstanceList: Purchase.list(params), purchaseInstanceTotal: Purchase.count()]
+        params.max = Math.min(params.max ? params.max.toInteger() : 15,  100)
+        if (!params.offset) params.offset = 0
+        if (!params.sort) params.sort = "codeNumber"
+        if (!params.order) params.order = "asc"
+
+        def query = {
+          if(params.codeNumber) {
+            eq('codeNumber', params.codeNumber)
+          }
+
+          if(params.supplier) {
+            supplier {
+              eq('name', params.supplier)
+            }
+          }
+
+          if(params.status) {
+            eq('status', params.status)
+          }
+        }
+
+        def criteria = Purchase.createCriteria()
+
+        def total = criteria.count(query)
+
+        def purchases = Purchase.withCriteria{
+
+          maxResults(params.max)
+          firstResult(params.offset?.toInteger())
+          order(params.sort, params.order)
+
+          if(params.codeNumber) {
+            eq('codeNumber', params.codeNumber)
+          }
+
+          if(params.supplier) {
+            supplier {
+              eq('name', params.supplier)
+            }
+          }
+
+          if(params.status) {
+            eq('status', params.status)
+          }
+        }
+      
+        [purchaseInstanceList: purchases, purchaseInstanceTotal: total, codeNumber:params.codeNumber, supplier:params.supplier, status:params.status]
     }
 
     def create = {
@@ -211,6 +256,7 @@ class PurchaseController {
         def updatedAmount = purchaseInstance.amount?purchaseInstance.amount - invoice.amount:0
         purchaseInstance.amount = updatedAmount < 0? 0 : updatedAmount
    }
+
 }
 
 class PurchaseInvoicesCommand{

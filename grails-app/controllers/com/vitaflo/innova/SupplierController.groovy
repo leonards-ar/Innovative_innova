@@ -112,4 +112,18 @@ class SupplierController {
             redirect(action: "list")
         }
     }
+
+    def searchAutocomplete = {
+        def suppliers = Supplier.findAllByNameLike('%' + params.supplier + '%')
+
+        StringBuffer idList = new StringBuffer()
+        idList.append('<ul>')
+
+        suppliers?.each{s -> idList.append('<li>' + s.name + '</li>')}
+
+        idList.append('</ul')
+
+        render idList.toString()
+  }
+
 }
