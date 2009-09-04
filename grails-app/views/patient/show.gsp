@@ -40,6 +40,27 @@
             </tr>
 
             <tr class="prop">
+              <td valign="top" class="name"><g:message code="patient.birth" default="Birth" />:</td>
+
+            <td valign="top" class="value"><g:formatDate date="${patientInstance?.birth}" format="dd/MM/yyyy" /></td>
+
+            </tr>
+
+            <tr class="prop">
+              <td valign="top" class="name"><g:message code="patient.weight" default="Weight" />:</td>
+
+            <td valign="top" class="value">${fieldValue(bean: patientInstance, field: "weight")}</td>
+
+            </tr>
+
+            <tr class="prop">
+              <td valign="top" class="name"><g:message code="patient.height" default="Height" />:</td>
+
+            <td valign="top" class="value">${fieldValue(bean: patientInstance, field: "height")}</td>
+
+            </tr>
+
+            <tr class="prop">
               <td valign="top" class="name"><g:message code="patient.phone" default="Phone" />:</td>
 
             <td valign="top" class="value">${fieldValue(bean: patientInstance, field: "phone")}</td>
@@ -54,9 +75,16 @@
             </tr>
 
             <tr class="prop">
+              <td valign="top" class="name"><g:message code="patient.deliveryAddress" default="Delivery Address" />:</td>
+
+            <td valign="top" class="value">${fieldValue(bean: patientInstance, field: "deliveryAddress")}</td>
+
+            </tr>
+            
+            <tr class="prop">
               <td valign="top" class="name"><g:message code="patient.country" default="Country" />:</td>
 
-            <td valign="top" class="value"><g:link controller="country" action="show" id="${patientInstance?.country?.id}">${patientInstance?.country?.encodeAsHTML()}</g:link></td>
+            <td valign="top" class="value">${patientInstance?.country?.encodeAsHTML()}</td>
 
             </tr>
 
@@ -67,6 +95,82 @@
 
             </tr>
 
+            <tr class="prop">
+              <td valign="top" class="name"><g:message code="patient.dose" default="Dose" />:</td>
+
+            <td valign="top" class="value">${fieldValue(bean: patientInstance, field: "dose")}</td>
+
+            </tr>
+
+            <tr class="prop">
+              <td valign="top" class="name"><g:message code="patient.pathology" default="Pathology" />:</td>
+
+            <td valign="top" class="value">${fieldValue(bean: patientInstance, field: "pathology")}</td>
+
+            </tr>
+
+            <tr class="prop">
+              <td valign="top" class="name"><g:message code="patient.physician" default="Physician" />:</td>
+
+            <td valign="top" class="value">${fieldValue(bean: patientInstance, field: "physician")}</td>
+
+            </tr>
+
+            <tr class="prop">
+              <td valign="top" class="name"><g:message code="patient.clinicalStatus" default="Clinical Status" />:</td>
+
+            <td valign="top" class="value">${fieldValue(bean: patientInstance, field: "clinicalStatus")}</td>
+
+            </tr>
+
+            <tr class="prop">
+              <td valign="top" class="name"><g:message code="patient.clinicalHistory" default="Clinical History" />:</td>
+
+            <td valign="top" class="value">${fieldValue(bean: patientInstance, field: "clinicalHistory")}</td>
+
+            </tr>
+
+            <tr class="prop">
+              <td valign="top" class="name"><g:message code="patient.adverseEvent" default="Adverse Event" />:</td>
+
+            <td valign="top" class="value">${fieldValue(bean: patientInstance, field: "adverseEvent")}</td>
+
+            </tr>
+
+            <tr class="prop">
+              <td valign="top" class="name"><g:message code="patient.startNTBC" default="Start" />:</td>
+
+            <td valign="top" class="value">${fieldValue(bean: patientInstance, field: "startNTBC")}</td>
+
+            </tr>
+
+            <tr class="prop">
+              <td valign="top" class="name"><g:message code="patient.product" default="Product" />:</td>
+
+            <td valign="top" class="value"><g:link controller="patient" action="show" id="${patientInstance?.product?.id}">${patientInstance?.product?.encodeAsHTML()}</g:link> </td>
+
+            </tr>
+
+            <tr class="prop">
+              <td valign="top" class="name"><g:message code="patient.lastOrderedDate" default="Last Ordered Date" />:</td>
+
+            <td valign="top" class="value"><g:formatDate date="${patientInstance?.lastOrderedDate}" format="dd/MM/yyyy" /></td>
+
+            </tr>
+
+            <tr class="prop">
+              <td valign="top" class="name"><g:message code="patient.orderedQty" default="Ordered Quantity" />:</td>
+
+            <td valign="top" class="value">${fieldValue(bean: patientInstance, field: "orderedQuantity")}</td>
+
+            </tr>
+
+            <tr class="prop">
+              <td valign="top" class="name"><g:message code="patient.reimbursement" default="Reimbursement" />:</td>
+
+            <td valign="top" class="value">${fieldValue(bean: patientInstance, field: "reimbursement")}</td>
+
+            </tr>
             </tbody>
           </table>
         </div>
