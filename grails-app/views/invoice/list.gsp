@@ -20,7 +20,10 @@
         url="[controller:'invoice',action:'list']">
         <table>
           <tr>
-            <td></td>
+               <td>
+              <div><g:message code="purchase.codeNumber"/> </div>
+          <g:textField name="codeNumber" value="${codeNumber}" />
+          </td>
             <td>
               <div><g:message code="proforma.client"/> </div>
 

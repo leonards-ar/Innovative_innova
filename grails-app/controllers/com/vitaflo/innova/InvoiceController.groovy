@@ -15,6 +15,9 @@ class InvoiceController {
 
         def  query = {
 
+            if(params.codeNumber){
+                eq('number', params.codeNumber)
+            }
             if(params.status){
                 eq('status', params.status)
             }
@@ -43,6 +46,10 @@ class InvoiceController {
             firstResult(params.offset?.toInteger())
             order(params.sort, params.order)
 
+            if(params.codeNumber){
+                eq('number', params.codeNumber)
+            }
+
             if(params.status){
                 eq('status', params.status)
             }
@@ -62,7 +69,7 @@ class InvoiceController {
             }
         }
         
-        [invoiceInstanceList: invoices, invoiceInstanceTotal: total, client: params.client, patient: params.patient, status: params.status]
+        [invoiceInstanceList: invoices, invoiceInstanceTotal: total, codeNumber: params.codeNumber, client: params.client, patient: params.patient, status: params.status]
     }
 
     def create = {
