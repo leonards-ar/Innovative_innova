@@ -78,7 +78,7 @@ class PatientController {
         }
 
         print session.countries
-        [patientInstanceList: patients, patientInstanceTotal: total, clientName: params.clientName, patientName:params.patientName, selectedCountry: params.selectedCountry]
+        [patientInstanceList: patients, patientInstanceTotal: total, client: params.client, patient:params.patient, selectedCountry: params.selectedCountry]
     }
 
     def create = {
