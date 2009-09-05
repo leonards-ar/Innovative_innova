@@ -29,7 +29,6 @@
 
             $('addDailyDose').value = e.responseText.evalJSON().dose;
 
-
           }
         </script>
     </head>
