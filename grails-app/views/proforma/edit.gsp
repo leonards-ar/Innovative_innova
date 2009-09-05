@@ -22,6 +22,15 @@
              return false;
            }
           }
+
+          function updateComponents(e)
+          {
+            $('clientName').innerHTML = e.responseText.evalJSON().clientName;
+
+            $('addDailyDose').value = e.responseText.evalJSON().dose;
+
+
+          }
         </script>
     </head>
     <body>
@@ -53,7 +62,7 @@
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: proformaInstance, field: 'patient', 'errors')}">
                                     <g:select name="patient.id" from="${patients}" optionKey="id" value="${proformaInstance?.patient?.id}"
-                                               onchange="${remoteFunction(controller:'proforma', action:'lookUpClient',update:'clientName', params:'\'patientId=\'  + this.value')}"/>
+                                               onchange="${remoteFunction(controller:'proforma', action:'lookUpClient',onSuccess:'updateComponents(e)', params:'\'patientId=\'  + this.value')}"/>
 
                                 </td>
                             </tr>

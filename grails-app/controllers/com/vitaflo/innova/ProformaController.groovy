@@ -1,5 +1,5 @@
 package com.vitaflo.innova
-
+import grails.converters.JSON
 class ProformaController {
 
     // the delete, save and update actions only accept POST requests
@@ -289,13 +289,18 @@ class ProformaController {
     def lookUpClient ={
 
         def clientName = ''
-
+        Float dose = 0
         if (params.patientId != 'null'){
             def patientInstance = Patient.get(params.patientId)
             clientName = patientInstance?.client?.name
+            if(patientInstance?.dose && patientInstance?.weight){
+                dose = patientInstance?.dose * patientInstance?.weight
+            } 
         }
 
-        render clientName
+        def data = []
+        data = [clientName:clientName, dose:dose]
+        render  data as JSON
     }
 
     def addDetail = { UpdateProformaDetailsListCommand updateCommand, AddProformaDetailsListCommand addCommand ->
