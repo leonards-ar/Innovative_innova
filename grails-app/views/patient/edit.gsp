@@ -11,10 +11,10 @@
     var clients = e.responseText.evalJSON();
     $('client.id').options.length=clients.size();
     for(i=0;i < clients.size();i++){
-      $('client.id').options[i] = new Option(clients[i].name, clients[i].id);
+    $('client.id').options[i] = new Option(clients[i].name, clients[i].id);
     }
 
-   }
+    }
   </g:javascript>
 </head>
 <body>
@@ -62,10 +62,62 @@
 
           <tr class="prop">
             <td valign="top" class="name">
+              <label for="birth"><g:message code="patient.birth" default="Day of Birth" />:</label>
+            </td>
+            <td valign="top" class="value ${hasErrors(bean: patientInstance, field: 'birth', 'errors')}">
+          <g:datePicker name="birth" value="${patientInstance?.birth}" precision="day" />
+
+          </td>
+          </tr>
+
+          <tr class="prop">
+            <td valign="top" class="name">
+              <label for="weight"><g:message code="patient.weight" default="Weight" />:</label>
+            </td>
+
+            <td valign="top" class="value ${hasErrors(bean: patientInstance, field: 'weight', 'errors')}">
+          <g:textField name="weight" value="${fieldValue(bean: patientInstance, field: 'weight')}" />
+
+
+          </tr>
+
+          <tr class="prop">
+            <td valign="top" class="name">
+              <label for="height"><g:message code="patient.height" default="Height" />:</label>
+            </td>
+
+            <td valign="top" class="value ${hasErrors(bean: patientInstance, field: 'height', 'errors')}">
+          <g:textField name="height" value="${fieldValue(bean: patientInstance, field: 'height')}" />
+          </td>
+
+          </tr>
+
+          <tr class="prop">
+            <td valign="top" class="name">
               <label for="phone"><g:message code="patient.phone" default="Phone" />:</label>
             </td>
             <td valign="top" class="value ${hasErrors(bean: patientInstance, field: 'phone', 'errors')}">
           <g:textField name="phone" value="${fieldValue(bean: patientInstance, field: 'phone')}" />
+
+          </td>
+          </tr>
+
+          <tr class="prop">
+            <td valign="top" class="name">
+              <label for="contactName"><g:message code="patient.contactName" default="Contact Name" />:</label>
+            </td>
+            <td valign="top" class="value ${hasErrors(bean: patientInstance, field: 'contactName', 'errors')}">
+          <g:textField name="contactName" value="${fieldValue(bean: patientInstance, field: 'contactName')}" />
+
+          </td>
+          </tr>
+
+          <tr class="prop">
+            <td valign="top" class="name">
+              <label for="deliveryAddress"><g:message code="patient.deliveryAddress" default="Delivery Address" />:</label>
+            </td>
+            <td valign="top" class="value ${hasErrors(bean: patientInstance, field: 'deliveryAddress', 'errors')}">
+          <g:textArea name="deliveryAddress" value="${patientInstance?.deliveryAddress}" style="width:200;height:70" />
 
           </td>
           </tr>
@@ -92,13 +144,64 @@
 
           <tr class="prop">
             <td valign="top" class="name">
-              <label for="contactName"><g:message code="patient.contactName" default="Contact Name" />:</label>
+              <label for="dose"><g:message code="patient.dose" default="Dose" />:</label>
             </td>
-            <td valign="top" class="value ${hasErrors(bean: patientInstance, field: 'contactName', 'errors')}">
-          <g:textField name="contactName" value="${fieldValue(bean: patientInstance, field: 'contactName')}" />
+            <td valign="top" class="value ${hasErrors(bean: patientInstance, field: 'dose', 'errors')}">
+          <g:textField name="dose" value="${fieldValue(bean: patientInstance, field: 'dose')}" />
 
           </td>
           </tr>
+
+          <tr class="prop">
+            <td valign="top" class="name">
+              <label for="pathology"><g:message code="patient.pathology" default="Pathology" />:</label>
+            </td>
+            <td valign="top" class="value ${hasErrors(bean: patientInstance, field: 'pathology', 'errors')}">
+          <g:textField name="pathology" value="${fieldValue(bean: patientInstance, field: 'pathology')}" />
+
+          </td>
+          </tr>
+
+          <tr class="prop">
+            <td valign="top" class="name">
+              <label for="physician"><g:message code="patient.physician" default="Physician" />:</label>
+            </td>
+            <td valign="top" class="value ${hasErrors(bean: patientInstance, field: 'physician', 'errors')}">
+          <g:textField name="physician" value="${fieldValue(bean: patientInstance, field: 'physician')}" />
+
+          </td>
+          </tr>
+
+          <tr class="prop">
+            <td valign="top" class="name">
+              <label for="clinicalStatus"><g:message code="patient.clinicalStatus" default="Clinical Status" />:</label>
+            </td>
+            <td valign="top" class="value ${hasErrors(bean: patientInstance, field: 'clinicalStatus', 'errors')}">
+          <g:textField name="clinicalStatus" value="${fieldValue(bean: patientInstance, field: 'clinicalStatus')}" />
+
+          </td>
+          </tr>
+
+          <tr class="prop">
+            <td valign="top" class="name">
+              <label for="clinicalHistory"><g:message code="patient.clinicalHistory" default="Clinical History" />:</label>
+            </td>
+            <td valign="top" class="value ${hasErrors(bean: patientInstance, field: 'clinicalHistory', 'errors')}">
+          <g:textField name="clinicalHistory" value="${fieldValue(bean: patientInstance, field: 'clinicalHistory')}" />
+
+          </td>
+          </tr>
+
+          <tr class="prop">
+            <td valign="top" class="name">
+              <label for="adverseEvent"><g:message code="patient.adverseEvent" default="Adverse Event" />:</label>
+            </td>
+            <td valign="top" class="value ${hasErrors(bean: patientInstance, field: 'adverseEvent', 'errors')}">
+          <g:textField name="adverseEvent" value="${fieldValue(bean: patientInstance, field: 'adverseEvent')}" />
+
+          </td>
+          </tr>
+
 
           </tbody>
         </table>
