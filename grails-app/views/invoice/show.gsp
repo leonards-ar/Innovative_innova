@@ -67,10 +67,39 @@
                         </tbody>
                     </table>
                 </div>
+
+                <g:if test="${invoiceInstance?.proforma?.details?.size()> 0}">
+                <div id="detailListPanel" class="list">
+                  <table style="margin-top: 5px;">
+                    <thead>
+                        <tr>
+                            <th><g:message code="proformaDetail.product" default="Product" /></th>
+
+                            <th><g:message code="proformaDetail.quantity" default="Quantity" /></th>
+
+                            <th><g:message code="proformaDetail.lot" default="Batch Number" /></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <g:each in="${invoiceInstance.proforma.details}" status="i" var="proformaDetail">
+                        <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
+
+                            <td>${fieldValue(bean:proformaDetail, field: "productName")}</td>
+
+                            <td>${fieldValue(bean:proformaDetail, field: "quantity")}</td>
+
+                            <td>${fieldValue(bean:proformaDetail, field: "lot")}</td>
+                        </tr>
+                    </g:each>
+                   </tbody>
+                  </table>
+                </div>
+                </g:if>
                 <g:if test="${invoiceInstance?.status == 'Pendiente'}">
                 <div class="buttons">
                     <span class="button"><g:actionSubmit class="edit" action="edit" value="${message(code: 'edit', 'default': 'Edit')}" /></span>
                     <span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'delete', 'default': 'Delete')}" onclick="return confirm('${message(code: 'delete.confirm', 'default': 'Are you sure?')}');" /></span>
+                    <span class="menuButton"><g:link class="create" controller="proforma" action="addBatch" id="${invoiceInstance?.proforma?.id}" params="[invoiceId:invoiceInstance.id]"><g:message code="proforma.addBatch" default="Add Batch"/></g:link></span>
                 </div>
                 </g:if>
             </g:form>

@@ -93,6 +93,58 @@ class ProformaController {
         render(view: "create", model: [proformaInstance: proformaInstance, proformaDetailList: proformaDetailList])        
     }
 
+    def addBatch = {
+        def proformaInstance = Proforma.get(params.id)
+        if (!proformaInstance) {
+            flash.message = "proforma.not.found"
+            flash.args = [params.id]
+            flash.defaultMessage = "Proforma not found with id ${params.id}"
+            redirect(action: "list")
+        }
+
+        def batchNumbers = []
+        proformaInstance.details.eachWithIndex{obj, i->
+            batchNumbers[i] = obj.lot
+        }
+
+        AddBatchNumberCommand addBatchCmd = new AddBatchNumberCommand(invoiceId: params.invoiceId, batchNumbers:batchNumbers)
+        render(view:'addBatch', model:[proformaInstance: proformaInstance, addBatchCmd:addBatchCmd])
+    }
+
+    def updateBatch = {AddBatchNumberCommand addBatchCmd ->
+        def proformaInstance = Proforma.get(params.id)
+        
+        if (!proformaInstance) {
+            flash.message = "proforma.not.found"
+            flash.args = [params.id]
+            flash.defaultMessage = "Proforma not found with id ${params.id}"
+            redirect(controller:"invoice", action: "list")
+        }
+        
+        //If a new product was added to the promforma while were editing the batch numbers an error is thrown.
+        if (proformaInstance.details.size() != addBatchCmd.batchNumbers.size()) {
+            proformaInstance.errors.rejectValue("version", "proforma.optimistic.locking.failure", "Another user has updated this Proforma while you were editing")
+            def proformaDetailList = proformaInstance.details
+            redirect(action:"addBatch",  id: proformaInstance.id)
+        }
+
+        //Updating the batch numbers in the proforma
+        proformaInstance.details.eachWithIndex{obj, i->
+            obj.lot = addBatchCmd.batchNumbers[i]
+        }
+
+        //Persisting the proforma
+        if (!proformaInstance.hasErrors() && proformaInstance.save()) {
+            flash.message = "batch.updated"
+            flash.args = [params.id]
+            flash.defaultMessage = "Batch number for proforma ${params.id} updated"
+            redirect(controller:"invoice", action: "show", id: addBatchCmd.invoiceId)
+        }
+        
+        render(view:'addBatch', model:[proformaInstance: proformaInstance, addBatchCmd:addBatchCmd])
+    }
+
+
     def show = {
         def proformaInstance = Proforma.get(params.id)
         if (!proformaInstance) {
@@ -399,4 +451,9 @@ class SendEmailCommand {
         clientEmail(email:true, blank:false)
     }
 
+}
+
+class AddBatchNumberCommand {
+    def invoiceId
+    List batchNumbers = []
 }
