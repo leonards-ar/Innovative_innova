@@ -6,28 +6,28 @@ class ProformaDetail {
     String lot
     Double dailyDose
     Product product
+    Double price
 
     static belongsTo = [proforma: Proforma]
     
     static constraints = {
-        quantity(nullable:false)
+        quantity(nullable:false, min:1)
         product(nullable:false)
         lot(nullable:true)
+        dailyDose(nullable:false, min:0.1d)
+        price(nullable:false, min:0d)
     }
 
     static mapping = {
-        table 'proformaDetails'
+        table 'proformadetails'
+        price column:'price_each'
     }
 
     static transients = ['total','productName','productPrice']
 
 
     Double getTotal(){
-        getProductPrice() * this.quantity
-    }
-
-    Double getProductPrice(){
-        this.product.price
+        this.price * this.quantity
     }
 
     String getProductName(){

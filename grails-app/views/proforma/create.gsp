@@ -11,8 +11,16 @@
         $('clientName').innerHTML = e.responseText.evalJSON().clientName;
         
         $('addDailyDose').value = e.responseText.evalJSON().dose;
-        
-        
+      }
+
+      function updateAddPrice(e)
+      {
+        document.getElementById('addPrice').value = e.responseText;
+      }
+
+      function updateProformaDetailsPrice(e, index)
+      {
+        document.getElementById('prices['+index+']').value = e.responseText;
       }
     </g:javascript>
 </head>

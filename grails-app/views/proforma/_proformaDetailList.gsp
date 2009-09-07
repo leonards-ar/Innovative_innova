@@ -19,7 +19,6 @@
 
         <th>&nbsp;</th>
     </tr>
-
    </thead>
    <tbody>
       <tr class="odd">
@@ -27,7 +26,7 @@
         <g:select name="addProductId" from="${com.vitaflo.innova.Product.list()}" optionKey="id"
                   value="${addCommand?.addProductId}"
                   noSelection="['':'Seleccione...']"
-                  onchange="${remoteFunction(controller:'proforma', action:'updatePrice',update:'addPrice', params:'\'addProductId=\'  + this.value')}"
+                  onchange="${remoteFunction(controller:'proforma', action:'updatePrice',onSuccess:'updateAddPrice(e)', params:'\'addProductId=\'  + this.value')}"
                   />
       </td>
 
@@ -38,8 +37,8 @@
       <td valign="top" class="value ${hasErrors(field: 'addDailyDose', 'errors')}">
         <g:textField name="addDailyDose" value="${fieldValue(bean: addCommand, field: 'addDailyDose')}"/>
       </td>
-      <td class="value" style="vertical-align:middle;">
-        <div id="addPrice" style="text-align:center;vertical-align:text-bottom">${formatNumber(number:addCommand?.addProductPrice, format:'#.##')}</div>
+      <td class="value ${hasErrors(field: 'addPrice', 'errors')}" style="vertical-align:middle;">
+        <g:textField id="addPrice" name="addPrice" value="${formatNumber(number:addCommand?.addPrice, format:'#.##')}" style="text-align:center;vertical-align:text-bottom"/>
       </td>
       <td>&nbsp;</td>
       <td><g:submitToRemote controller="proforma" update="detailListPanel" action="addDetail" value="${message(code: 'add', 'default': 'Add')}"/></td>
@@ -51,7 +50,7 @@
       <g:select name="productIds[${i}]" from="${com.vitaflo.innova.Product.list()}" optionKey="id"
                 value="${proformaDetail.product?.id}"
                 noSelection="['':'Seleccione...']"
-                onchange="${remoteFunction(controller:'proforma', action:'updatePrice',update:'addPrice_'+i, params:'\'addProductId=\'  + this.value')}"
+                onchange="${remoteFunction(controller:'proforma', action:'updatePrice',onSuccess:'updateProformaDetailsPrice(e,'+i+')', params:'\'addProductId=\'  + this.value')}"
                 />
       </td>
 
@@ -63,9 +62,8 @@
         <g:textField name="dailyDoses[${i}]" value="${fieldValue(bean: proformaDetail, field: 'dailyDose')}"/>
       </td>
       <td class="value" style="vertical-align:middle;">
-        <div id="addPrice_${i}" style="text-align:center;vertical-align:text-bottom">
-          ${proformaDetail.product?formatNumber(number:proformaDetail?.productPrice, format:'#.##'):''}
-        </div></td>
+          <g:textField id="prices[${i}]" name="prices[${i}]" value="${formatNumber(number:proformaDetail?.price, format:'#.##')}" style="text-align:center;vertical-align:text-bottom"/>
+      </td>
       <td>&nbsp;</td>
       <td><g:submitToRemote controller="proforma" update="detailListPanel" action="removeDetail" id="${i}" value="${message(code: 'remove', 'default': 'Remove')}"/></td>
       </tr>

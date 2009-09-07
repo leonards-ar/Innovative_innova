@@ -90,7 +90,9 @@ class ProformaController {
             }
         }
 
-        render(view: "create", model: [proformaInstance: proformaInstance, proformaDetailList: proformaDetailList])        
+        def patients = Patient.findAllByCountryInList(session.countries)
+
+        render(view: "create", model: [proformaInstance: proformaInstance, proformaDetailList: proformaDetailList, patients:patients])
     }
 
     def addBatch = {
@@ -258,7 +260,10 @@ class ProformaController {
                     
                     proformaInstance.errors.rejectValue("version", "proforma.optimistic.locking.failure", "Another user has updated this Proforma while you were editing")
                     def proformaDetailList = proformaInstance.details
-                    render(view: "edit", model: [proformaInstance: proformaInstance, proformaDetailList: proformaDetailList])
+                    
+                    def patients = Patient.findAllByCountryInList(session.countries)
+
+                    render(view: "edit", model: [proformaInstance: proformaInstance, proformaDetailList: proformaDetailList, patients:patients])
                     return
                 }
             }
@@ -272,6 +277,7 @@ class ProformaController {
                     def auxProformaDetail = proformaInstance.details.find{it.id == updatedDetail.id}
                     auxProformaDetail.quantity = updatedDetail.quantity
                     auxProformaDetail.dailyDose = updatedDetail.dailyDose
+                    auxProformaDetail.price = updatedDetail.price
                     auxProformaDetail.product = updatedDetail.product
                 }
             }
@@ -302,7 +308,8 @@ class ProformaController {
                 redirect(action: "show", id: proformaInstance.id)
             }
             else {
-                render(view: "edit", model: [proformaInstance: proformaInstance, proformaDetailList: updatedDetailList])
+               def patients = Patient.findAllByCountryInList(session.countries)
+               render(view: "edit", model: [proformaInstance: proformaInstance, proformaDetailList: updatedDetailList, patients:patients])
             }
         }
         else {
@@ -392,29 +399,29 @@ class AddProformaDetailsListCommand {
     Long addProductId
     Integer addQuantity
     Double addDailyDose
-    Double addProductPrice = 0d
+    Double addPrice
 
 
     static constraints = {
         addProductId(nullable:false)
         addQuantity(nullable:false, min:1)
         addDailyDose(nullable:false, min:0.1d)
+        addPrice(nullable:false, min:0d)
     }
 
     ProformaDetail createNewProformaDetail(){
         def auxProduct = Product.get(addProductId)
-        def proformaDetail = new ProformaDetail(product:auxProduct, quantity:addQuantity, dailyDose:addDailyDose)
+        def proformaDetail = new ProformaDetail(product:auxProduct, quantity:addQuantity, dailyDose:addDailyDose, price:addPrice)
 
         return proformaDetail
     }
 
     void updateAddProductPrice(){
 
-        addProductPrice = 0d
-
+        addPrice = 0d
         if (addProductId != null && addProductId != ''){
             def auxProduct = Product.get(addProductId)
-            addProductPrice = auxProduct.getPrice()
+            addPrice = auxProduct.getPrice()
         }
     }
 
@@ -426,13 +433,14 @@ class UpdateProformaDetailsListCommand {
     List quantities = []
     List dailyDoses = []
     List detailsIds = []
+    List prices = []
     
 
     List createProformaDetailsList(){
         List proformaDetailList = []
         productIds.eachWithIndex(){ productId, i->
             def auxProduct = Product.get(productId)
-            def proformaDetail = new ProformaDetail(product:auxProduct, quantity:quantities[i], dailyDose:dailyDoses[i])
+            def proformaDetail = new ProformaDetail(product:auxProduct, quantity:quantities[i], dailyDose:dailyDoses[i], price:prices[i])
             if(detailsIds[i]!=''){
                 proformaDetail.id = detailsIds[i].toLong()
             }

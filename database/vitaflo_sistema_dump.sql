@@ -245,36 +245,11 @@ INSERT INTO `products` VALUES (2,'Cystagonpó',3,0,'Cystagon 150 mg','Enabled',1
 UNLOCK TABLES;
 
 --
--- Table structure for table `proforma_details`
+-- Drop Table structure for table `proforma_details`
 --
 
 DROP TABLE IF EXISTS `proforma_details`;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-CREATE TABLE `proforma_details` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `version` bigint(20) NOT NULL,
-  `amount` double NOT NULL,
-  `description` varchar(255) NOT NULL,
-  `lot` varchar(255) NOT NULL,
-  `price_each` double NOT NULL,
-  `product_id` bigint(20) NOT NULL,
-  `proforma_id` bigint(20) NOT NULL,
-  `quantity` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK695F86938E8C9EED` (`proforma_id`),
-  KEY `FK695F86933082FFEF` (`product_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-SET character_set_client = @saved_cs_client;
 
---
--- Dumping data for table `proforma_details`
---
-
-LOCK TABLES `proforma_details` WRITE;
-/*!40000 ALTER TABLE `proforma_details` DISABLE KEYS */;
-/*!40000 ALTER TABLE `proforma_details` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `proformadetails`
