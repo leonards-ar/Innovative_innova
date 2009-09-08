@@ -358,7 +358,7 @@ class ProformaController {
         }
 
         def data = []
-        data = [clientName:clientName, dose:dose]
+        data = [clientName:clientName, dose:formatNumber(number:dose,format:"#.##")]
         render  data as JSON
     }
 

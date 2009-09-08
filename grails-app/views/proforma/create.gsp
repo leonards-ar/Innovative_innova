@@ -9,7 +9,7 @@
     <g:javascript>
       function updateComponents(e){
         $('clientName').innerHTML = e.responseText.evalJSON().clientName;
-        
+
         $('addDailyDose').value = e.responseText.evalJSON().dose;
       }
 

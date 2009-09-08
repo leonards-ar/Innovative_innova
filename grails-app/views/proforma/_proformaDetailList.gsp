@@ -35,7 +35,7 @@
       </td>
 
       <td valign="top" class="value ${hasErrors(field: 'addDailyDose', 'errors')}">
-        <g:textField name="addDailyDose" value="${fieldValue(bean: addCommand, field: 'addDailyDose')}"/>
+        <g:textField name="addDailyDose" value="${formatNumber(number:addCommand?.addDailyDose, format:'#.##')}"/>
       </td>
       <td class="value ${hasErrors(field: 'addPrice', 'errors')}" style="vertical-align:middle;">
         <g:textField id="addPrice" name="addPrice" value="${formatNumber(number:addCommand?.addPrice, format:'#.##')}" style="text-align:center;vertical-align:text-bottom"/>
@@ -59,7 +59,7 @@
       </td>
 
       <td valign="top" class="value">
-        <g:textField name="dailyDoses[${i}]" value="${fieldValue(bean: proformaDetail, field: 'dailyDose')}"/>
+        <g:textField name="dailyDoses[${i}]" value="${formatNumber(number:proformaDetail?.dailyDose, format:'#.##')}"/>
       </td>
       <td class="value" style="vertical-align:middle;">
           <g:textField id="prices[${i}]" name="prices[${i}]" value="${formatNumber(number:proformaDetail?.price, format:'#.##')}" style="text-align:center;vertical-align:text-bottom"/>

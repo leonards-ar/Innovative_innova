@@ -74,7 +74,7 @@
             </td>
 
             <td valign="top" class="value ${hasErrors(bean: patientInstance, field: 'weight', 'errors')}">
-          <g:textField name="weight" value="${fieldValue(bean: patientInstance, field: 'weight')}" />
+          <g:textField name="weight" value="${formatNumber(number:patientInstance?.weight, format:'#.##')}" />
 
 
           </tr>
@@ -85,7 +85,7 @@
             </td>
 
             <td valign="top" class="value ${hasErrors(bean: patientInstance, field: 'height', 'errors')}">
-          <g:textField name="height" value="${fieldValue(bean: patientInstance, field: 'height')}" />
+          <g:textField name="height" value="${formatNumber(number:patientInstance?.height, format:'#.##' )}" />
           </td>
 
           </tr>
@@ -146,7 +146,7 @@
               <label for="dose"><g:message code="patient.dose" default="Dose" />:</label>
             </td>
             <td valign="top" class="value ${hasErrors(bean: patientInstance, field: 'dose', 'errors')}">
-          <g:textField name="dose" value="${fieldValue(bean: patientInstance, field: 'dose')}" />
+          <g:textField name="dose" value="${formatNumber(number:patientInstance?.dose, format:'#.##')}" />
 
           </td>
           </tr>
