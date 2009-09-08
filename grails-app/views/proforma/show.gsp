@@ -47,7 +47,7 @@
                             <tr class="prop">
                                 <td valign="top" class="name"><g:message code="proforma.status" default="Status" />:</td>
 
-                                <td valign="top" class="value">${fieldValue(bean: proformaInstance, field: "status")}</td>
+                                <td valign="top" class="value">${message(code: 'proforma.status.list.'+proformaInstance.status)}</td>
 
                             </tr>
 

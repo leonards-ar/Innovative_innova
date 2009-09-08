@@ -43,7 +43,7 @@
           </td>
           <td>
             <div><g:message code="invoice.status"/> </div>
-            <g:select name="status" from="${com.vitaflo.innova.Invoice.STATUS_LIST}" value="${status}" noSelection="['':'']"/>
+            <g:select name="status" from="${com.vitaflo.innova.Invoice.STATUS_LIST}" value="${status}" noSelection="['':'']" valueMessagePrefix="invoice.status" />
           </td>
           <td>
             <div>&nbsp;</div>
@@ -83,7 +83,7 @@
 
                             <td>${formatNumber(number: invoiceInstance.amount, format: "#.##")}</td>
 
-                            <td>${fieldValue(bean: invoiceInstance, field: "status")}</td>
+                            <td>${message(code: 'invoice.status.'+invoiceInstance.status)}</td>
 
                             <td><g:formatDate date="${invoiceInstance.date}" format="dd/MM/yyyy"/></td>
                         </tr>

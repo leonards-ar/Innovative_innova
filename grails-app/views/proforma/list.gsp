@@ -41,7 +41,7 @@
           </td>
           <td>
             <div><g:message code="proforma.status"/> </div>
-            <g:select name="status" from="${com.vitaflo.innova.Proforma.STATUS_LIST}" value="${status}" noSelection="['':'']"/>
+            <g:select name="status" from="${com.vitaflo.innova.Proforma.STATUS_LIST}" value="${status}" noSelection="['':'']" valueMessagePrefix="proforma.status.list"/>
           </td>
           <td>
             <div>&nbsp;</div>
@@ -84,7 +84,7 @@
 
           <td>${fieldValue(bean: proformaInstance, field: "patient")}</td>
 
-          <td>${fieldValue(bean: proformaInstance, field: "status")}</td>
+          <td>${message(code: 'proforma.status.list.'+proformaInstance.status)}</td>
 
           <td><g:formatDate format="dd-MM-yyyy" date="${proformaInstance.createdAt}" /></td>
 

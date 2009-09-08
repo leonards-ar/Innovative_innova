@@ -86,7 +86,7 @@
 
                                 <td>${formatNumber(number: invoiceInstance.amount, format: "#.##")}</td>
 
-                                <td>${fieldValue(bean: invoiceInstance, field: "status")}</td>
+                                <td>${message(code: 'invoice.status.'+invoiceInstance.status)}</td>
 
                                 <td><g:formatDate date="${invoiceInstance.date}" format="dd/MM/yyyy"/></td>
                             </tr>
