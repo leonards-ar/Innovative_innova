@@ -80,13 +80,13 @@ log4j = {
 //Mail Plugin Configuration
 grails {
    mail {
-     host = "hp31.hostpapa.com"
-     port = 465
+     host = "mail.mindpool-it.com"
+     port = 587
      username = "labs+mindpool.com.ar"
      password = "java1234"
      props = ["mail.smtp.auth":"true", 					   
-              "mail.smtp.socketFactory.port":"465",
-              "mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
+//              "mail.smtp.socketFactory.port":"587",
+//              "mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
               "mail.smtp.socketFactory.fallback":"false"]
 
 } }
