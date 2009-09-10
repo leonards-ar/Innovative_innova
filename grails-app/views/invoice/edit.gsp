@@ -104,8 +104,16 @@
                                     <g:select name="status" from="${invoiceInstance.constraints.status.inList}" value="${invoiceInstance.status}" valueMessagePrefix="invoice.status"  />
 
                                 </td>
-                            </tr>                       
-                                                
+                            </tr>
+
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="deliveryDate"><g:message code="invoice.deliveryDate" default="Date of delivery" />:</label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: invoiceInstance, field: 'deliveryDate', 'errors')}">
+                                    <g:datePicker default="none" noSelection="${['':message(code:'noselect.dash')]}" name="deliveryDate" value="${invoiceInstance?.deliveryDate}" precision="day" years="${2009..2015}" />
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

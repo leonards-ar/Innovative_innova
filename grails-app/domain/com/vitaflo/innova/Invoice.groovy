@@ -4,6 +4,7 @@ class Invoice implements Comparable {
 
     Date createdAt = new Date()
     Date date = new Date()
+    Date deliveryDate
     String number
     String status = 'Pendiente'
     Double amount
@@ -12,15 +13,20 @@ class Invoice implements Comparable {
     
     static belongsTo = [proforma:Proforma]
 
-    static final def STATUS_LIST = ['Pendiente','Pagada']
+    static final def STATUS_LIST = ['Pendiente','Pagada', 'Entregada']
 
     static constraints = {
         number(nullable:false, blank:false, unique:true)
         date(nullable:false)
         amount(nullable:false,min:0d)
-        status(inList:STATUS_LIST)
+        status(inList:STATUS_LIST, validator:{val, obj ->
+            if ((val == 'Entregada') && !obj.deliveryDate){
+                return "invoice.delivered.musthave.deliverydate.error"
+           }
+        })
         proforma(nullable:false, unique:true)
         purchase(nullable:true)
+        deliveryDate(nullable:true, blank:true)
     }
 
     static transients = ['viewPurchase']
@@ -36,7 +42,7 @@ class Invoice implements Comparable {
 
     //TODO: Resolve how to apply i18n without penalize performance.
     String getViewPurchase(){
-        return "Factura de Venta: ${this.number} - Proforma: ${this.proforma}"
+        return "${this.number} - Proforma: ${this.proforma}"
     }
 
     int compareTo(other) {

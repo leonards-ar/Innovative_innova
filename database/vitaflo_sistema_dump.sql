@@ -124,7 +124,7 @@ CREATE TABLE `invoices` (
   `client_id` int(10) unsigned NOT NULL DEFAULT '0',
   `amount` float NOT NULL DEFAULT '0',
   `date` date NOT NULL DEFAULT '0000-00-00',
-  `status` enum('Pendiente','Pagada') NOT NULL DEFAULT 'Pendiente',
+  `status` enum('Pendiente','Pagada','Entregada') NOT NULL DEFAULT 'Pendiente',
   `concile` int(10) unsigned NOT NULL DEFAULT '0',
   `version` bigint(20) DEFAULT NULL,
   `create_at` datetime DEFAULT NULL,
@@ -240,7 +240,7 @@ SET character_set_client = @saved_cs_client;
 
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
-INSERT INTO `products` VALUES (2,'Cystagonpó',3,0,'Cystagon 150 mg','Enabled',1,3,10),(3,'NTBC 5mg',4,0,'Bottle 60 Capsulas de 5 mg','Enabled',1,0,NULL),(4,'Betaina',5,0,'Betaina Polvo 98%','Enabled',1,0,NULL),(5,'Ambutyrate',2,0,'Ambutyrate Polvo 98%','Enabled',1,0,NULL),(6,'Ambutyrate Oral',2,0,'Fenilbutirato Polvo SoluciÃ³n Oral 250 mg en 1 ml','Enabled',1,0,NULL),(7,'NTBC 10mg',4,0,'NTBC 10mg Bottle 60 Comprimidos','Enabled',1,0,NULL),(8,'NTBC 2mg',4,0,'NTBC 2 mg Frasco de 60 comprimidos. ','Enabled',1,0,NULL),(9,'Buphenyl Tabletas',2,0,'Buphenyl Tabletas 250 comprimidos.','Enabled',1,0,NULL),(10,'Normosang',8,0,'Ampollas x 4','Enabled',1,0,NULL),(11,'Neophe',9,0,'Frasco 550 Tabletas','Enabled',1,0,NULL),(12,'Lacrisert 5 mg',2,0,'60 unidades','Enabled',1,0,NULL),(13,'Cidofovir ',12,0,'Frasco de Ampollas.','Enabled',1,0,NULL),(14,'Sodium Dichloroacetate',13,0,'Dicloroacetato de sodio (98%)Polvo de 10g\\\\r\\\\nDicloroacetato de sodio 50mg en 1ml Polvo Liquido\\\\r\\\\nDicloroacetato de sodio Polvo de 100g','Enabled',1,0,NULL),(15,'Producto Test',2,10,'','Enabled',1,2,100.89);
+INSERT INTO `products` VALUES (1,'Producto Test',3,10,'Producto Test 150mg','Enabled',1,3,150),(2,'Cystagonpó',3,0,'Cystagon 150 mg','Enabled',1,3,10),(3,'NTBC 5mg',4,0,'Bottle 60 Capsulas de 5 mg','Enabled',1,0,NULL),(4,'Betaina',5,0,'Betaina Polvo 98%','Enabled',1,0,NULL),(5,'Ambutyrate',2,0,'Ambutyrate Polvo 98%','Enabled',1,0,NULL),(6,'Ambutyrate Oral',2,0,'Fenilbutirato Polvo SoluciÃ³n Oral 250 mg en 1 ml','Enabled',1,0,NULL),(7,'NTBC 10mg',4,0,'NTBC 10mg Bottle 60 Comprimidos','Enabled',1,0,NULL),(8,'NTBC 2mg',4,0,'NTBC 2 mg Frasco de 60 comprimidos. ','Enabled',1,0,NULL),(9,'Buphenyl Tabletas',2,0,'Buphenyl Tabletas 250 comprimidos.','Enabled',1,0,NULL),(10,'Normosang',8,0,'Ampollas x 4','Enabled',1,0,NULL),(11,'Neophe',9,0,'Frasco 550 Tabletas','Enabled',1,0,NULL),(12,'Lacrisert 5 mg',2,0,'60 unidades','Enabled',1,0,NULL),(13,'Cidofovir ',12,0,'Frasco de Ampollas.','Enabled',1,0,NULL),(14,'Sodium Dichloroacetate',13,0,'Dicloroacetato de sodio (98%)Polvo de 10g\\\\r\\\\nDicloroacetato de sodio 50mg en 1ml Polvo Liquido\\\\r\\\\nDicloroacetato de sodio Polvo de 100g','Enabled',1,0,NULL),(15,'Producto Test',2,10,'','Enabled',1,2,100.89);
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 

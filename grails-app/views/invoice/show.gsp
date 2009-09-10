@@ -25,43 +25,43 @@
                             <tr class="prop">
                                 <td valign="top" class="name"><g:message code="invoice.number" default="Number" />:</td>
                                 
-                                <td valign="top" class="value">${fieldValue(bean: invoiceInstance, field: "number")}</td>
-                                
+                                <td valign="top" class="value">${fieldValue(bean: invoiceInstance, field: "number")}</td>                                
                             </tr>
 
                             <tr class="prop">
                                 <td valign="top" class="name"><g:message code="invoice.proforma" default="Proforma" />:</td>
 
                                 <td valign="top" class="value"><g:link controller="proforma" action="show" id="${invoiceInstance?.proforma?.id}">${invoiceInstance?.proforma?.encodeAsHTML()}</g:link></td>
-
                             </tr>
 
                             <tr class="prop">
                                 <td valign="top" class="name"><g:message code="invoice.date" default="Date" />:</td>
                                 
-                                <td valign="top" class="value"><g:formatDate date="${invoiceInstance?.date}" format="dd/MM/yyyy" /></td>
-                                
+                                <td valign="top" class="value"><g:formatDate date="${invoiceInstance?.date}" format="dd/MM/yyyy" /></td>                             
                             </tr>
                             
                             <tr class="prop">
                                 <td valign="top" class="name"><g:message code="invoice.amount" default="Amount" />:</td>
                                 
-                                <td valign="top" class="value">${formatNumber(number: invoiceInstance.amount, format: "#.##")}</td>
-                                
+                                <td valign="top" class="value">${formatNumber(number: invoiceInstance.amount, format: "#.##")}</td>                              
                             </tr>
                             
                             <tr class="prop">
                                 <td valign="top" class="name"><g:message code="invoice.status" default="Status" />:</td>
                                 
-                                <td valign="top" class="value">${message(code: 'invoice.status.'+invoiceInstance.status)}</td>
-                                
+                                <td valign="top" class="value">${message(code: 'invoice.status.'+invoiceInstance.status)}</td>                            
                             </tr>
-                            
+
+                            <tr class="prop">
+                                <td valign="top" class="name"><g:message code="invoice.deliveryDate" default="Date of delivery" />:</td>
+
+                                <td valign="top" class="value"><g:formatDate date="${invoiceInstance?.deliveryDate}" format="dd/MM/yyyy" /></td>
+                            </tr>
+
                             <tr class="prop">
                                 <td valign="top" class="name"><g:message code="invoice.createdAt" default="Created At" />:</td>
                                 
-                                <td valign="top" class="value"><g:formatDate date="${invoiceInstance?.createdAt}" format="dd/MM/yyyy" /></td>
-                                
+                                <td valign="top" class="value"><g:formatDate date="${invoiceInstance?.createdAt}" format="dd/MM/yyyy" /></td>                                
                             </tr>
                                                         
                         </tbody>

@@ -82,7 +82,16 @@ class InvoiceController {
     }
 
     def save = {
-        def invoiceInstance = new Invoice(params)
+
+        def invoiceInstance = new Invoice()
+        // Workaround for http://jira.codehaus.org/browse/GRAILS-1793
+        def excludes = []
+        if ((!params.deliveryDate_month) && (!params.deliveryDate_day) && (!params.deliveryDate_year)){
+            excludes << "deliveryDate"
+        }
+        bindData(invoiceInstance, params, excludes)
+        // end the workaround
+
         if (!invoiceInstance.hasErrors() && invoiceInstance.save()) {
             flash.message = "invoice.created"
             flash.args = [invoiceInstance.id]
@@ -125,6 +134,7 @@ class InvoiceController {
     }
 
     def update = {
+
         def invoiceInstance = Invoice.get(params.id)
 
         //Storing the original proforma to be included in the list of proformas in case
@@ -141,7 +151,19 @@ class InvoiceController {
                     return
                 }
             }
-            invoiceInstance.properties = params
+
+            // Workaround for http://jira.codehaus.org/browse/GRAILS-1793
+            def excludes = []
+            if ((!params.deliveryDate_month) && (!params.deliveryDate_day) && (!params.deliveryDate_year)){
+                excludes << "deliveryDate"
+            }
+            bindData(invoiceInstance, params, excludes)
+            // end the workaround
+
+            if (!excludes.isEmpty()){
+                invoiceInstance.deliveryDate = null
+            }
+
             if (!invoiceInstance.hasErrors() && invoiceInstance.save()) {
                 flash.message = "invoice.updated"
                 flash.args = [params.id]
