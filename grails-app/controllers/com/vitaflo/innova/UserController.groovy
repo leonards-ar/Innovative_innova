@@ -28,6 +28,14 @@ class UserController {
             userInstance.passwd = authenticateService.encodePassword(params.passwd)
         }
 
+        if(!params.selectedCountries) {
+          userInstance.errors.rejectValue("countries", "user.countries.min.size.message")
+        }
+
+        if(!params.selectedAuthorities) {
+          userInstance.errors.rejectValue("authorities", "user.roles.min.size.message")
+        }
+
         if(!userInstance.hasErrors() && userInstance.save()) {
             addRoles(userInstance)
             addCountries(userInstance)
@@ -35,9 +43,7 @@ class UserController {
             redirect(action: show, id: userInstance.id)
         }
         else {
-            addRoles(person)
-            addCountries(person)
-            render view: 'create', model: [userInstance: person]
+            render view: 'create', model: [userInstance: userInstance]
         }
     }
 
@@ -106,6 +112,14 @@ class UserController {
                 userInstance.passwd = authenticateService.encodePassword(params.passwd)
             }
 
+            if(!params.selectedCountries) {
+              userInstance.errors.rejectValue("countries", "user.countries.min.size.message")
+            }
+
+            if(!params.selectedAuthorities) {
+              userInstance.errors.rejectValue("authorities", "user.roles.min.size.message")
+            }
+          
             if (!userInstance.hasErrors() && userInstance.save()) {
                 Country.findAll().each {userInstance.removeFromCountries(it)}
                 Role.findAll().each {userInstance.removeFromAuthorities(it)}
