@@ -50,10 +50,14 @@ security {
 
   onInteractiveAuthenticationSuccessEvent = {e, appCtx ->
     com.vitaflo.innova.User.withTransaction {
-        def user = com.vitaflo.innova.User.findByUsername(e.source.principal.username)
+        //def user = com.vitaflo.innova.User.findByUsername(e.source.principal.username)
+        def c = com.vitaflo.innova.User.createCriteria();
+        def user = c.get{
+            fetchMode("countries", org.hibernate.FetchMode.EAGER)
+            eq('username', e.source.principal.username)
+        }
         def attr = org.springframework.web.context.request.RequestContextHolder?.getRequestAttributes()
         attr.session.countries = user.countries.sort {it.name}
-        println(attr.session.countries)
     }
   }
 
