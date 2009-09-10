@@ -4,8 +4,14 @@ class PatientProductStock {
 
     Patient patient
     Product product
-    Date lastDeliveryDate
     Date runningOutOfStockDate
+    // This is the proforma that supplied the product that is being
+    // currently "in use" by the patient". The product bought in
+    // proformas before this one, has already ran out.
+    // This is to simplify and optimize re calculation of the new
+    // runningOutOfStockDate
+    Proforma currentProforma
+
     Boolean notified
     
     static constraints = {
