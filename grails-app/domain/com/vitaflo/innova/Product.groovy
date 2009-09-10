@@ -21,8 +21,13 @@ class Product {
         table 'products'
     }
 
-    String toString(){
+    static transients = ['deliveryPeriod']
+
+    String toString() {
         return name
     }
 
+    Integer getDeliveryPeriod() {
+        return supplier?.deliveryPeriod;
+    }
 }

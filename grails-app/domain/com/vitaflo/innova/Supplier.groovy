@@ -14,7 +14,7 @@ class Supplier {
     static constraints = {
         name(blank:false)
         email(email:true)
-        deliveryPeriod(min:1)
+        deliveryPeriod(min:1, nullable:false, blank:false)
 
     }
 

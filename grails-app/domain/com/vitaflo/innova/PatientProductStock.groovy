@@ -18,9 +18,10 @@ class PatientProductStock {
         patient(nullable:false)
         product(nullable:false)
         runningOutOfStockDate(nullable:false)
+        currentProforma(nullable:true)
     }
 
     String toString(){
-        return "${this.id} - ${this.patient} - ${this.product} - ${this.runningOutOfStockDate}"
+        return "${this.id} - ${this.patient} - ${this.product} - ${this.runningOutOfStockDate} - ${this.notified}"
     }
 }

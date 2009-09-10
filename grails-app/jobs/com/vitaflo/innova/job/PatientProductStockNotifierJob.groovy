@@ -1,15 +1,18 @@
 package com.vitaflo.innova.job
 
-import com.vitaflo.innova.service.PatientProductStockServiceService;
+import com.vitaflo.innova.service.PatientProductStockService;
 
 class PatientProductStockNotifierJob {
-    PatientProductStockServiceService patientProductStockServiceService
+    PatientProductStockService patientProductStockService
 
-    def cronExpresion = "0 1 0 ? * *" // Every day at 1:00 am
-    //def timeout = 5000l // execute job once in 5 seconds
+    def concurrent = false
+    
+    def cronExpresion = "0 0 1 ? * *" // Every day at 1:00 am
+
+    def timeout = 5000l // execute job once in 5 seconds
 
     def execute() {
-        patientProductStockServiceService.listPatientsProductStockToNotify();
+        patientProductStockService.sendPatientsProductStockNotifications();
     }
 }
 
