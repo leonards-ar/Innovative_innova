@@ -8,7 +8,7 @@ class PatientProductStockServiceService {
     boolean transactional = true
 
     def listPatientsProductStockToNotify() {
-
+        System.out.println("Called listPatientsProductStockToNotify: " + new Date());
     }
 
     def updatePatientProductStock(Patient patient, Product product, Integer stockDays) {
