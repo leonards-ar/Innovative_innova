@@ -53,6 +53,13 @@
 
             </tr>
 
+            <tr class="prop">
+              <td valign="top" class="name"><g:message code="supplier.deliveryPeriod" default="Delivery Period" />:</td>
+
+            <td valign="top" class="value">${fieldValue(bean: supplierInstance, field: "deliveryPeriod")}</td>
+
+            </tr>
+
             </tbody>
           </table>
         </div>

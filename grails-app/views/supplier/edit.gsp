@@ -68,7 +68,17 @@
 
                                 </td>
                             </tr>
-                        
+                            
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="phone"><g:message code="supplier.deliveryPeriod" default="Delivery Period" />:</label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: supplierInstance, field: 'deliveryPeriod', 'errors')}">
+                                    <g:textField name="deliveryPeriod" value="${fieldValue(bean: supplierInstance, field: 'deliveryPeriod')}" />
+
+                                </td>
+                            </tr>
+
                         </tbody>
                     </table>
                 </div>
