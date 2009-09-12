@@ -37,7 +37,7 @@ class PatientProductStockService {
 
     def sendPatientsProductStockNotifications() {
         listPatientsProductStockToNotify().each { patientProductStock ->
-            if(sendNotification(it)) {
+            if(sendNotification(patientProductStock)) {
                 patientProductStock.setNotified(true);
                 if(!patientProductStock.save(flush:true)) {
                     patientProductStock.errors.each { err ->
