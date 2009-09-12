@@ -1,7 +1,8 @@
 package com.vitaflo.innova
 
 class InvoiceController {
-
+    def patientProductStockService
+    
     def index = { redirect(action: "list", params: params) }
 
     // the delete, save and update actions only accept POST requests
@@ -93,6 +94,7 @@ class InvoiceController {
         // end the workaround
 
         if (!invoiceInstance.hasErrors() && invoiceInstance.save()) {
+            patientProductStockService.updatePatientProductStock(invoiceInstance);
             flash.message = "invoice.created"
             flash.args = [invoiceInstance.id]
             flash.defaultMessage = "Invoice ${invoiceInstance.id} created"
@@ -165,6 +167,7 @@ class InvoiceController {
             }
 
             if (!invoiceInstance.hasErrors() && invoiceInstance.save()) {
+                patientProductStockService.updatePatientProductStock(invoiceInstance);
                 flash.message = "invoice.updated"
                 flash.args = [params.id]
                 flash.defaultMessage = "Invoice ${params.id} updated"
