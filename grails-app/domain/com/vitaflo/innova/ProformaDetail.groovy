@@ -23,8 +23,16 @@ class ProformaDetail {
         price column:'price_each'
     }
 
-    static transients = ['total','productName','productPrice']
+    static transients = ['total','productName','productPrice', 'totalDoseDays']
 
+    Integer getTotalDoseDays() {
+        if(this.dailyDose != null && this.quantity != null) {
+            return new Integer(this.product?.presentation * this.quantity / this.dailyDose)
+        } else {
+            return new Integer(0);
+        }
+
+    }
 
     Double getTotal(){
         this.price * this.quantity
@@ -34,6 +42,8 @@ class ProformaDetail {
         this.product.name;
     }
 
-    String toString(){return "${this.proforma} - ${this.product}"}
+    String toString() {
+        return "${this.proforma} - ${this.product}"
+    }
 
 }
