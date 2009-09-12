@@ -1,26 +1,50 @@
 package com.vitaflo.innova.service
 
-import com.vitaflo.innova.Patient
+import com.vitaflo.innova.Invoice
 import com.vitaflo.innova.Product
+import com.vitaflo.innova.Proforma
+import com.vitaflo.innova.ProformaDetail
 import com.vitaflo.innova.PatientProductStock
 import com.vitaflo.innova.User
 
 class PatientProductStockService {
-   def mailService
+    def mailService
 
     boolean transactional = true
 
+    def updatePatientProductStock(Invoice invoice) {
+        if(invoice.deliveryDate != null) {
+            Proforma proforma = invoice.getProforma();
 
-    def sendPatientsProductStockNotifications() {
-        listPatientsProductStockToNotify().each {
-
-            if(sendNotification(it)) {
-                it.setNotified(true);
-                if(!it.save(flush:true)) {
-                    log.error it.errors
+            proforma?.getDetails().each {
+                def patientProductStock = PatientProductStock.findByPatientAndProduct(proforma.patient, it.product);
+                if(patientProductStock == null) {
+                    patientProductStock = new PatientProductStock();
+                    patientProductStock.setPatient(proforma.patient);
+                    patientProductStock.setProduct(it.product);
+                }
+                patientProductStock.setRunningOutOfStockDate(invoice.deliveryDate + it.getTotalDoseDays());
+                //:TODO: Check if the flag should always be cleaned!
+                patientProductStock.setNotified(false);
+                if(!patientProductStock.save()) {
+                    patientProductStock.errors.each {
+                        log.error it
+                    }
                 }
             }
+        }
+    }
 
+    def sendPatientsProductStockNotifications() {
+        listPatientsProductStockToNotify().each { patientProductStock ->
+            if(sendNotification(it)) {
+                patientProductStock.setNotified(true);
+                if(!patientProductStock.save(flush:true)) {
+                    patientProductStock.errors.each { err ->
+                        log.error err
+                    }
+                }
+            }
         }
     }
 
@@ -48,10 +72,6 @@ class PatientProductStockService {
            )
         }
         return patientProductStocksToNotify;
-    }
-
-    def updatePatientProductStock(Patient patient, Product product, Integer stockDays) {
-
     }
 
     private sendNotification(PatientProductStock patientProductStock) {
