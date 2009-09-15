@@ -440,7 +440,7 @@ class UpdateProformaDetailsListCommand {
         List proformaDetailList = []
         productIds.eachWithIndex(){ productId, i->
             def auxProduct = Product.get(productId)
-            def proformaDetail = new ProformaDetail(product:auxProduct, quantity:quantities[i], dailyDose:dailyDoses[i], price:prices[i])
+            def proformaDetail = new ProformaDetail(product:auxProduct, quantity:quantities[i], dailyDose:dailyDoses[i].replace(',','.').toDouble(), price:prices[i].replace(',','.').toDouble())
             if(detailsIds[i]!=''){
                 proformaDetail.id = detailsIds[i].toLong()
             }
