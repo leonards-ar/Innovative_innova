@@ -17,10 +17,14 @@ class Purchase implements Comparable {
     static constraints = {
         codeNumber(nullable:false, blank:false, unique:true)
         creationDate(nullable:false)
-        expireDate(nullable:false)
+        expireDate(nullable:false, validator:{val, obj ->
+            if (val.before(obj.creationDate)){
+                return "purchase.expireDate.less.creationDate"
+           }
+        })
         amount(nullable:false,min:0.01d)
         status(inList:STATUS_LIST)
-        supplier(nullable:false)
+        supplier(nullable:false, blank:false)
         invoices(nullable:false,minSize:1)
     }
 
@@ -29,7 +33,6 @@ class Purchase implements Comparable {
         codeNumber column:'code'
         creationDate column:'date'
         invoices cascade: 'save-update'
-        //invoices joinTable:[name:'purchase_invoices', key:'purchase_id', column:'invoice_id']
     }
 
     String toString(){

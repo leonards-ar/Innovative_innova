@@ -71,11 +71,20 @@
                             
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="phone"><g:message code="supplier.deliveryPeriod" default="Delivery Period" />:</label>
+                                    <label for="deliveryPeriod"><g:message code="supplier.deliveryPeriod" default="Delivery Period" />:</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: supplierInstance, field: 'deliveryPeriod', 'errors')}">
                                     <g:textField name="deliveryPeriod" value="${fieldValue(bean: supplierInstance, field: 'deliveryPeriod')}" />
 
+                                </td>
+                            </tr>
+
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="paymentConditionPeriod"><g:message code="supplier.paymentConditionPeriod" default="Payment Condition Period" />:</label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: supplierInstance, field: 'paymentConditionPeriod', 'errors')}">
+                                    <g:textField name="paymentConditionPeriod" value="${fieldValue(bean: supplierInstance, field: 'paymentConditionPeriod')}" />
                                 </td>
                             </tr>
 

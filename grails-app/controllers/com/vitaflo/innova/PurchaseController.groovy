@@ -257,6 +257,32 @@ class PurchaseController {
         purchaseInstance.amount = updatedAmount < 0? 0 : updatedAmount
    }
 
+
+    def updateExpireDate ={
+        def supplierPeriod = Supplier.PAYMENT_CONDITION_PERIOD
+        def auxCreationDate = new Date()
+
+        def auxSupplierId = params.supplierId
+
+        if (params.creationDate_year != '' && params.creationDate_day != '' && params.creationDate_month != ''){
+            def auxCreationCalendar = new GregorianCalendar()
+            auxCreationCalendar.set(params.creationDate_year.toInteger(), (params.creationDate_month.toInteger() - 1),params.creationDate_day.toInteger())
+            auxCreationDate = auxCreationCalendar.getTime()
+        }
+
+        if (auxSupplierId != '' && auxSupplierId != 'null'){
+            def auxSupplier = Supplier.get(auxSupplierId)
+            if (auxSupplier && auxSupplier.getPaymentConditionPeriod()){
+                supplierPeriod = auxSupplier.getPaymentConditionPeriod()
+            }
+        }
+
+        def expireDateUpdated = auxCreationDate + supplierPeriod
+        //Setting this format so it can be parse by JavaScript Date  Object
+        //See more at:
+        //https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/Date/parse
+        render formatDate(date:expireDateUpdated, format:"MMM d, yyyy")
+    }
 }
 
 class PurchaseInvoicesCommand{

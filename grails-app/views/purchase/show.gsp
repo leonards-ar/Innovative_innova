@@ -38,6 +38,13 @@
                             </tr>
 
                             <tr class="prop">
+                                <td valign="top" class="name"><g:message code="purchase.creationDate" default="Date of issue" />:</td>
+
+                                <td valign="top" class="value"><g:formatDate format="dd/MM/yyyy" date="${purchaseInstance?.creationDate}" /></td>
+
+                            </tr>
+
+                            <tr class="prop">
                                 <td valign="top" class="name"><g:message code="purchase.expireDate" default="Expire Date" />:</td>
 
                                 <td valign="top" class="value"><g:formatDate format="dd/MM/yyyy" date="${purchaseInstance?.expireDate}" /></td>

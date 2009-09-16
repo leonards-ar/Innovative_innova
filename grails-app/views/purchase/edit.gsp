@@ -5,6 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="layout" content="main" />
         <title><g:message code="purchase.edit" default="Edit Purchase" /></title>
+        <g:javascript library="prototype" />
         <script type="text/javascript" language="JavaScript">
           function submitRemoveInvoice(index)
           {
@@ -17,6 +18,14 @@
           {
             document.purchaseForm.action = 'addInvoiceForUpdate';
             document.purchaseForm.submit();
+          }
+
+          function updateExpireDateValue(e)
+          {
+            var auxDate = new Date(e.responseText)
+            document.purchaseForm.expireDate_day.value = auxDate.getDate();
+            document.purchaseForm.expireDate_month.value =  auxDate.getMonth()+1;
+            document.purchaseForm.expireDate_year.value = auxDate.getFullYear();
           }
 
         </script>
@@ -59,7 +68,20 @@
                                     <label for="supplier"><g:message code="purchase.supplier" default="Supplier" />:</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: purchaseInstance, field: 'supplier', 'errors')}">
-                                    <g:select name="supplier.id" from="${com.vitaflo.innova.Supplier.list()}" optionKey="id" value="${purchaseInstance?.supplier?.id}"  />
+                                    <g:select name="supplier.id" from="${com.vitaflo.innova.Supplier.list()}" optionKey="id" value="${purchaseInstance?.supplier?.id}"
+                                              onchange="${remoteFunction(controller:'purchase', action:'updateExpireDate',onSuccess:'updateExpireDateValue(e)',
+                                                    params:'\'supplierId=\'+ this.value+\'&creationDate_day=\'+document.purchaseForm.creationDate_day.value+\'&creationDate_month=\'+document.purchaseForm.creationDate_month.value+\'&creationDate_year=\'+document.purchaseForm.creationDate_year.value')}"
+                                              />
+
+                                </td>
+                            </tr>
+
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="creationDate"><g:message code="purchase.creationDate" default="Date of issue" />:</label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: purchaseInstance, field: 'creationDate', 'errors')}">
+                                    <g:datePicker precision="day" name="creationDate" value="${purchaseInstance?.creationDate}"  />
 
                                 </td>
                             </tr>
