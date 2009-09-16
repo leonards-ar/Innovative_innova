@@ -94,7 +94,7 @@
                                     <label for="deliveryDate"><g:message code="invoice.deliveryDate" default="Date of delivery" />:</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: invoiceInstance, field: 'deliveryDate', 'errors')}">
-                                    <g:datePicker default="none" noSelection="${['':message(code:'noselect.dash')]}" name="deliveryDate" value="${invoiceInstance?.deliveryDate}" precision="day" years="${2009..2015}" />
+                                    <g:datePicker default="none" noSelection="${['':message(code:'noselect.dash')]}" name="deliveryDate" value="${invoiceInstance?.deliveryDate}" precision="day" years="${2007..2015}" />
                                 </td>
                             </tr>
 

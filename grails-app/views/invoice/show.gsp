@@ -95,13 +95,13 @@
                   </table>
                 </div>
                 </g:if>
-                <g:if test="${invoiceInstance?.status == 'Pendiente'}">
                 <div class="buttons">
                     <span class="button"><g:actionSubmit class="edit" action="edit" value="${message(code: 'edit', 'default': 'Edit')}" /></span>
-                    <span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'delete', 'default': 'Delete')}" onclick="return confirm('${message(code: 'delete.confirm', 'default': 'Are you sure?')}');" /></span>
+                    <g:if test="${invoiceInstance?.status == 'Pendiente'}">
+                      <span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'delete', 'default': 'Delete')}" onclick="return confirm('${message(code: 'delete.confirm', 'default': 'Are you sure?')}');" /></span>
+                    </g:if>
                     <span class="menuButton"><g:link class="create" controller="proforma" action="addBatch" id="${invoiceInstance?.proforma?.id}" params="[invoiceId:invoiceInstance.id]"><g:message code="proforma.addBatch" default="Add Batch"/></g:link></span>
                 </div>
-                </g:if>
             </g:form>
         </div>
     </body>

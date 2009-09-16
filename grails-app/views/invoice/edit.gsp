@@ -111,7 +111,7 @@
                                     <label for="deliveryDate"><g:message code="invoice.deliveryDate" default="Date of delivery" />:</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: invoiceInstance, field: 'deliveryDate', 'errors')}">
-                                    <g:datePicker default="none" noSelection="${['':message(code:'noselect.dash')]}" name="deliveryDate" value="${invoiceInstance?.deliveryDate}" precision="day" years="${2009..2015}" />
+                                    <g:datePicker default="none" noSelection="${['':message(code:'noselect.dash')]}" name="deliveryDate" value="${invoiceInstance?.deliveryDate}" precision="day" years="${2007..2015}" />
                                 </td>
                             </tr>
                         </tbody>
@@ -119,7 +119,9 @@
                 </div>
                 <div class="buttons">
                     <span class="button"><g:submitButton name="update" class="save" value="${message(code: 'update', 'default': 'Update')}" onclick="submitForm('update')"/></span>
-                    <span class="button"><g:submitButton name="delete" class="delete" value="${message(code: 'delete', 'default': 'Delete')}" onclick="return submitDeleteForm()"/></span>
+                    <g:if test="${invoiceInstance?.status == 'Pendiente'}">
+                      <span class="button"><g:submitButton name="delete" class="delete" value="${message(code: 'delete', 'default': 'Delete')}" onclick="return submitDeleteForm()"/></span>
+                    </g:if>
                 </div>
             </g:form>
         </div>
