@@ -42,6 +42,9 @@ security {
     /purchase/edit=ROLE_ADMIN,ROLE_USER
     /**/create=ROLE_ADMIN
     /**/edit=ROLE_ADMIN
+    /emails/**=ROLE_ADMIN, ROLE_USER
+    /index = IS_AUTHENTICATED_ANONYMOUSLY
+    /error = IS_AUTHENTICATED_ANONYMOUSLY
     /**=IS_AUTHENTICATED_ANONYMOUSLY
     """
 
