@@ -1,8 +1,6 @@
-update suppliers set delivery_period = 10;
+update suppliers set delivery_period = 20;
 
 -- Los productos 1
-
- alter table patient_product_stock drop column last_delivery_date;
  
  -- Countries
 insert into countries (id, version, code, name) values(1, 0, 'AR', 'Argentina');
@@ -40,6 +38,7 @@ alter table users drop column password;
 update clients set version = 0;
 -- in case all clients are from argentina
 --update clients set country_id = 1;
+--update patients set country_id = 1;
 
 
 
