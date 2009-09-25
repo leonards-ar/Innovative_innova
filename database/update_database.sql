@@ -35,3 +35,12 @@ update users set version=0, enabled=1, passwd='e79cab55eab4c0a1a63610829a51fd51d
 
 -- Delete column password
 alter table users drop column password;
+
+-- Update clients
+update clients set version = 0;
+-- in case all clients are from argentina
+--update clients set country_id = 1;
+
+
+
+
