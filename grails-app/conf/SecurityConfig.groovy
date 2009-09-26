@@ -25,8 +25,8 @@ security {
     /user/edit=ROLE_ADMIN
     /user/list=ROLE_ADMIN
     /user/create=ROLE_ADMIN
-    /user/showProfile=ROLE_ADMIN,ROLE_USER
-    /user/editProfile=ROLE_ADMIN,ROLE_USER
+    /user/showprofile=ROLE_ADMIN,ROLE_USER
+    /user/editprofile=ROLE_ADMIN,ROLE_USER
     /client/**=ROLE_ADMIN,ROLE_USER
     /drug/**=ROLE_ADMIN,ROLE_USER
     /login/**=IS_AUTHENTICATED_ANONYMOUSLY
