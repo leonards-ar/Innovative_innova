@@ -137,7 +137,7 @@
 
             </tr>
 
-            <tr class="prop">
+            <!--tr class="prop">
               <td valign="top" class="name"><g:message code="patient.startNTBC" default="Start" />:</td>
 
             <td valign="top" class="value">${fieldValue(bean: patientInstance, field: "startNTBC")}</td>
@@ -170,7 +170,7 @@
 
             <td valign="top" class="value">${fieldValue(bean: patientInstance, field: "reimbursement")}</td>
 
-            </tr>
+            </tr-->
             </tbody>
           </table>
         </div>
