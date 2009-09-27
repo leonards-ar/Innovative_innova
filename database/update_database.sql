@@ -1,5 +1,9 @@
 update suppliers set delivery_period = 20;
 
+-- Supplier 0
+INSERT INTO suppliers VALUES (null,'SUPPLIER 0','','','',NULL,20,NULL);
+UPDATE products set supplier_id = (select id from suppliers s where s.name='SUPPLIER 0') where  supplier_id=0;
+
 -- Los productos 1
  
  -- Countries
