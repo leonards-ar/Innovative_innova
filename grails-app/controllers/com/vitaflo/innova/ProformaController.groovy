@@ -349,13 +349,14 @@ class ProformaController {
     def lookUpClient ={
 
         def clientName = ''
-        Float dose = 0
+        Double dose = 0.0
         if (params.patientId != 'null'){
             def patientInstance = Patient.get(params.patientId)
             clientName = patientInstance?.client?.name
+
             if(patientInstance?.dose && patientInstance?.weight){
-                dose = patientInstance?.dose * patientInstance?.weight
-            } 
+                dose = patientInstance?.dose 
+            }
         }
 
         def data = []

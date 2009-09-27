@@ -5,7 +5,7 @@ class Proforma {
     Date createdAt = new Date()
 
     Integer discount =0
-    Double courier =0.0
+    Double courier =200.0
     String status = 'Creada'
 
     Patient patient
