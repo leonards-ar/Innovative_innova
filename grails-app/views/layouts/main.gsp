@@ -12,13 +12,16 @@
     <img src="${resource(dir:'images',file:'spinner.gif')}" alt="Spinner" />
   </div>
   <div class="logo"><img src="${resource(dir:'images',file:'innovative.gif')}" alt="Innovative" />
-    <g:isLoggedIn>
+
       <p>  </p>
       <div class="welcomeBox">
-        <g:link controller="user" action="showProfile" id="${loggedInUserInfo(field:'id')}"><g:message code="login.bar.profile"/></g:link> | <g:link controller="logout"><g:message code="logout"/></g:link>
+        <g:isLoggedIn>
+          <g:link controller="user" action="showProfile" id="${loggedInUserInfo(field:'id')}"><g:message code="login.bar.profile"/></g:link> | <g:link controller="logout"><g:message code="logout"/></g:link>
+          <br/><br/>
+          <g:message code="login.bar.welcomeback" args="${[loggedInUserInfo(field:'username')]}"/>
+        </g:isLoggedIn>
         <br/><br/>
-        <g:message code="login.bar.welcomeback" args="${[loggedInUserInfo(field:'firstName')]}"/>
-        <br/><br/>
+        <g:if test="${params.controller == 'home' || params.controller == 'login'}">
        <span>
           <g:link controller="${params.controller?params.controller:'home'}" action="${params.action}" id="${params.id}" params="[lang:'en']" class="menuButton"><g:message code="language.english"/></g:link>
         </span>
@@ -28,8 +31,8 @@
         <!--span>
           <g:link controller="${params.controller}" action="${params.action}" id="${params.id}" params="[lang:'pt_BR']" class="menuButton"><g:message code="language.portuguese"/></g:link>
         </span-->
+        </g:if>
       </div>
-    </g:isLoggedIn>
   </div>
 <g:layoutBody/>
 </body>
