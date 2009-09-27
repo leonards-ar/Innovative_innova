@@ -77,7 +77,6 @@ class PatientController {
             }
         }
 
-        print session.countries
         [patientInstanceList: patients, patientInstanceTotal: total, client: params.client, patient:params.patient, selectedCountry: params.selectedCountry]
     }
 
