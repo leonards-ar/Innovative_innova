@@ -43,7 +43,7 @@
                             <tr class="prop">
                                 <td valign="top" class="name"><g:message code="invoice.amount" default="Amount" />:</td>
                                 
-                                <td valign="top" class="value">${formatNumber(number: invoiceInstance.amount, format: "#.##")}</td>                              
+                                <td valign="top" class="value">${formatNumber(number: invoiceInstance.amount, format: "0.00")}</td>                              
                             </tr>
                             
                             <tr class="prop">

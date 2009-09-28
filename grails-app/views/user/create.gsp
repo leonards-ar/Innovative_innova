@@ -95,6 +95,7 @@
                                       <g:select name="selectedAuthorities"
                                             from="${com.vitaflo.innova.Role.list()}"
                                             size="3" multiple="yes" optionKey="id"
+                                            
                                             value="${userInstance?.authorities?.id}" />
                                   </td>
                               </tr>

@@ -91,7 +91,7 @@
 
                                 <td>${fieldValue(bean: invoiceInstance, field: "proforma")}</td>
 
-                                <td>${formatNumber(number: invoiceInstance.amount, format: "#.##")}</td>
+                                <td class="currencyValue">${formatNumber(number: invoiceInstance.amount, format: "0.00")}</td>
 
                                 <td>${message(code: 'invoice.status.'+invoiceInstance.status)}</td>
 

@@ -69,7 +69,7 @@
               <label for="courier"><g:message code="proforma.courier" default="Courier" />:</label>
             </td>
             <td valign="top" class="value ${hasErrors(bean: proformaInstance, field: 'courier', 'errors')}">
-          <g:textField name="courier" value="${formatNumber(number:proformaInstance?.courier, format:'#.##')}" />
+          <g:textField name="courier" value="${formatNumber(number:proformaInstance?.courier, format:'0.00')}" />
           </td>
           </tr>
 

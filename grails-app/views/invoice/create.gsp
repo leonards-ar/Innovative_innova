@@ -75,7 +75,7 @@
                                     <label for="amount"><g:message code="invoice.amount" default="Amount" />:</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: invoiceInstance, field: 'amount', 'errors')}">
-                                 <g:textField name="amount" value="${formatNumber(number:invoiceInstance?.amount, format: '#.##')}"/>
+                                 <g:textField name="amount" value="${formatNumber(number:invoiceInstance?.amount, format: '0.00')}"/>
                                 </td>
                             </tr>
                         

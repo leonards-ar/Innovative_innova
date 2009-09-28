@@ -104,7 +104,7 @@
 
                             <td>${fieldValue(bean: proformaDetail, field: "dailyDose")}</td>
 
-                            <td><g:formatNumber number="${proformaDetail?.price}" format="#.##"/></td>
+                            <td><g:formatNumber number="${proformaDetail?.price}" format="0.00"/></td>
 
                             <td>${fieldValue(bean: proformaDetail, field: "total")}</td>
                         </tr>
@@ -112,19 +112,19 @@
                     <g:set var="detailsSize" value="${proformaInstance.details.size()}" />
                     <tr class="${(detailsSize % 2) == 0?'odd':'even'}" style="border-top:1px solid #ddd">
                         <td colspan="4"><g:message code="proforma.totalproducts" default="Total Products" /></td>
-                        <td><g:formatNumber number="${totalDetails}" format="#.##"/></td>
+                        <td><g:formatNumber number="${totalDetails}" format="0.00"/></td>
                       </tr>
                     <tr class="${((detailsSize+1) % 2) == 0?'odd':'even'}">
                     <td colspan="4"><g:message code="proforma.courier" default="Courier" /></td>
-                    <td><g:formatNumber number="${proformaInstance?.courier}" format="#.##"/></td>
+                    <td><g:formatNumber number="${proformaInstance?.courier}" format="0.00"/></td>
                     </tr>
                     <tr class="${((detailsSize+2) % 2) == 0?'odd':'even'}">
-                    <td colspan="4" style="color:red"><g:message code="proforma.discountAmount" default="Discount" /> <g:formatNumber number="${proformaInstance?.discount}" format="#.##"/> %</td>
-                    <td style="color:red"><g:formatNumber number="${discountAmount}" format="#.##"/></td>
+                    <td colspan="4" style="color:red"><g:message code="proforma.discountAmount" default="Discount" /> <g:formatNumber number="${proformaInstance?.discount}" format="0.00"/> %</td>
+                    <td style="color:red"><g:formatNumber number="${discountAmount}" format="0.00"/></td>
                     </tr>
                     <tr class="${((detailsSize+3) % 2) == 0?'odd':'even'}">
                     <td colspan="4"><b><g:message code="proforma.totalAmount" default="Total Amount" /></b></td>
-                    <td><b><g:formatNumber number="${totalAmount}" format="#.##"/></b></td>
+                    <td><b><g:formatNumber number="${totalAmount}" format="0.00"/></b></td>
                     </tr>
                    </tbody>
                   </table>

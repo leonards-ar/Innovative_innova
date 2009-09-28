@@ -39,7 +39,7 @@
 
             <td>${fieldValue(bean: productInstance, field: "presentation")}</td>
 
-            <td>${fieldValue(bean: productInstance, field: "price")}</td>
+            <td class="currencyValue"><g:formatNumber number="${productInstance?.price}" format="0.00"/></td>
 
             <td>${fieldValue(bean: productInstance, field: "supplier")}</td>
 
