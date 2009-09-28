@@ -40,10 +40,27 @@ alter table users drop column password;
 
 -- Update clients
 update clients set version = 0;
+update countries set version = 0;
+update drugs set version = 0;
+update invoices set version = 0;
+update patient_product_stock set version = 0;
+update patients set version = 0;
+update products set version = 0;
+update proformadetails set version = 0;
+update proformas set version = 0;
+update purchases set version = 0;
+update suppliers set version = 0;
+update users set version = 0;
+
 -- in case all clients are from argentina
 --update clients set country_id = 1;
 --update patients set country_id = 1;
 
 
+alter table proformas modify client_description text default null;
+alter table proformas modify patient_description text default null;
+alter table proformadetails modify description text default null;
+alter table proformadetails modify lot varchar(45) default null;
+alter table users modify email varchar(45) default null;
 
-
+alter table invoices modify status enum('Pendiente','Pagada','Entregada') NOT NULL default 'Pendiente';
