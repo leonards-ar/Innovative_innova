@@ -26,7 +26,7 @@ class ProformaDetail {
     static transients = ['total','productName','productPrice', 'totalDoseDays']
 
     Integer getTotalDoseDays() {
-        if(this.dailyDose != null && this.quantity != null) {
+        if(this.product?.presentation != null && this.dailyDose != null && this.quantity != null) {
             return new Integer(this.product?.presentation * this.quantity / this.dailyDose)
         } else {
             return new Integer(0);

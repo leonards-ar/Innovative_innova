@@ -12,7 +12,6 @@ class PatientProductStockNotifierJob {
     def timeout = 3600000l // execute job once every 1 hour
 
     def execute() {
-        println("Notification running " + new Date())
         patientProductStockService.sendPatientsProductStockNotifications();
     }
 }
