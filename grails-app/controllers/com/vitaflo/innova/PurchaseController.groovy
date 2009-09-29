@@ -10,8 +10,8 @@ class PurchaseController {
     def list = {
         params.max = Math.min(params.max ? params.max.toInteger() : 15,  100)
         if (!params.offset) params.offset = 0
-        if (!params.sort) params.sort = "codeNumber"
-        if (!params.order) params.order = "asc"
+        if (!params.sort) params.sort = "expireDate"
+        if (!params.order) params.order = "desc"
 
         def query = {
           if(params.codeNumber) {
