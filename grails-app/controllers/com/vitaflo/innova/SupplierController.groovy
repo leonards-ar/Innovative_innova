@@ -9,6 +9,10 @@ class SupplierController {
 
     def list = {
         params.max = Math.min(params.max ? params.max.toInteger() : 15,  100)
+        if (!params.offset) params.offset = 0
+        if (!params.sort) params.sort = "name"
+        if (!params.order) params.order = "asc"
+
         [supplierInstanceList: Supplier.list(params), supplierInstanceTotal: Supplier.count()]
     }
 
