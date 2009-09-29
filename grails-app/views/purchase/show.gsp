@@ -54,7 +54,7 @@
                             <tr class="prop">
                                 <td valign="top" class="name"><g:message code="purchase.amount" default="Amount" />:</td>
                                 
-                                <td valign="top" class="value">${fieldValue(bean: purchaseInstance, field: "amount")}</td>
+                                <td valign="top" class="value"><g:formatNumber number="${purchaseInstance?.amount}" format="0.00"/></td>
                                 
                             </tr>
                             

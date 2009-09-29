@@ -101,7 +101,7 @@
                                     <label for="amount"><g:message code="purchase.amount" default="Amount" />:</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: purchaseInstance, field: 'amount', 'errors')}">
-                                    <g:textField name="amount" value="${fieldValue(bean: purchaseInstance, field: 'amount')}" />
+                                    <g:textField name="amount" value="${formatNumber(number:purchaseInstance?.amount , format:'0.00')}" />
 
                                 </td>
                             </tr>

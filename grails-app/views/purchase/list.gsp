@@ -75,7 +75,7 @@
 
                             <td><g:formatDate date="${purchaseInstance.expireDate}" format="dd/MM/yyyy" /></td>
                         
-                            <td><g:formatNumber number="${purchaseInstance?.amount}" format="0.00"/></td>
+                            <td class="currencyValue"><g:formatNumber number="${purchaseInstance?.amount}" format="0.00"/></td>
                         
                             <td>${message(code: 'purchase.status.'+purchaseInstance?.status)}</td>
                         </tr>
