@@ -5,6 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="layout" content="main" />
     <title><g:message code="product.list" default="Product List" /></title>
+    <g:javascript library="scriptaculous" />
   </head>
   <body>
     <div class="nav">
@@ -15,6 +16,35 @@
     </div>
     <div class="body">
       <h1><g:message code="product.list" default="Product List" /></h1>
+    <div id="searchBox">
+      <g:form
+        name="searchForm"
+        url="[controller:'product',action:'list']">
+        <table>
+          <tr>
+            <td>
+              <div><g:message code="product.name"/> </div>
+          <g:textField name="name" value="${name}" />
+          </td>
+          <td>
+            <div><g:message code="product.supplier"/> </div>
+          <g:textField id="autocompleteSupplier" name="supplier" value="${supplier}" />
+          <div id="supplier_choices" class="autocomplete"></div>
+          <g:javascript>
+            new Ajax.Autocompleter("autocompleteSupplier", "supplier_choices", "${createLink(controller:'supplier', action:'searchAutocomplete')}",{});
+          </g:javascript>
+          </td>
+          <td>
+            <div>&nbsp;</div>
+            <span class="button"><g:submitButton name="search" class="save" value="${message(code: 'find', 'default': 'Find')}" /></span>
+          </td>
+          </tr>
+        </table>
+
+      </g:form>
+
+    </div>
+
       <g:if test="${flash.message}">
         <div class="message"><g:message code="${flash.message}" args="${flash.args}" default="${flash.defaultMessage}" /></div>
       </g:if>

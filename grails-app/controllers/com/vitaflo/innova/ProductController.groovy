@@ -13,7 +13,39 @@ class ProductController {
         if (!params.sort) params.sort = "name"
         if (!params.order) params.order = "asc"
 
-        [productInstanceList: Product.list(params), productInstanceTotal: Product.count()]
+        def query = {
+            if(params.name) {
+                like('name', '%' + params.name + '%')
+            }
+            if(params.supplier) {
+                supplier {
+                    eq('name', params.supplier)
+                }
+            }
+
+        }
+
+        def criteria = Product.createCriteria()
+        def total = criteria.count(query)
+
+        def products = Product.withCriteria {
+
+            maxResults(params.max)
+            firstResult(params.offset?.toInteger())
+            order(params.sort, params.order)
+
+            if(params.name) {
+                like('name', '%' + params.name + '%')
+            }
+            if(params.supplier) {
+                supplier {
+                    eq('name', params.supplier)
+                }
+            }
+
+        }
+
+        [productInstanceList: products, productInstanceTotal: total, name:params.name, supplier: params.supplier]
     }
 
     def create = {
