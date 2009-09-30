@@ -66,16 +66,10 @@ class ProformaController {
         def proformaInstance = new Proforma()
         proformaInstance.properties = params
         
-        def patients = Patient.withCriteria{
-            inList('country', session.countries)
-            order('lastName', 'asc')
-        }
+        def patients = Patient.findAllByCountryInList(session.countries, [sort:'lastName', order:'asc'])
         
-        def clients = Client.withCriteria {
-            inList('country', session.countries)
-            order('name', 'asc')
-        }
-        
+        def clients = Client.findAllByCountryInList(session.countries, [sort:'name', order:'asc'])
+
         return [proformaInstance: proformaInstance, patients: patients, clients: clients]
     }
 
@@ -368,11 +362,7 @@ class ProformaController {
                 dose = patientInstance?.dose 
             }
         } else {
-            clients = Client.withCriteria {
-            fetchMode("patients", org.hibernate.FetchMode.LAZY)
-            inList('country', session.countries)
-            order('name', 'asc')
-            }
+            clients = Client.findAllByCountryInList(session.countries, [sort:'name', order:'asc'])
         }
 
         def data = []
@@ -423,7 +413,7 @@ class AddProformaDetailsListCommand {
     static constraints = {
         addProductId(nullable:false)
         addQuantity(nullable:false, min:1)
-        addDailyDose(nullable:false, min:0.1d)
+        addDailyDose(nullable:true, min:0.1d)
         addPrice(nullable:false, min:0d)
     }
 

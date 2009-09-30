@@ -9,6 +9,7 @@
     <g:javascript>
       function updateComponents(e){
         var clients = e.responseText.evalJSON().clients;
+
         $('client.id').options.length=clients.size();
 
         for(i=0;i < clients.size();i++){

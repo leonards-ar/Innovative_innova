@@ -15,7 +15,7 @@ class ProformaDetail {
         product(nullable:false)
         lot(nullable:true)
         dailyDose(min:0.1d, validator:{val, obj ->
-            if(!obj.proforma.patient && val){
+            if(obj.proforma.patient && !val){
                 return false
             }
         })

@@ -23,7 +23,7 @@
    <tbody>
       <tr class="odd">
       <td valign="top" class="value ${hasErrors(field: 'addProductId', 'errors')}">
-        <g:select name="addProductId" from="${com.vitaflo.innova.Product.list()}" optionKey="id"
+        <g:select name="addProductId" from="${com.vitaflo.innova.Product.list([sort:'name', order:'asc'])}" optionKey="id"
                   value="${addCommand?.addProductId}"
                   noSelection="['':'Seleccione...']"
                   onchange="${remoteFunction(controller:'proforma', action:'updatePrice',onSuccess:'updateAddPrice(e)', params:'\'addProductId=\'  + this.value')}"
@@ -47,7 +47,7 @@
       <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
       <td valign="top" class="value">
       <g:hiddenField name="detailsIds[${i}]" value="${fieldValue(bean: proformaDetail, field: 'id')}"/>
-      <g:select name="productIds[${i}]" from="${com.vitaflo.innova.Product.list()}" optionKey="id"
+      <g:select name="productIds[${i}]" from="${com.vitaflo.innova.Product.list([sort:'name', order:'asc'])}" optionKey="id"
                 value="${proformaDetail.product?.id}"
                 noSelection="['':'Seleccione...']"
                 onchange="${remoteFunction(controller:'proforma', action:'updatePrice',onSuccess:'updateProformaDetailsPrice(e,'+i+')', params:'\'addProductId=\'  + this.value')}"
@@ -64,7 +64,7 @@
       <td class="value" style="vertical-align:middle;">
           <g:textField id="prices[${i}]" name="prices[${i}]" value="${formatNumber(number:proformaDetail?.price, format:'0.00')}" style="text-align:center;vertical-align:text-bottom"/>
       </td>
-      <td>&nbsp;</td>
+      <td style="vertical-align:center"><g:formatNumber number="${proformaDetail?.total}" /></td>
       <td><g:submitToRemote controller="proforma" update="detailListPanel" action="removeDetail" id="${i}" value="${message(code: 'remove', 'default': 'Remove')}"/></td>
       </tr>
     </g:each>
