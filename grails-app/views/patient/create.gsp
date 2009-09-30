@@ -11,7 +11,7 @@
     var clients = e.responseText.evalJSON();
     $('client.id').options.length=clients.size();
     for(i=0;i < clients.size();i++){
-    $('client.id').options[i] = new Option(clients[i].name, clients[i].id);
+      $('client.id').options[i] = new Option(clients[i].name, clients[i].id);
     }
 
     }
