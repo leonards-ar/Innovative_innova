@@ -9,13 +9,15 @@ class Proforma {
     String status = 'Creada'
 
     Patient patient
+    Client client
 
     static final def STATUS_LIST = ['Creada','Aprobada','Rechazada','Anulada']
 
     static hasMany = [details:ProformaDetail]
 
     static constraints = {
-        patient(nullable:false)
+        patient(nullable:true)
+        client(nullable:false)
         status(inList:STATUS_LIST)
         details(nullable:false,minSize:1)
     }
@@ -25,11 +27,7 @@ class Proforma {
         details cascade:'all, delete-orphan'
     }
 
-    static transients = ['client', 'totalAmount', 'totalDetails']
-
-    Client getClient(){
-        this.patient.client
-    }
+    static transients = ['totalAmount', 'totalDetails']
 
     Double getTotalAmount(){
 
@@ -52,6 +50,6 @@ class Proforma {
 
 
     String toString(){
-        return "${this.id} - ${getClient()} - ${this.patient}"
+        return "${this.id} - ${this.client} - ${this.patient}"
     }
 }

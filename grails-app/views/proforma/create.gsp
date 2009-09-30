@@ -8,8 +8,12 @@
     <g:javascript library="prototype" />
     <g:javascript>
       function updateComponents(e){
-        $('clientName').innerHTML = e.responseText.evalJSON().clientName;
+        var clients = e.responseText.evalJSON().clients;
+        $('client.id').options.length=clients.size();
 
+        for(i=0;i < clients.size();i++){
+          $('client.id').options[i] = new Option(clients[i].name, clients[i].id);
+        }
         $('addDailyDose').value = e.responseText.evalJSON().dose;
       }
 
@@ -60,7 +64,7 @@
               <label for="client"><g:message code="proforma.client" default="Client" />:</label>
             </td>
             <td valign="top" class="value ${hasErrors(bean: proformaInstance, field: 'client', 'errors')}">
-              <div id="clientName"></div>
+              <g:select name="client.id" from="${clients}" optionKey="id" value="${proformaInstance?.client?.id}"  />
             </td>
           </tr>
 

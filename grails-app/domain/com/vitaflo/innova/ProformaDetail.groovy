@@ -14,7 +14,11 @@ class ProformaDetail {
         quantity(nullable:false, min:1)
         product(nullable:false)
         lot(nullable:true)
-        dailyDose(nullable:false, min:0.1d)
+        dailyDose(min:0.1d, validator:{val, obj ->
+            if(!obj.proforma.patient && val){
+                return false
+            }
+        })
         price(nullable:false, min:0d)
     }
 

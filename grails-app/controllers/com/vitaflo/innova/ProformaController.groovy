@@ -65,9 +65,18 @@ class ProformaController {
     def create = {
         def proformaInstance = new Proforma()
         proformaInstance.properties = params
-        def patients = Patient.findAllByCountryInList(session.countries)
-
-        return [proformaInstance: proformaInstance, patients: patients]
+        
+        def patients = Patient.withCriteria{
+            inList('country', session.countries)
+            order('lastName', 'asc')
+        }
+        
+        def clients = Client.withCriteria {
+            inList('country', session.countries)
+            order('name', 'asc')
+        }
+        
+        return [proformaInstance: proformaInstance, patients: patients, clients: clients]
     }
 
 
@@ -348,19 +357,26 @@ class ProformaController {
 
     def lookUpClient ={
 
-        def clientName = ''
+        def clients = []
         Double dose = 0.0
+       
         if (params.patientId != 'null'){
             def patientInstance = Patient.get(params.patientId)
-            clientName = patientInstance?.client?.name
+            clients.add(patientInstance?.client)
 
-            if(patientInstance?.dose && patientInstance?.weight){
+            if(patientInstance?.dose){
                 dose = patientInstance?.dose 
+            }
+        } else {
+            clients = Client.withCriteria {
+            fetchMode("patients", org.hibernate.FetchMode.LAZY)
+            inList('country', session.countries)
+            order('name', 'asc')
             }
         }
 
         def data = []
-        data = [clientName:clientName, dose:formatNumber(number:dose,format:"#.##")]
+        data = [clients:clients, dose:formatNumber(number:dose,format:"#.##")]
         render  data as JSON
     }
 
