@@ -415,7 +415,6 @@ class ProformaController {
 
         def data = []
         data = [clients:clients, dose:formatNumber(number:dose,format:"#.##")]
-        println 'ya paso el superselect?'
         render  data as JSON
     }
 

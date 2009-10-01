@@ -211,7 +211,6 @@ def update = {
 
         if (!invoiceInstance.hasErrors() && invoiceInstance.save()) {
             if(invoice.proforma.patient){
-                println 'paso por aca'
                 patientProductStockService.updatePatientProductStock(invoiceInstance);
             }
             flash.message = "invoice.updated"
