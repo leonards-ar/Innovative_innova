@@ -50,6 +50,6 @@ class Proforma {
 
 
     String toString(){
-        return "${this.id} - ${this.client} - ${this.patient}"
+        return "${this.id} - ${this.client} - ${(this.patient)?this.patient:'---'}"
     }
 }

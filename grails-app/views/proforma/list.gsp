@@ -80,9 +80,9 @@
 
             <td><g:link action="show" id="${proformaInstance.id}">${fieldValue(bean: proformaInstance, field: "id")}</g:link></td>
 
-          <td>${fieldValue(bean: proformaInstance, field: "client")}</td>
+          <td>${proformaInstance?.client}</td>
 
-          <td>${fieldValue(bean: proformaInstance, field: "patient")}</td>
+          <td>${proformaInstance?.patient}</td>
 
           <td>${message(code: 'proforma.status.list.'+proformaInstance.status)}</td>
 

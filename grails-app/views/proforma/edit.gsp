@@ -23,12 +23,15 @@
            }
           }
 
-          function updateComponents(e)
-          {
-            $('clientName').innerHTML = e.responseText.evalJSON().clientName;
+          function updateComponents(e){
+            var clients = e.responseText.evalJSON().clients;
 
+            $('client.id').options.length=clients.size();
+
+            for(i=0;i < clients.size();i++){
+              $('client.id').options[i] = new Option(clients[i].name, clients[i].id);
+            }
             $('addDailyDose').value = e.responseText.evalJSON().dose;
-
           }
 
           function updateAddPrice(e)
@@ -70,7 +73,7 @@
                                     <label for="patient"><g:message code="proforma.patient" default="Patient" />:</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: proformaInstance, field: 'patient', 'errors')}">
-                                    <g:select name="patient.id" from="${patients}" optionKey="id" value="${proformaInstance?.patient?.id}"
+                                    <g:select name="patient.id" from="${patients}" optionKey="id" value="${proformaInstance?.patient?.id}"  noSelection="${['null':message(code:'noselect')]}"
                                                onchange="${remoteFunction(controller:'proforma', action:'lookUpClient',onSuccess:'updateComponents(e)', params:'\'patientId=\'  + this.value')}"/>
 
                                 </td>
@@ -81,7 +84,7 @@
                                     <label for="client"><g:message code="proforma.client" default="Client" />:</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: proformaInstance, field: 'client', 'errors')}">
-                                  <div id="clientName">${proformaInstance?.client?.name?.encodeAsHTML()}</div>
+                                  <g:select name="client.id" from="${clients}" optionKey="id" value="${proformaInstance?.client?.id}"  />
                                 </td>
                             </tr>
 

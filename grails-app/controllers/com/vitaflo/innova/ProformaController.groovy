@@ -22,16 +22,36 @@ class ProformaController {
             if(params.status) {
                 eq('status', params.status)
             }
-            patient {
-                if(params.client) {
+            if(params.client && params.patient){
+                client {
                     eq('client', Client.findByName(params.client))
+
+                    inList('country', session.countries)
                 }
-                if(params.patient) {
+                patient {
                     def str = params.patient.split(',')
                     eq('lastName', str[0])
-                }
               
-                inList('country', session.countries)
+                    inList('country', session.countries)
+                }
+            } else {
+                or{
+                    client {
+                        if(params.client){
+                            eq('client', Client.findByName(params.client))
+                        }
+
+                        inList('country', session.countries)
+                    }
+                    patient {
+                        if(params.patient){
+                            def str = params.patient.split(',')
+                            eq('lastName', str[0])
+                        }
+                        inList('country', session.countries)
+                    }
+
+                }
             }
         }
 
@@ -47,16 +67,36 @@ class ProformaController {
                 eq('status', params.status)
             }
 
-            patient {
-                if(params.client) {
+            if(params.client && params.patient){
+                client {
                     eq('client', Client.findByName(params.client))
+
+                    inList('country', session.countries)
                 }
-                if(params.patient) {
+                patient {
                     def str = params.patient.split(',')
                     eq('lastName', str[0])
-                }
 
-                inList('country', session.countries)
+                    inList('country', session.countries)
+                }
+            } else {
+                or{
+                    client {
+                        if(params.client){
+                            eq('client', Client.findByName(params.client))
+                        }
+
+                        inList('country', session.countries)
+                    }
+                    patient {
+                        if(params.patient){
+                            def str = params.patient.split(',')
+                            eq('lastName', str[0])
+                        }
+                        inList('country', session.countries)
+                    }
+
+                }
             }
         }
         [proformaInstanceList: proformas, proformaInstanceTotal: total, client: params.client, patient: params.patient, status: params.status]
@@ -93,9 +133,11 @@ class ProformaController {
             }
         }
 
-        def patients = Patient.findAllByCountryInList(session.countries)
+        def patients = Patient.findAllByCountryInList(session.countries, [sort:'lastName', order:'asc'])
 
-        render(view: "create", model: [proformaInstance: proformaInstance, proformaDetailList: proformaDetailList, patients:patients])
+        def clients = Client.findAllByCountryInList(session.countries, [sort:'name', order:'asc'])
+
+        render(view: "create", model: [proformaInstance: proformaInstance, proformaDetailList: proformaDetailList, patients:patients, clients:clients])
     }
 
     def addBatch = {
@@ -248,8 +290,14 @@ class ProformaController {
         }
         else {
             def proformaDetailList = proformaInstance.details
-            def patients = Patient.findAllByCountryInList(session.countries)
-            return [proformaInstance: proformaInstance, proformaDetailList:proformaDetailList, patients: patients]
+            def patients = Patient.findAllByCountryInList(session.countries,[sort:'lastName', order:'asc'])
+            def clients = []
+            if(proformaInstance.patient){
+                clients.add(proformaInstance.patient.client)
+            } else {
+                clients = Client.findAllByCountryInList(session.countries, [sort:'name', order:'asc'])
+            }
+            return [proformaInstance: proformaInstance, proformaDetailList:proformaDetailList, patients: patients, clients: clients]
         }
     }
 
@@ -312,8 +360,8 @@ class ProformaController {
                 redirect(action: "show", id: proformaInstance.id)
             }
             else {
-               def patients = Patient.findAllByCountryInList(session.countries)
-               render(view: "edit", model: [proformaInstance: proformaInstance, proformaDetailList: updatedDetailList, patients:patients])
+                def patients = Patient.findAllByCountryInList(session.countries)
+                render(view: "edit", model: [proformaInstance: proformaInstance, proformaDetailList: updatedDetailList, patients:patients])
             }
         }
         else {
@@ -367,6 +415,7 @@ class ProformaController {
 
         def data = []
         data = [clients:clients, dose:formatNumber(number:dose,format:"#.##")]
+        println 'ya paso el superselect?'
         render  data as JSON
     }
 
@@ -448,7 +497,7 @@ class UpdateProformaDetailsListCommand {
         List proformaDetailList = []
         productIds.eachWithIndex(){ productId, i->
             def auxProduct = Product.get(productId)
-            def proformaDetail = new ProformaDetail(product:auxProduct, quantity:quantities[i], dailyDose:dailyDoses[i].replace(',','.').toDouble(), price:prices[i].replace(',','.').toDouble())
+            def proformaDetail = new ProformaDetail(product:auxProduct, quantity:quantities[i], dailyDose:(dailyDoses[i])? dailyDoses[i].replace(',','.').toDouble():null, price:prices[i].replace(',','.').toDouble())
             if(detailsIds[i]!=''){
                 proformaDetail.id = detailsIds[i].toLong()
             }
