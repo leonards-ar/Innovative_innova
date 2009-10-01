@@ -6,7 +6,7 @@
         <meta name="layout" content="main" />
         <title><g:message code="proforma.edit" default="Edit Proforma" /></title>
         <g:javascript library="prototype" />
-        <script type="text/javascript" language="JavaScript">
+        <g:javascript>
           function submitForm(name)
           {
             document.editProforma.action = name;
@@ -23,14 +23,22 @@
            }
           }
 
-          function updateComponents(e){
-            var clients = e.responseText.evalJSON().clients;
+          function updateComponents(e) {
+            var client = e.responseText.evalJSON().client;
 
-            $('client.id').options.length=clients.size();
-
-            for(i=0;i < clients.size();i++){
-              $('client.id').options[i] = new Option(clients[i].name, clients[i].id);
+            if (client != null) {
+              for (i = 0; i < $('client.id').options.length; i++) {
+                if ($('client.id').options[i].value == client) {
+                  $('client.id').options[i].selected = true;
+                  $('client.id').disabled = true;
+                  break;
+                }
+              }
+            } else {
+              $('client.id').options.selectedIndex = 0;
+              $('client.id').disabled = false;
             }
+
             $('addDailyDose').value = e.responseText.evalJSON().dose;
           }
 
@@ -43,7 +51,7 @@
           {
             document.getElementById('prices['+index+']').value = e.responseText;
           }
-        </script>
+        </g:javascript>
     </head>
     <body>
         <div class="nav">
@@ -84,7 +92,7 @@
                                     <label for="client"><g:message code="proforma.client" default="Client" />:</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: proformaInstance, field: 'client', 'errors')}">
-                                  <g:select name="client.id" from="${clients}" optionKey="id" value="${proformaInstance?.client?.id}"  />
+                                  <g:select name="client.id" from="${clients}" optionKey="id" value="${proformaInstance?.client?.id}" disabled="${(proformaInstance?.patient)?'true':'false'}"  />
                                 </td>
                             </tr>
 

@@ -291,12 +291,8 @@ class ProformaController {
         else {
             def proformaDetailList = proformaInstance.details
             def patients = Patient.findAllByCountryInList(session.countries,[sort:'lastName', order:'asc'])
-            def clients = []
-            if(proformaInstance.patient){
-                clients.add(proformaInstance.patient.client)
-            } else {
-                clients = Client.findAllByCountryInList(session.countries, [sort:'name', order:'asc'])
-            }
+            def clients = Client.findAllByCountryInList(session.countries, [sort:'name', order:'asc'])
+
             return [proformaInstance: proformaInstance, proformaDetailList:proformaDetailList, patients: patients, clients: clients]
         }
     }
@@ -399,22 +395,19 @@ class ProformaController {
 
     def lookUpClient ={
 
-        def clients = []
         Double dose = 0.0
-       
+        def client = null
         if (params.patientId != 'null'){
             def patientInstance = Patient.get(params.patientId)
-            clients.add(patientInstance?.client)
+            client = patientInstance?.client?.id
 
             if(patientInstance?.dose){
                 dose = patientInstance?.dose 
             }
-        } else {
-            clients = Client.findAllByCountryInList(session.countries, [sort:'name', order:'asc'])
         }
 
         def data = []
-        data = [clients:clients, dose:formatNumber(number:dose,format:"#.##")]
+        data = [client:client, dose:formatNumber(number:dose,format:"#.##")]
         render  data as JSON
     }
 
