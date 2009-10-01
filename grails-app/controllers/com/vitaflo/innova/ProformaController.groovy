@@ -291,7 +291,7 @@ class ProformaController {
         else {
             def proformaDetailList = proformaInstance.details
             def patients = Patient.findAllByCountryInList(session.countries,[sort:'lastName', order:'asc'])
-            def clients = proformaEmailClient.findAllByCountryInList(session.countries, [sort:'name', order:'asc'])
+            def clients = Client.findAllByCountryInList(session.countries, [sort:'name', order:'asc'])
 
             return [proformaInstance: proformaInstance, proformaDetailList:proformaDetailList, patients: patients, clients: clients]
         }
