@@ -51,6 +51,11 @@
           {
             document.getElementById('prices['+index+']').value = e.responseText;
           }
+
+          function submitProforma() {
+            $('client.id').disabled = false;
+            submitForm('update');
+          }
         </g:javascript>
     </head>
     <body>
@@ -135,7 +140,7 @@
 
                 <div class="buttons">
                     <g:if test="${(proformaInstance?.status == 'Creada') || (proformaInstance?.status == 'Rechazada')}">
-                    <span class="button"><g:submitButton name="update" class="save" value="${message(code: 'update', 'default': 'Update')}" onclick="submitForm('update')"/></span>
+                    <span class="button"><g:submitButton name="update" class="save" value="${message(code: 'update', 'default': 'Update')}" onclick="submitProforma()"/></span>
                     </g:if>
                     <g:if test="${proformaInstance?.status == 'Creada'}">
                       <span class="button"><g:submitButton name="delete" class="delete" value="${message(code: 'delete', 'default': 'Delete')}" onclick="return submitDeleteForm()"/></span>
