@@ -38,7 +38,7 @@
         <g:textField name="addDailyDose" value="${formatNumber(number:addCommand?.addDailyDose, format:'#.##')}"/>
       </td>
       <td class="value ${hasErrors(field: 'addPrice', 'errors')}" style="vertical-align:middle;">
-        <g:textField id="addPrice" name="addPrice" value="${formatNumber(number:addCommand?.addPrice, format:'0.00')}" style="text-align:center;vertical-align:text-bottom"/>
+        <g:textField id="addPrice" name="addPrice" value="${formatNumber(number:addCommand?.addPrice, format:'0.00')}" style="text-align:center;vertical-align:middle"/>
       </td>
       <td>&nbsp;</td>
       <td><g:submitToRemote controller="proforma" update="detailListPanel" action="addDetail" value="${message(code: 'add', 'default': 'Add')}"/></td>
@@ -62,9 +62,9 @@
         <g:textField name="dailyDoses[${i}]" value="${formatNumber(number:proformaDetail?.dailyDose, format:'#.##')}"/>
       </td>
       <td class="value" style="vertical-align:middle;">
-          <g:textField id="prices[${i}]" name="prices[${i}]" value="${formatNumber(number:proformaDetail?.price, format:'0.00')}" style="text-align:center;vertical-align:text-bottom"/>
+          <g:textField id="prices[${i}]" name="prices[${i}]" value="${formatNumber(number:proformaDetail?.price, format:'0.00')}" style="text-align:center;vertical-align:middle"/>
       </td>
-      <td style="vertical-align:center"><g:formatNumber number="${proformaDetail?.total}" /></td>
+      <td style="vertical-align:middle"><g:formatNumber number="${proformaDetail?.total}" /></td>
       <td><g:submitToRemote controller="proforma" update="detailListPanel" action="removeDetail" id="${i}" value="${message(code: 'remove', 'default': 'Remove')}"/></td>
       </tr>
     </g:each>
