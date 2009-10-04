@@ -42,17 +42,17 @@
           </table>
         </div>
         <div class="dialog">
-          <table borde="1" style="margin-top: 5px;" width="70%">
+          <table border="1" style="margin-top: 5px;">
             <tbody>
               <tr>
-                <td width="720" colspan="2"><img src="${resource(dir:'images',file:'innovative.gif')}" alt="Innovative" /></td>
+                <td colspan="2"><img src="${resource(dir:'images',file:'innovative.gif')}" alt="Innovative" /></td>
               </tr>
               <tr>
-                <td width="720" colspan="2" style="text-align:right">Montevideo,<g:formatDate date="${proformaInstance?.createdAt}" format="yyyy-MM-dd HH:mm:ss"/></td>
+                <td colspan="2" style="text-align:right">Montevideo,<g:formatDate date="${proformaInstance?.createdAt}" format="yyyy-MM-dd HH:mm:ss"/></td>
             </tr>
 
             <tr>
-              <td width="720">
+              <td style="vertical-align:middle">
                 INNOVATIVE MEDICINES SA<br/>
                 <label>Dirección </label>
                 Juan C. Gomez 1445 Ap. 505<br/>
@@ -61,31 +61,32 @@
                 <label>Tel/Fax </label>
                 (598 2) 917 0953<br/>
               </td>
-              <td width="720">
+              <td>
                 ${proformaInstance?.client?.name}<br />
                 ${proformaInstance?.client?.address}<br />
                 ${proformaInstance?.client?.phone}<br />
                 ${proformaInstance?.client?.email}<br />
-                <label class="name"><g:message code="proforma.patient" default="Patient" /></label>
-                <br/>
-                ${proformaInstance?.patient?.firstName}, ${proformaInstance?.patient?.lastName}<br/>
+                <g:if test="${proformaInstance?.patient}">
+                  <label class="name"><b><g:message code="proforma.patient" default="Patient" /></b></label>
+                  <br/>
+                  ${proformaInstance?.patient?.firstName}, ${proformaInstance?.patient?.lastName}<br/>
+                </g:if>
               </td>
             </tr>
 
           </table>
         </div>
 
+        <h4><g:message code="proforma.number"/> ${proformaInstance?.id}</h4>
         <g:if test="${proformaInstance?.details?.size()> 0}">
           <div id="detailListPanel" class="list">
-            <table style="margin-top: 5px;">
+            <table style="margin-top: 5px;" border="1">
               <thead>
                 <tr>
 
-                  <th><g:message code="proformaDetail.product" default="Product" /></th>
+              <th><g:message code="proformaDetail.product" default="Product" /></th>
 
               <th><g:message code="proformaDetail.quantity" default="Quantity" /></th>
-
-              <th><g:message code="proformaDetail.dailyDose" default="Daily Dose" /></th>
 
               <th><g:message code="product.price" default="Price" /></th>
 
@@ -100,34 +101,51 @@
 
                   <td>${fieldValue(bean:proformaDetail, field: "quantity")}</td>
 
-                  <td>${fieldValue(bean: proformaDetail, field: "dailyDose")}</td>
+                  <td class="currencyValue"><g:formatNumber number="${proformaDetail?.price}" format="U\$S 0.00"/></td>
 
-                  <td><g:formatNumber number="${proformaDetail?.price}" format="0.00"/></td>
-
-                <td>${fieldValue(bean: proformaDetail, field: "total")}</td>
+                <td class="currencyValue"><g:formatNumber number="${proformaDetail?.total}" format="U\$S 0.00"/></td>
                 </tr>
               </g:each>
               <g:set var="detailsSize" value="${proformaInstance.details.size()}" />
               <tr class="${(detailsSize % 2) == 0?'odd':'even'}" style="border-top:1px solid #ddd">
-                <td colspan="4"><g:message code="proforma.totalproducts" default="Total Products" /></td>
-              <td><g:formatNumber number="${totalDetails}" format="0.00"/></td>
+                <td colspan="3"><g:message code="proforma.totalproducts" default="Total Products" /></td>
+              <td class="currencyValue"><g:formatNumber number="${totalDetails}" format="U\$S 0.00"/></td>
               </tr>
               <tr class="${((detailsSize+1) % 2) == 0?'odd':'even'}">
-                <td colspan="4"><g:message code="proforma.courier" default="Courier" /></td>
-              <td><g:formatNumber number="${proformaInstance?.courier}" format="0.00"/></td>
+                <td colspan="3"><g:message code="proforma.courier" default="Courier" /></td>
+              <td class="currencyValue"><g:formatNumber number="${proformaInstance?.courier}" format="U\$S 0.00"/></td>
               </tr>
               <tr class="${((detailsSize+2) % 2) == 0?'odd':'even'}">
-                <td colspan="4" style="color:red"><g:message code="proforma.discountAmount" default="Discount" /> <g:formatNumber number="${proformaInstance?.discount}" format="0.00"/> %</td>
-              <td style="color:red"><g:formatNumber number="${discountAmount}" format="0.00"/></td>
+                <td colspan="3" style="color:red"><g:message code="proforma.discountAmount" default="Discount" /> <g:formatNumber number="${proformaInstance?.discount}" format="0.00"/> %</td>
+              <td style="color:red;text-align:right"><g:formatNumber number="${discountAmount}" format="U\$S 0.00"/></td>
               </tr>
               <tr class="${((detailsSize+3) % 2) == 0?'odd':'even'}">
-                <td colspan="4"><b><g:message code="proforma.totalAmount" default="Total Amount" /></b></td>
-                <td><b><g:formatNumber number="${totalAmount}" format="0.00"/></b></td>
+                <td colspan="2">&nbsp;</td>
+                <td><b><g:message code="proforma.totalAmount" default="Total Amount" /></b></td>
+                <td class="currencyValue"><b><g:formatNumber number="${totalAmount}" format="U\$S 0.00"/></b></td>
               </tr>
               </tbody>
             </table>
+          </g:if>
+
+          <br/>
+          <p>US DOLLARS:
+              <g:numToWords number="${totalAmount}" lang="en"/> (
+              <g:numToWords number="${totalAmount}" lang="es"/>   )<br/>
+              Sales Terms/ Condiciones: 100% advanced payment. 100% pago adelantado.<br/>
+
+              a/c Innovative Medicines SA<br/>
+              Account Number/ Cuenta Nro: 6410<br/>
+              Banco:Santander Uruguay (Swift BSCHUYMM)<br/>
+              Corresponsal en dólares<br/>
+              Bank of New York, NY (Swift IRVTUS3N)<br/>
+              <ul>
+                <li>Valid proforma for 30 days. Proforma válida por 30 días.</li>
+
+                <li>No se entregarán productos sin constancia de transferencia o efectivo pago.</li>
+              </ul>
+          </p>
           </div>
-        </g:if>
       </g:form>
     </div>
   </body>
