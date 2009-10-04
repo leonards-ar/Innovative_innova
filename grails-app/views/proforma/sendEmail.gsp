@@ -30,7 +30,7 @@
               <tr class="prop">
                 <td valign="baseline" class="name" style="vertical-align:middle;"><g:message code="proforma.clientEmail" default="Client email" />:</td>
             <td valign="baseline" style="vertical-align:middle;" class="value ${hasErrors(field: 'clientEmail', 'errors')}">
-            <g:textField name="clientEmail" value="${clientEmail}"/>
+            <g:textField name="clientEmail" size="40" value="${clientEmail}"/>
             </td>
             <td style="vertical-align:middle;">
               <div class="buttons">
