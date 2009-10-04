@@ -256,7 +256,7 @@ class ProformaController {
             try{
                 mailService.sendMail {
                     to emailCmd.clientEmail
-                    from "labs@mindpool.com.ar"
+                    from "Vitaflo-Sistema@vitaflo.com.ar"
                     subject "Proforma ${proformaInstance.id}"
                     body (view:"/emails/proforma", model:[proformaInstance:proformaInstance, totalDetails:totalDetails, totalAmount:totalAmount,
                             discountAmount: discountAmount])
