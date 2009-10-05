@@ -67,5 +67,5 @@ alter table invoices modify status enum('Pendiente','Pagada','Entregada') NOT NU
 
 -- Update proforma table
 alter table proformas modify column patient_id integer unsigned default NULL;
-alter table drop column patient_description;
+alter table proformas drop column patient_description;
 alter table proformas drop column client_description;
