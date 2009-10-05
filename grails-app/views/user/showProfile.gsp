@@ -53,7 +53,7 @@
 
                                 <td  valign="top" style="text-align: left;" class="value">
                                     <ul>
-                                    <g:each in="${userInstance?.countries}" var="countryInstance">
+                                    <g:each in="${userInstance?.countries?.sort{it.name}}" var="countryInstance">
                                         <li>${countryInstance.encodeAsHTML()}</li>
                                     </g:each>
                                     </ul>
