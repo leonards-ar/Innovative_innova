@@ -149,7 +149,7 @@ class UserController {
               if (userInstance.version > version) {
 
                   userInstance.errors.rejectValue("version", "user.optimistic.locking.failure", "Another user has updated this User while you were editing")
-                  render(view: "edit", model: [userInstance: userInstance])
+                  render(view: "editProfile", model: [userInstance: userInstance])
                   return
               }
           }
@@ -169,10 +169,10 @@ class UserController {
               flash.message = "user.updated"
               flash.args = [params.id]
               flash.defaultMessage = "User ${params.id} updated"
-              redirect(action: "show", id: userInstance.id)
+              redirect(action: "showProfile", id: userInstance.id)
           }
           else {
-              render(view: "edit", model: [userInstance: userInstance])
+              render(view: "editProfile", model: [userInstance: userInstance])
           }
       }
       else {
