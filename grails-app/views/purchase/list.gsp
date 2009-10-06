@@ -69,7 +69,7 @@
                     <g:each in="${purchaseInstanceList}" status="i" var="purchaseInstance">
                         <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                                                 
-                            <td><g:link action="show" id="${purchaseInstance.id}">${fieldValue(bean: purchaseInstance, field: "codeNumber")}</g:link></td>
+                            <td><g:link action="show" id="${purchaseInstance.id}">${(purchaseInstance?.codeNumber)?purchaseInstance?.codeNumber : '_'}</g:link></td>
                         
                             <td>${fieldValue(bean: purchaseInstance, field: "supplier")}</td>
 

@@ -77,7 +77,7 @@
                     <tbody>
                     <g:each in="${invoiceInstanceList}" status="i" var="invoiceInstance">
                         <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">                                                
-                            <td><g:link action="show" id="${invoiceInstance.id}">${fieldValue(bean: invoiceInstance, field: "number")}</g:link></td>
+                            <td><g:link action="show" id="${invoiceInstance.id}">${(invoiceInstance?.number)?invoiceInstance?.number : '_'}</g:link></td>
 
                             <td>${fieldValue(bean: invoiceInstance, field: "proforma")}</td>
 
