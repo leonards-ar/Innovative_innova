@@ -24,7 +24,7 @@ class ProformaController {
             }
             if(params.client && params.patient){
                 client {
-                    eq('client', Client.findByName(params.client))
+                    eq('name', params.client)
 
                     inList('country', session.countries)
                 }
@@ -34,11 +34,26 @@ class ProformaController {
               
                     inList('country', session.countries)
                 }
-            } else {
+            } else
+              if(params.client) {
+                client {
+                    eq('name', params.client)
+
+                    inList('country', session.countries)
+                }
+              } else
+                if(params.patient){
+                patient {
+                    def str = params.patient.split(',')
+                    eq('lastName', str[0])
+
+                    inList('country', session.countries)
+                }
+                } else {
                 or{
                     client {
                         if(params.client){
-                            eq('client', Client.findByName(params.client))
+                            eq('name', params.client)
                         }
 
                         inList('country', session.countries)
@@ -63,42 +78,56 @@ class ProformaController {
             firstResult(params.offset?.toInteger())
             order(params.sort, params.order)
             
-            if(params.status) {
-                eq('status', params.status)
-            }
+          if(params.status) {
+              eq('status', params.status)
+          }
+          if(params.client && params.patient){
+              client {
+                  eq('name', params.client)
 
-            if(params.client && params.patient){
-                client {
-                    eq('client', Client.findByName(params.client))
+                  inList('country', session.countries)
+              }
+              patient {
+                  def str = params.patient.split(',')
+                  eq('lastName', str[0])
 
-                    inList('country', session.countries)
-                }
-                patient {
-                    def str = params.patient.split(',')
-                    eq('lastName', str[0])
+                  inList('country', session.countries)
+              }
+          } else
+            if(params.client) {
+              client {
+                  eq('name', params.client)
 
-                    inList('country', session.countries)
-                }
-            } else {
-                or{
-                    client {
-                        if(params.client){
-                            eq('client', Client.findByName(params.client))
-                        }
+                  inList('country', session.countries)
+              }
+            } else
+              if(params.patient){
+              patient {
+                  def str = params.patient.split(',')
+                  eq('lastName', str[0])
 
-                        inList('country', session.countries)
-                    }
-                    patient {
-                        if(params.patient){
-                            def str = params.patient.split(',')
-                            eq('lastName', str[0])
-                        }
-                        inList('country', session.countries)
-                    }
+                  inList('country', session.countries)
+              }
+              } else {
+              or{
+                  client {
+                      if(params.client){
+                          eq('name', params.client)
+                      }
 
-                }
-            }
-        }
+                      inList('country', session.countries)
+                  }
+                  patient {
+                      if(params.patient){
+                          def str = params.patient.split(',')
+                          eq('lastName', str[0])
+                      }
+                      inList('country', session.countries)
+                  }
+
+              }
+          }
+      }
         [proformaInstanceList: proformas, proformaInstanceTotal: total, client: params.client, patient: params.patient, status: params.status]
     }
 
