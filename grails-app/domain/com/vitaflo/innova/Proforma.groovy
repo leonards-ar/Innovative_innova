@@ -27,7 +27,7 @@ class Proforma {
         details cascade:'all, delete-orphan'
     }
 
-    static transients = ['totalAmount', 'totalDetails']
+    static transients = ['totalAmount', 'totalDetails', 'discountAmount']
 
     Double getTotalAmount(){
 
@@ -35,9 +35,13 @@ class Proforma {
 
         totalAmount += getTotalDetails()
 
-        totalAmount *= (this.discount > 0?(100 - this.discount)/100d:1)
+        totalAmount -= getDiscountAmount()
 
         return totalAmount
+    }
+
+    Double getDiscountAmount() {
+        return calculateDiscount(getTotalDetails())
     }
 
     Double getTotalDetails(){

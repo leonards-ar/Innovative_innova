@@ -237,7 +237,7 @@ class ProformaController {
             Double totalAmount = proformaInstance.getTotalAmount();
 
             //Discount Amount
-            Double discountAmount = proformaInstance.calculateDiscount(totalAmount)
+            Double discountAmount = proformaInstance.getDiscountAmount();
 
             return [proformaInstance: proformaInstance, totalDetails:totalDetails, totalAmount:totalAmount, discountAmount: discountAmount]
         }

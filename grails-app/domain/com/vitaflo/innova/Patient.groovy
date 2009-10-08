@@ -33,8 +33,8 @@ class Patient {
         lastName(blank:false)
         country(blank:false)
         client(blank:false)
-        weight(min:1.00d, max:1000.00d)
-        height(min:0.01d, max:3.00d)
+        weight(nullable:true, min:1.00d, max:1000.00d)
+        height(nullable:true, min:0.01d, max:3.00d)
     }
 
     static mapping = {
