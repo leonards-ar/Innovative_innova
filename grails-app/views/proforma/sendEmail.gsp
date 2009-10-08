@@ -34,10 +34,10 @@
               <td valign="baseline" style="vertical-align:middle;" class="value ${hasErrors(field: 'clientEmail', 'errors')}">
               <g:textField name="clientEmail" size="40" value="${clientEmail}"/>
               </td>
-              <td style="vertical-align:middle;">
-                <div class="buttons">
+              <td>
+                <span class="buttons">
                   <span class="button"><g:actionSubmit class="edit" action="sendProformaEmail" value="${message(code: 'send', 'default': 'send')}" /></span>
-                </div>
+                </span>
               </td>
               </tr>
               </tbody>
