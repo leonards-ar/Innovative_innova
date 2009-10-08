@@ -260,7 +260,7 @@ class ProformaController {
         def totalAmount = proformaInstance.getTotalAmount();
 
         //Discount Amount
-        def discountAmount = proformaInstance.calculateDiscount(totalAmount)
+        def discountAmount = proformaInstance.getDiscountAmount();
         
         //Cliente email
         def clientEmail = proformaInstance.client.email
@@ -287,7 +287,7 @@ class ProformaController {
       def totalAmount = proformaInstance.getTotalAmount();
 
       //Discount Amount
-      def discountAmount = proformaInstance.calculateDiscount(totalAmount)
+      def discountAmount = proformaInstance.getDiscountAmount();
 
       render(view:'sendEmail', model:[proformaInstance: proformaInstance, totalDetails:totalDetails,
               totalAmount:totalAmount, discountAmount: discountAmount, action:'print'])
@@ -302,7 +302,7 @@ class ProformaController {
         //Total Amount
         def totalAmount = proformaInstance.getTotalAmount();
         //Discount Amount
-        def discountAmount = proformaInstance.calculateDiscount(totalAmount)
+        def discountAmount = proformaInstance.getDiscountAmount();
 
         if (!emailCmd.hasErrors()){
             try{
