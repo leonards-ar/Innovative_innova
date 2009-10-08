@@ -142,7 +142,7 @@
                       <span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'delete', 'default': 'Delete')}" onclick="return confirm('${message(code: 'delete.confirm', 'default': 'Are you sure?')}');" /></span>
                     </g:if>
                     <span class="button"><g:actionSubmit class="edit" action="proformaEmail" value="${message(code: 'sendEmailToClient', 'default': 'Send to client')}" /></span>
-                    <span class="button"><g:actionSubmit class="print" onclick="print()"><g:message code="proforma.print" default="Print Proforma"/> </g:submit></span>
+                    <span class="button"><g:actionSubmit class="print" onclick="print()" value="${message(code: 'proforma.print', 'default': 'Print Proforma')}" /></span>
                 </div>
             </g:form>
         </div>
