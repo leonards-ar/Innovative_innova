@@ -266,10 +266,33 @@ class ProformaController {
         def clientEmail = proformaInstance.client.email
 
         render(view:'sendEmail', model:[proformaInstance: proformaInstance, totalDetails:totalDetails,
-                totalAmount:totalAmount, discountAmount: discountAmount, clientEmail:clientEmail])
+                totalAmount:totalAmount, discountAmount: discountAmount, clientEmail:clientEmail, action:'sendEmail'])
         
     }
 
+    def printProforma = {
+      def proformaInstance = Proforma.get(params.id)
+
+      if (!proformaInstance) {
+          flash.message = "proforma.not.found"
+          flash.args = [params.id]
+          flash.defaultMessage = "Proforma not found with id ${params.id}"
+          redirect(action: "list")
+      }
+
+      //Total Details
+      def totalDetails = proformaInstance.getTotalDetails();
+
+      //Total Amount
+      def totalAmount = proformaInstance.getTotalAmount();
+
+      //Discount Amount
+      def discountAmount = proformaInstance.calculateDiscount(totalAmount)
+
+      render(view:'sendEmail', model:[proformaInstance: proformaInstance, totalDetails:totalDetails,
+              totalAmount:totalAmount, discountAmount: discountAmount, action:'print'])
+
+    }
     def sendProformaEmail = {SendEmailCommand emailCmd ->
 
         def proformaInstance = Proforma.get(params.id)

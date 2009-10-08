@@ -5,6 +5,12 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="layout" content="main" />
         <title><g:message code="proforma.show" default="Show Proforma" /></title>
+        <g:javascript>
+
+          function print() {
+            window.open('${link(action:'printProforma', params:params)}');
+          }
+        </g:javascript>
     </head>
     <body>
         <div class="nav">
@@ -136,6 +142,7 @@
                       <span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'delete', 'default': 'Delete')}" onclick="return confirm('${message(code: 'delete.confirm', 'default': 'Are you sure?')}');" /></span>
                     </g:if>
                     <span class="button"><g:actionSubmit class="edit" action="proformaEmail" value="${message(code: 'sendEmailToClient', 'default': 'Send to client')}" /></span>
+                    <span class="button"><g:actionSubmit class="print" onclick="print()"><g:message code="proforma.print" default="Print Proforma"/> </g:submit></span>
                 </div>
             </g:form>
         </div>
