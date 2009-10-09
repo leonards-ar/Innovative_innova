@@ -8,7 +8,7 @@
         <g:javascript>
 
           function print() {
-            window.open('${link(action:'printProforma', params:params)}');
+            window.open("<g:createLink action='printProforma' id='${proformaInstance?.id}'/>","printWindow","menubar=1,resizable=1,width=350,height=250");
           }
         </g:javascript>
     </head>
@@ -142,7 +142,7 @@
                       <span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'delete', 'default': 'Delete')}" onclick="return confirm('${message(code: 'delete.confirm', 'default': 'Are you sure?')}');" /></span>
                     </g:if>
                     <span class="button"><g:actionSubmit class="edit" action="proformaEmail" value="${message(code: 'sendEmailToClient', 'default': 'Send to client')}" /></span>
-                    <span class="button"><g:actionSubmit class="print" onclick="print()" value="${message(code: 'proforma.print', 'default': 'Print Proforma')}" /></span>
+                    <span class="button"><g:actionSubmit class="edit" onclick="print()" value="${message(code: 'proforma.print', 'default': 'Print Proforma')}" /></span>
                     </div>
             </g:form>
         </div>

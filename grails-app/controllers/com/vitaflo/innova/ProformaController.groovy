@@ -266,7 +266,7 @@ class ProformaController {
         def clientEmail = proformaInstance.client.email
 
         render(view:'sendEmail', model:[proformaInstance: proformaInstance, totalDetails:totalDetails,
-                totalAmount:totalAmount, discountAmount: discountAmount, clientEmail:clientEmail, action:'sendEmail'])
+                totalAmount:totalAmount, discountAmount: discountAmount, clientEmail:clientEmail])
         
     }
 
@@ -289,10 +289,11 @@ class ProformaController {
       //Discount Amount
       def discountAmount = proformaInstance.getDiscountAmount();
 
-      render(view:'sendEmail', model:[proformaInstance: proformaInstance, totalDetails:totalDetails,
-              totalAmount:totalAmount, discountAmount: discountAmount, action:'print'])
+      render(view:'print', model:[proformaInstance: proformaInstance, totalDetails:totalDetails,
+              totalAmount:totalAmount, discountAmount: discountAmount])
 
     }
+  
     def sendProformaEmail = {SendEmailCommand emailCmd ->
 
         def proformaInstance = Proforma.get(params.id)
