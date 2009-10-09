@@ -24,26 +24,23 @@
       </g:hasErrors>
       <g:form>
         <g:hiddenField name="id" value="${proformaInstance?.id}" />
-        <g:if test="action = 'sendEmail'">
           <div class="dialog">
             <table>
               <tbody>
-
                 <tr class="prop">
                   <td valign="baseline" class="name" style="vertical-align:middle;"><g:message code="proforma.clientEmail" default="Client email" />:</td>
               <td valign="baseline" style="vertical-align:middle;" class="value ${hasErrors(field: 'clientEmail', 'errors')}">
               <g:textField name="clientEmail" size="40" value="${clientEmail}"/>
               </td>
               <td>
-                <span class="buttons">
+                <div class="buttons">
                   <span class="button"><g:actionSubmit class="edit" action="sendProformaEmail" value="${message(code: 'send', 'default': 'send')}" /></span>
-                </span>
+                </div>
               </td>
               </tr>
               </tbody>
             </table>
           </div>
-        </g:if>
         <div class="dialog">
           <table border="1" style="margin-top: 5px;">
             <tbody>
