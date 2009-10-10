@@ -97,7 +97,8 @@ class PatientController {
             redirect(action: "show", id: patientInstance.id)
         }
         else {
-            render(view: "create", model: [patientInstance: patientInstance])
+            def clientList = Client.findAllByCountry(patientInstance.country, [sort:'name', order:'asc'])
+            render(view: "create", model: [patientInstance: patientInstance, clientList: clientList])
         }
     }
 
@@ -148,7 +149,8 @@ class PatientController {
                 redirect(action: "show", id: patientInstance.id)
             }
             else {
-                render(view: "edit", model: [patientInstance: patientInstance])
+                def clientList = Client.findAllByCountry(patientInstance.country, [sort:'name', order:'asc'])
+                render(view: "edit", model: [patientInstance: patientInstance, clientList: clientList])
             }
         }
         else {
