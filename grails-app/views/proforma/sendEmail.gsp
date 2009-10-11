@@ -117,7 +117,7 @@
               </tr>
               <tr class="${((detailsSize+2) % 2) == 0?'odd':'even'}">
                 <td colspan="3" style="color:red"><g:message code="proforma.discountAmount" default="Discount" /> <g:formatNumber number="${proformaInstance?.discount}" format="0.00"/> %</td>
-              <td style="color:red;text-align:right"><g:formatNumber number="${discountAmount}" format="U\$S 0.00"/></td>
+                <td class="currencyDiscountValue"><g:formatNumber number="${discountAmount}" format="U\$S 0.00"/></td>
               </tr>
               <tr class="${((detailsSize+3) % 2) == 0?'odd':'even'}">
                 <td colspan="2">&nbsp;</td>
@@ -132,10 +132,10 @@
           <p>US DOLLARS:
               <g:numToWords number="${totalAmount}" lang="en"/>
               (<g:numToWords number="${totalAmount}" lang="es"/>)<br/>
-              Sales Terms / Condiciones: 100% advanced payment. 100% pago adelantado.<br/>
+              Sales Terms/Condiciones: 100% advanced payment. 100% pago adelantado.<br/>
 
               a/c Innovative Medicines SA<br/>
-              Account Number / Cuenta Nro: 6410<br/>
+              Account Number/Cuenta Nro: 6410<br/>
               Banco:Santander Uruguay (Swift BSCHUYMM)<br/>
               Corresponsal en dólares<br/>
               Bank of New York, NY (Swift IRVTUS3N)<br/>

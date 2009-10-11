@@ -78,28 +78,28 @@
 
                 <td>${fieldValue(bean:proformaDetail, field: "quantity")}</td>
 
-                <td class="currencyValue"><g:formatNumber number="${proformaDetail?.price}" format="U\$S 0.00"/></td>
+                <td style="text-align:right"><g:formatNumber number="${proformaDetail?.price}" format="U\$S 0.00"/></td>
 
-              <td class="currencyValue"><g:formatNumber number="${proformaDetail?.total}" format="U\$S 0.00"/></td>
+              <td style="text-align:right"><g:formatNumber number="${proformaDetail?.total}" format="U\$S 0.00"/></td>
               </tr>
             </g:each>
             <g:set var="detailsSize" value="${proformaInstance.details.size()}" />
             <tr class="${(detailsSize % 2) == 0?'odd':'even'}" style="border-top:1px solid #ddd">
               <td colspan="3"><g:message code="proforma.totalproducts" default="Total Products" /></td>
-            <td class="currencyValue"><g:formatNumber number="${totalDetails}" format="U\$S 0.00"/></td>
+            <td style="text-align:right"><g:formatNumber number="${totalDetails}" format="U\$S 0.00"/></td>
             </tr>
             <tr class="${((detailsSize+1) % 2) == 0?'odd':'even'}">
               <td colspan="3"><g:message code="proforma.courier" default="Courier" /></td>
-            <td class="currencyValue"><g:formatNumber number="${proformaInstance?.courier}" format="U\$S 0.00"/></td>
+            <td style="text-align:right"><g:formatNumber number="${proformaInstance?.courier}" format="U\$S 0.00"/></td>
             </tr>
             <tr class="${((detailsSize+2) % 2) == 0?'odd':'even'}">
               <td colspan="3" style="color:red"><g:message code="proforma.discountAmount" default="Discount" /> <g:formatNumber number="${proformaInstance?.discount}" format="0.00"/> %</td>
-            <td style="color:red;text-align:right"><g:formatNumber number="${discountAmount}" format="U\$S 0.00"/></td>
+            <td style="text-align:right;color:red"><g:formatNumber number="${discountAmount}" format="U\$S 0.00"/></td>
             </tr>
             <tr class="${((detailsSize+3) % 2) == 0?'odd':'even'}">
               <td colspan="2">&nbsp;</td>
               <td><b><g:message code="proforma.totalAmount" default="Total Amount" /></b></td>
-              <td class="currencyValue"><b><g:formatNumber number="${totalAmount}" format="U\$S 0.00"/></b></td>
+              <td style="text-align:right"><b><g:formatNumber number="${totalAmount}" format="U\$S 0.00"/></b></td>
             </tr>
             </tbody>
           </table>
@@ -109,10 +109,10 @@
       <p>US DOLLARS:
       <g:numToWords number="${totalAmount}" lang="en"/>
       (<g:numToWords number="${totalAmount}" lang="es"/>)<br/>
-      Sales Terms / Condiciones: 100% advanced payment. 100% pago adelantado.<br/>
+      Sales Terms/Condiciones: 100% advanced payment. 100% pago adelantado.<br/>
 
       a/c Innovative Medicines SA<br/>
-      Account Number / Cuenta Nro: 6410<br/>
+      Account Number/Cuenta Nro: 6410<br/>
       Banco:Santander Uruguay (Swift BSCHUYMM)<br/>
       Corresponsal en d&oacute;lares<br/>
       Bank of New York, NY (Swift IRVTUS3N)<br/>
@@ -124,7 +124,8 @@
     </p>
   </div>
   <br/></br>
-  <input type="button" class="print" onclick="window.print()" value="${message(code: 'print', 'default': 'print')}" src="${createLinkTo(dir:'images/skin',file:'database_print.png')}"/>
+  <input type="button" class="print" onclick="window.print()" value="${message(code: 'print', 'default': 'print')}" />    
+  <input type="button" class="print" onclick="window.close()" value="${message(code: 'close', 'default': 'close')}" />
 
 </div>
 </body>

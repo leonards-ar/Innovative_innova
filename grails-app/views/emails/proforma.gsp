@@ -108,9 +108,9 @@
           <p>US DOLLARS:
               <g:numToWords number="${totalAmount}" lang="en"/>
               (<g:numToWords number="${totalAmount}" lang="es"/>)<br/>
-              Sales Terms / Condiciones: 100% advanced payment. 100% pago adelantado.<br/>
+              Sales Terms/Condiciones: 100% advanced payment. 100% pago adelantado.<br/>
               a/c Innovative Medicines SA<br/>
-              Account Number / Cuenta Nro: 6410<br/>
+              Account Number/Cuenta Nro: 6410<br/>
               Banco:Santander Uruguay (Swift BSCHUYMM)<br/>
               Corresponsal en dólares<br/>
               Bank of New York, NY (Swift IRVTUS3N)<br/>
