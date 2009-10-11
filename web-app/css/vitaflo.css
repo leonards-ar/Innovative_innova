@@ -63,3 +63,9 @@ div.autocomplete ul li {
 .currencyValue {
     text-align:right
 }
+
+.printLink {
+    background: transparent url(../images/skin/database_print.png) 5px 50% no-repeat;
+    padding-left: 28px;
+}
+
