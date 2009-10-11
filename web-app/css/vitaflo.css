@@ -61,7 +61,12 @@ div.autocomplete ul li {
 }
 
 .currencyValue {
-    text-align:right
+    text-align:right;
+}
+
+.currencyDiscountValue {
+    color:red;
+    text-align:right;
 }
 
 .printLink {
