@@ -124,7 +124,7 @@
                     </tr>
                     <tr class="${((detailsSize+2) % 2) == 0?'odd':'even'}">
                     <td colspan="4" style="color:red"><g:message code="proforma.discountAmount" default="Discount" /> <g:formatNumber number="${proformaInstance?.discount}" format="0.00"/> %</td>
-                    <td style="color:red;text-align:right"><g:formatNumber number="${discountAmount}" format="0.00"/></td>
+                    <td class="currencyDiscountValue"><g:formatNumber number="${discountAmount}" format="0.00"/></td>
                     </tr>
                     <tr class="${((detailsSize+3) % 2) == 0?'odd':'even'}">
                     <td colspan="4"><b><g:message code="proforma.totalAmount" default="Total Amount" /></b></td>
