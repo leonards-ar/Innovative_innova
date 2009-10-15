@@ -31,7 +31,7 @@ class Patient {
         lastName(blank:false)
         country(blank:false)
         client(blank:false)
-        dose(nullable:true, min:0.0)
+        dose(nullable:true, min:0.0d)
     }
 
     static mapping = {
