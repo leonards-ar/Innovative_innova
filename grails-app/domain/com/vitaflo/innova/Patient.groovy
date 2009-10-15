@@ -9,8 +9,6 @@ class Patient {
     Country country
     Client client
     Date birth
-    Double weight
-    Double height
     Double dose
     String pathology
     String deliveryAddress
@@ -34,8 +32,6 @@ class Patient {
         country(blank:false)
         client(blank:false)
         dose(nullable:true, min:0.0)
-        weight(nullable:true, min:1.00d, max:1000.00d)
-        height(nullable:true, min:0.01d, max:3.00d)
     }
 
     static mapping = {

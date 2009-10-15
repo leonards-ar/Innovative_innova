@@ -47,20 +47,6 @@
             </tr>
 
             <tr class="prop">
-              <td valign="top" class="name"><g:message code="patient.weight" default="Weight" />:</td>
-
-            <td valign="top" class="value">${fieldValue(bean: patientInstance, field: "weight")}</td>
-
-            </tr>
-
-            <tr class="prop">
-              <td valign="top" class="name"><g:message code="patient.height" default="Height" />:</td>
-
-            <td valign="top" class="value">${fieldValue(bean: patientInstance, field: "height")}</td>
-
-            </tr>
-
-            <tr class="prop">
               <td valign="top" class="name"><g:message code="patient.phone" default="Phone" />:</td>
 
             <td valign="top" class="value">${fieldValue(bean: patientInstance, field: "phone")}</td>

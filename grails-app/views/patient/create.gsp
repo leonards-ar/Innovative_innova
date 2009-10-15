@@ -70,28 +70,6 @@
 
           <tr class="prop">
             <td valign="top" class="name">
-              <label for="weight"><g:message code="patient.weight" default="Weight" />:</label>
-            </td>
-
-            <td valign="top" class="value ${hasErrors(bean: patientInstance, field: 'weight', 'errors')}">
-          <g:textField name="weight" value="${formatNumber(number:patientInstance?.weight, format:'#.##')}" />
-
-
-          </tr>
-
-          <tr class="prop">
-            <td valign="top" class="name">
-              <label for="height"><g:message code="patient.height" default="Height" />:</label>
-            </td>
-
-            <td valign="top" class="value ${hasErrors(bean: patientInstance, field: 'height', 'errors')}">
-          <g:textField name="height" value="${formatNumber(number:patientInstance?.height, format:'#.##' )}" />
-          </td>
-
-          </tr>
-
-          <tr class="prop">
-            <td valign="top" class="name">
               <label for="phone"><g:message code="patient.phone" default="Phone" />:</label>
             </td>
             <td valign="top" class="value ${hasErrors(bean: patientInstance, field: 'phone', 'errors')}">
