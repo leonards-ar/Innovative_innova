@@ -33,6 +33,7 @@ class Patient {
         lastName(blank:false)
         country(blank:false)
         client(blank:false)
+        dose(nullable:true, min:0.0)
         weight(nullable:true, min:1.00d, max:1000.00d)
         height(nullable:true, min:0.01d, max:3.00d)
     }
