@@ -39,7 +39,7 @@
               (598 2) 917 0953<br/>
             </td>
             <td>
-    ${proformaInstance?.client?.name}<br />
+    <b>${proformaInstance?.client?.name}</b><br />
     ${proformaInstance?.client?.address}<br />
     ${proformaInstance?.client?.phone}<br />
     ${proformaInstance?.client?.email}<br />

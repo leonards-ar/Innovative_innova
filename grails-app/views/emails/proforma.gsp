@@ -12,7 +12,7 @@
           <table border="1" style="margin-top: 5px;">
             <tbody>
               <tr>
-                <td colspan="2"><img src="${resource(dir:'images',file:'innovative.gif')}" alt="Innovative" /></td>
+                <td colspan="2"><img src="${request.getScheme()}://${request.getRemoteHost()}:${request.getRemotePort()}${resource(dir:'images',file:'innovative.gif')}" alt="Innovative" /></td>
               </tr>
               <tr>
                 <td colspan="2" style="text-align:right">Montevideo,<g:formatDate date="${proformaInstance?.createdAt}" format="yyyy-MM-dd HH:mm:ss"/></td>
@@ -29,7 +29,7 @@
                 (598 2) 917 0953<br/>
               </td>
               <td>
-                ${proformaInstance?.client?.name}<br />
+                <b>${proformaInstance?.client?.name}</b><br />
                 ${proformaInstance?.client?.address}<br />
                 ${proformaInstance?.client?.phone}<br />
                 ${proformaInstance?.client?.email}<br />
