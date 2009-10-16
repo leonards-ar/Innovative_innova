@@ -30,13 +30,11 @@
               for (i = 0; i < $('client.id').options.length; i++) {
                 if ($('client.id').options[i].value == client) {
                   $('client.id').options[i].selected = true;
-                  $('client.id').disabled = true;
                   break;
                 }
               }
             } else {
               $('client.id').options.selectedIndex = 0;
-              $('client.id').disabled = false;
             }
 
             $('addDailyDose').value = e.responseText.evalJSON().dose;
@@ -52,10 +50,6 @@
             document.getElementById('prices['+index+']').value = e.responseText;
           }
 
-          function submitProforma() {
-            $('client.id').disabled = false;
-            submitForm('update');
-          }
         </g:javascript>
     </head>
     <body>
@@ -97,7 +91,7 @@
                                     <label for="client"><g:message code="proforma.client" default="Client" />:</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: proformaInstance, field: 'client', 'errors')}">
-                                  <g:select name="client.id" from="${clients}" optionKey="id" value="${proformaInstance?.client?.id}" disabled="${(proformaInstance?.patient)?'true':'false'}"  />
+                                  <g:select name="client.id" from="${clients}" optionKey="id" value="${proformaInstance?.client?.id}" />
                                 </td>
                             </tr>
 
@@ -143,7 +137,7 @@
                     <span class="button"><g:submitButton name="update" class="save" value="${message(code: 'update', 'default': 'Update')}" onclick="submitProforma()"/></span>
                     </g:if>
                     <g:if test="${proformaInstance?.status == 'Creada'}">
-                      <span class="button"><g:submitButton name="delete" class="delete" value="${message(code: 'delete', 'default': 'Delete')}" onclick="return submitDeleteForm()"/></span>
+                      <span class="button"><g:submitButton name="delete" class="delete" value="${message(code: 'delete', 'default': 'Delete')}" /></span>
                     </g:if>
                 </div>
             </g:form>

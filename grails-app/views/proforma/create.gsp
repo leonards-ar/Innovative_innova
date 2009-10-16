@@ -13,13 +13,11 @@
         for (i = 0; i < $('client.id').options.length; i++) {
           if ($('client.id').options[i].value == client) {
             $('client.id').options[i].selected = true;
-            $('client.id').disabled = true;
             break;
           }
         }
       } else {
         $('client.id').options.selectedIndex = 0;
-        $('client.id').disabled = false;
       }
       
       $('addDailyDose').value = e.responseText.evalJSON().dose;
@@ -35,9 +33,6 @@
       document.getElementById('prices[' + index + ']').value = e.responseText;
     }
 
-    function submitProforma() {
-      $('client.id').disabled=false;
-    }
   </g:javascript>
 </head>
 <body>
@@ -105,7 +100,7 @@
     <div id="detailListPanel"><g:render template="proformaDetailList" model="[proformaDetailList:proformaDetailList]"/></div>
 
     <div class="buttons">
-      <span class="button"><g:submitButton name="create" class="save" value="${message(code: 'create', 'default': 'Create')}" onclick="submitProforma()" /></span>
+      <span class="button"><g:submitButton name="create" class="save" value="${message(code: 'create', 'default': 'Create')}"/></span>
     </div>
   </g:form>
 </div>
