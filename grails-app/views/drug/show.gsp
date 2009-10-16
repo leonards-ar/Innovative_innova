@@ -30,7 +30,16 @@
             <td valign="top" class="value">${fieldValue(bean: drugInstance, field: "name")}</td>
 
             </tr>
-
+            <tr class="prop">
+              <td valign="top" class="name"><g:message code="drug.products" default="Products" />:</td>
+            <td  valign="top" style="text-align: left;" class="value">
+              <ul>
+                <g:each in="${drugInstance?.products}" var="productInstance">
+                  <li><g:link controller="product" action="show" id="${productInstance?.id}">${productInstance?.name}</g:link></li>
+                </g:each>
+              </ul>
+            </td>
+            </tr>
             </tbody>
           </table>
         </div>

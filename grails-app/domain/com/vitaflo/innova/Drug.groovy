@@ -4,6 +4,8 @@ class Drug {
 
     String name
 
+    static hasMany = [products:Product]
+
     static constraints = {
         name(blank:false)
     }
