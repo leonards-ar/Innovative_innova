@@ -14,7 +14,7 @@
           </style>
 
           <g:javascript library="application" />
-          <title><g:message code="proforma.send" default="Send Proforma" /></title>
+          <title><g:message code="proforma.print" default="Print Proforma" /></title>
   </head>
   <body>
     <div class="body">
@@ -39,12 +39,12 @@
               (598 2) 917 0953<br/>
             </td>
             <td>
-    <b>${proformaInstance?.client?.name}</b><br />
-    ${proformaInstance?.client?.address}<br />
-    ${proformaInstance?.client?.phone}<br />
-    ${proformaInstance?.client?.email}<br />
+    <b>${proformaInstance?.client?.name}</b></b><br />
+    <b>${proformaInstance?.client?.address}</b><br/>
+    <b>${proformaInstance?.client?.phone}</b><br/>
+    <b>${proformaInstance?.client?.email}</b><br/></b>
           <g:if test="${proformaInstance?.patient}">
-            <label class="name"><b><g:message code="proforma.patient" default="Patient" /></b></label>
+            <label class="name"><g:message code="proforma.patient" default="Patient" /></label>
             <br/>
     ${proformaInstance?.patient?.firstName}, ${proformaInstance?.patient?.lastName}<br/>
           </g:if>

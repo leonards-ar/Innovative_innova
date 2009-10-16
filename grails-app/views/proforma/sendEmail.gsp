@@ -24,23 +24,23 @@
       </g:hasErrors>
       <g:form>
         <g:hiddenField name="id" value="${proformaInstance?.id}" />
-          <div class="dialog">
-            <table>
-              <tbody>
-                <tr class="prop">
-                  <td valign="baseline" class="name" style="vertical-align:middle;"><g:message code="proforma.clientEmail" default="Client email" />:</td>
-              <td valign="baseline" style="vertical-align:middle;" class="value ${hasErrors(field: 'clientEmail', 'errors')}">
-              <g:textField name="clientEmail" size="40" value="${clientEmail}"/>
-              </td>
-              <td>
-                <div class="buttons">
-                  <span class="button"><g:actionSubmit class="edit" action="sendProformaEmail" value="${message(code: 'send', 'default': 'send')}" /></span>
-                </div>
-              </td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
+        <div class="dialog">
+          <table>
+            <tbody>
+              <tr class="prop">
+                <td valign="baseline" class="name" style="vertical-align:middle;"><g:message code="proforma.clientEmail" default="Client email" />:</td>
+            <td valign="baseline" style="vertical-align:middle;" class="value ${hasErrors(field: 'clientEmail', 'errors')}">
+            <g:textField name="clientEmail" size="40" value="${clientEmail}"/>
+            </td>
+            <td>
+              <div class="buttons">
+                <span class="button"><g:actionSubmit class="edit" action="sendProformaEmail" value="${message(code: 'send', 'default': 'send')}" /></span>
+              </div>
+            </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
         <div class="dialog">
           <table border="1" style="margin-top: 5px;">
             <tbody>
@@ -62,16 +62,16 @@
                 (598 2) 917 0953<br/>
               </td>
               <td>
-                <b>${proformaInstance?.client?.name}</b><br />
-                ${proformaInstance?.client?.address}<br />
-                ${proformaInstance?.client?.phone}<br />
-                ${proformaInstance?.client?.email}<br />
-                <g:if test="${proformaInstance?.patient}">
-                  <label class="name"><b><g:message code="proforma.patient" default="Patient" /></b></label>
-                  <br/>
-                  ${proformaInstance?.patient?.firstName}, ${proformaInstance?.patient?.lastName}<br/>
-                </g:if>
-              </td>
+                <b>${proformaInstance?.client?.name}</b></b><br />
+                <b>${proformaInstance?.client?.address}</b><br/>
+                <b>${proformaInstance?.client?.phone}</b><br/>
+                <b>${proformaInstance?.client?.email}</b><br/></b>
+            <g:if test="${proformaInstance?.patient}">
+              <label class="name"><g:message code="proforma.patient" default="Patient" /></label>
+              <br/>
+${proformaInstance?.patient?.firstName}, ${proformaInstance?.patient?.lastName}<br/>
+            </g:if>
+            </td>
             </tr>
 
           </table>
@@ -84,7 +84,7 @@
               <thead>
                 <tr>
 
-              <th><g:message code="proformaDetail.product" default="Product" /></th>
+                  <th><g:message code="proformaDetail.product" default="Product" /></th>
 
               <th><g:message code="proformaDetail.quantity" default="Quantity" /></th>
 
@@ -117,7 +117,7 @@
               </tr>
               <tr class="${((detailsSize+2) % 2) == 0?'odd':'even'}">
                 <td colspan="3" style="color:red"><g:message code="proforma.discountAmount" default="Discount" /> <g:formatNumber number="${proformaInstance?.discount}" format="0.00"/> %</td>
-                <td class="currencyDiscountValue"><g:formatNumber number="${discountAmount}" format="U\$S 0.00"/></td>
+              <td class="currencyDiscountValue"><g:formatNumber number="${discountAmount}" format="U\$S 0.00"/></td>
               </tr>
               <tr class="${((detailsSize+3) % 2) == 0?'odd':'even'}">
                 <td colspan="2">&nbsp;</td>
@@ -126,27 +126,27 @@
               </tr>
               </tbody>
             </table>
-          </g:if>
+        </g:if>
 
-          <br/>
-          <p>US DOLLARS:
-              <g:numToWords number="${totalAmount}" lang="en"/>
-              (<g:numToWords number="${totalAmount}" lang="es"/>)<br/>
-              Sales Terms/Condiciones: 100% advanced payment. 100% pago adelantado.<br/>
+        <br/>
+        <p>US DOLLARS:
+        <g:numToWords number="${totalAmount}" lang="en"/>
+        (<g:numToWords number="${totalAmount}" lang="es"/>)<br/>
+        Sales Terms/Condiciones: 100% advanced payment. 100% pago adelantado.<br/>
 
-              a/c Innovative Medicines SA<br/>
-              Account Number/Cuenta Nro: 6410<br/>
-              Banco:Santander Uruguay (Swift BSCHUYMM)<br/>
-              Corresponsal en dólares<br/>
-              Bank of New York, NY (Swift IRVTUS3N)<br/>
-              <ul>
-                <li>Valid proforma for 30 days. Proforma válida por 30 días.</li>
+        a/c Innovative Medicines SA<br/>
+        Account Number/Cuenta Nro: 6410<br/>
+        Banco:Santander Uruguay (Swift BSCHUYMM)<br/>
+        Corresponsal en dólares<br/>
+        Bank of New York, NY (Swift IRVTUS3N)<br/>
+        <ul>
+          <li>Valid proforma for 30 days. Proforma válida por 30 días.</li>
 
-                <li>No se entregarán productos sin constancia de transferencia o efectivo pago.</li>
-              </ul>
-          </p>
-          </div>
-      </g:form>
+          <li>No se entregarán productos sin constancia de transferencia o efectivo pago.</li>
+        </ul>
+        </p>
     </div>
-  </body>
+  </g:form>
+</div>
+</body>
 </html>
