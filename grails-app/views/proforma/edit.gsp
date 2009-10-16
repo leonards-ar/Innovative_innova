@@ -134,10 +134,10 @@
 
                 <div class="buttons">
                     <g:if test="${(proformaInstance?.status == 'Creada') || (proformaInstance?.status == 'Rechazada')}">
-                    <span class="button"><g:submitButton name="update" class="save" value="${message(code: 'update', 'default': 'Update')}" onclick="submitProforma()"/></span>
+                    <span class="button"><g:submitButton name="update" class="save" value="${message(code: 'update', 'default': 'Update')}" onclick="return submitForm('update')"/></span>
                     </g:if>
                     <g:if test="${proformaInstance?.status == 'Creada'}">
-                      <span class="button"><g:submitButton name="delete" class="delete" value="${message(code: 'delete', 'default': 'Delete')}" /></span>
+                      <span class="button"><g:submitButton name="delete" class="delete" value="${message(code: 'delete', 'default': 'Delete')}" onclick="return submitDeleteForm()" /></span>
                     </g:if>
                 </div>
             </g:form>

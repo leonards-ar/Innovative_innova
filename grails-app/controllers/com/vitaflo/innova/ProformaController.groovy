@@ -155,6 +155,8 @@ class ProformaController {
         if (!proformaInstance.hasErrors()){
 
             if (proformaInstance.save()){
+                //update the patient with the client selected in the proforma
+                updatePatient(proformaInstance)
                 flash.message = "proforma.created"
                 flash.args = [proformaInstance.id]
                 flash.defaultMessage = "Proforma ${proformaInstance.id} created"
@@ -403,6 +405,9 @@ class ProformaController {
             }
 
             if (!proformaInstance.hasErrors() && proformaInstance.save()) {
+              
+                //update the patient with the client selected in the proforma
+                updatePatient(proformaInstance)              
                 flash.message = "proforma.updated"
                 flash.args = [params.id]
                 flash.defaultMessage = "Proforma ${params.id} updated"
@@ -495,6 +500,17 @@ class ProformaController {
         
         render formatNumber(number:price,format:"#.##")
     }
+
+    void updatePatient(proformaInstance) {
+        if(proformaInstance?.patient && proformaInstance?.client){
+            def patient = Patient.get(proformaInstance?.patient?.id)
+            def client = Client.get(proformaInstance?.client?.id)
+            if(patient?.client?.id != client?.id){
+                patient.client = client
+                patient.save()
+            }
+        }
+    }  
 }
 
 class AddProformaDetailsListCommand {

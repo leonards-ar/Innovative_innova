@@ -100,7 +100,7 @@
     <div id="detailListPanel"><g:render template="proformaDetailList" model="[proformaDetailList:proformaDetailList]"/></div>
 
     <div class="buttons">
-      <span class="button"><g:submitButton name="create" class="save" value="${message(code: 'create', 'default': 'Create')}"/></span>
+      <span class="button"><g:submitButton name="create" action="save" class="save" value="${message(code: 'create', 'default': 'Create')}"/></span>
     </div>
   </g:form>
 </div>

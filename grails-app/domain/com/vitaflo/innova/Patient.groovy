@@ -32,6 +32,13 @@ class Patient {
         country(blank:false)
         client(blank:false)
         dose(nullable:true, min:0.0d)
+        birth(nullable:true)
+        pathology(nullable:true)
+        deliveryAddress(nullable:true)
+        physician(nullable:true)
+        clinicalStatus(nullable:true)
+        clinicalHistory(nullable:true)
+        adverseEvent(nullable:true)
     }
 
     static mapping = {
@@ -41,6 +48,7 @@ class Patient {
         lastName column:'last_name'
         phone column:'telephone'
         contactName column:'contact'
+        deliveryAddress column:'delivery_address'
     }
 
    String toString(){return "${this.lastName}, ${this.firstName}"}
