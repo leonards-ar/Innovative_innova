@@ -31,7 +31,6 @@ class ProformaController {
                 patient {
                     def str = params.patient.split(',')
                     eq('lastName', str[0])
-              
                     inList('country', session.countries)
                 }
             } else
@@ -90,14 +89,12 @@ class ProformaController {
               patient {
                   def str = params.patient.split(',')
                   eq('lastName', str[0])
-
                   inList('country', session.countries)
               }
           } else
             if(params.client) {
               client {
                   eq('name', params.client)
-
                   inList('country', session.countries)
               }
             } else
@@ -105,7 +102,6 @@ class ProformaController {
               patient {
                   def str = params.patient.split(',')
                   eq('lastName', str[0])
-
                   inList('country', session.countries)
               }
               } else {
@@ -114,7 +110,6 @@ class ProformaController {
                       if(params.client){
                           eq('name', params.client)
                       }
-
                       inList('country', session.countries)
                   }
                   patient {
@@ -131,13 +126,30 @@ class ProformaController {
         [proformaInstanceList: proformas, proformaInstanceTotal: total, client: params.client, patient: params.patient, status: params.status]
     }
 
+    private getPatientsForSelectList() {
+        Patient.withCriteria {
+            ne('status', 'Deleted')
+            inList('country',session.countries)
+            order("lastName", "asc")
+            order("firstName", "asc")
+        }
+    }
+    
+    private getClientsForSelectList() {
+         Client.withCriteria {
+            ne('status', 'Deleted')
+            inList('country',session.countries)
+            order("name", "asc")
+        }
+    }
+
     def create = {
         def proformaInstance = new Proforma()
         proformaInstance.properties = params
+
+        def patients = getPatientsForSelectList()
         
-        def patients = Patient.findAllByCountryInList(session.countries, [sort:'lastName', order:'asc'])
-        
-        def clients = Client.findAllByCountryInList(session.countries, [sort:'name', order:'asc'])
+        def clients = getClientsForSelectList()
 
         return [proformaInstance: proformaInstance, patients: patients, clients: clients]
     }
@@ -164,9 +176,9 @@ class ProformaController {
             }
         }
 
-        def patients = Patient.findAllByCountryInList(session.countries, [sort:'lastName', order:'asc'])
+        def patients = getPatientsForSelectList()
 
-        def clients = Client.findAllByCountryInList(session.countries, [sort:'name', order:'asc'])
+        def clients = getClientsForSelectList()
 
         render(view: "create", model: [proformaInstance: proformaInstance, proformaDetailList: proformaDetailList, patients:patients, clients:clients])
     }
@@ -345,8 +357,8 @@ class ProformaController {
         }
         else {
             def proformaDetailList = proformaInstance.details
-            def patients = Patient.findAllByCountryInList(session.countries,[sort:'lastName', order:'asc'])
-            def clients = Client.findAllByCountryInList(session.countries, [sort:'name', order:'asc'])
+            def patients = getPatientsForSelectList()
+            def clients = getClientsForSelectList()
 
             return [proformaInstance: proformaInstance, proformaDetailList:proformaDetailList, patients: patients, clients: clients]
         }
@@ -364,7 +376,7 @@ class ProformaController {
                     proformaInstance.errors.rejectValue("version", "proforma.optimistic.locking.failure", "Another user has updated this Proforma while you were editing")
                     def proformaDetailList = proformaInstance.details
                     
-                    def patients = Patient.findAllByCountryInList(session.countries)
+                    def patients = getPatientsForSelectList()
 
                     render(view: "edit", model: [proformaInstance: proformaInstance, proformaDetailList: proformaDetailList, patients:patients])
                     return
@@ -414,7 +426,7 @@ class ProformaController {
                 redirect(action: "show", id: proformaInstance.id)
             }
             else {
-                def patients = Patient.findAllByCountryInList(session.countries)
+                def patients = getPatientsForSelectList()
                 render(view: "edit", model: [proformaInstance: proformaInstance, proformaDetailList: updatedDetailList, patients:patients])
             }
         }

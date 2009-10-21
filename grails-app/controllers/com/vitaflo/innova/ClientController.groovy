@@ -181,25 +181,6 @@ class ClientController {
         render clients as JSON
     }
 
-    def search = {
-        params.max = Math.min(params.max ? params.max.toInteger() : 15, 100)
-
-        if (!params.sort) params.sort = "name"
-        if (!params.order) params.order = "asc"
-
-        def clients
-        def total
-
-        if (!params.clientName) {
-            clients = Client.list(params)
-            total = Client.count()
-        } else {
-            clients = Client.findAllByNameLike('%' + params.clientName + '%', [max: params.max, sort: params.sort, order: params.order, offset: params.offset])
-            total = Client.findAllByNameLike('%' + params.clientName + '%').size()
-        }
-        render(view: 'list', model: [clientInstanceList: clients, clientInstanceTotal: total, clientName: params.clientName])
-    }
-  
     def searchClientsByCountry = {
         
         def clients = Client.findAllByCountry(Country.get(params.country),[sort:'name', order:'asc'])

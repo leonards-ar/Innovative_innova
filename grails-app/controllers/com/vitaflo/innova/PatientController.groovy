@@ -84,11 +84,19 @@ class PatientController {
         [patientInstanceList: patients, patientInstanceTotal: total, client: params.client, patient:params.patient, selectedCountry: params.selectedCountry]
     }
 
+    private getClientsForSelectList(country) {
+         Client.withCriteria {
+            ne('status', 'Deleted')
+            eq('country',country)
+            order("name", "asc")
+        }
+    }
+
     def create = {
         def patientInstance = new Patient()
         patientInstance.properties = params
 
-        def clientList = Client.findAllByCountry(session.countries[0], [sort:'name', order:'asc'])
+        def clientList = getClientsForSelectList(session.countries[0])
         return [patientInstance: patientInstance, clientList: clientList]
     }
 
@@ -101,7 +109,7 @@ class PatientController {
             redirect(action: "show", id: patientInstance.id)
         }
         else {
-            def clientList = Client.findAllByCountry(patientInstance.country, [sort:'name', order:'asc'])
+            def clientList = getClientsForSelectList(patientInstance.country)
             render(view: "create", model: [patientInstance: patientInstance, clientList: clientList])
         }
     }
@@ -128,7 +136,7 @@ class PatientController {
             redirect(action: "list")
         }
         else {
-            def clientList = Client.findAllByCountry(patientInstance.country, [sort:'name', order:'asc'])
+            def clientList = getClientsForSelectList(patientInstance.country)
             return [patientInstance: patientInstance, clientList: clientList]
         }
     }
@@ -153,7 +161,7 @@ class PatientController {
                 redirect(action: "show", id: patientInstance.id)
             }
             else {
-                def clientList = Client.findAllByCountry(patientInstance.country, [sort:'name', order:'asc'])
+                def clientList = getClientsForSelectList(patientInstance.country)
                 render(view: "edit", model: [patientInstance: patientInstance, clientList: clientList])
             }
         }
