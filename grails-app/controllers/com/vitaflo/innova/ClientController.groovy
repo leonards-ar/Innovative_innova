@@ -183,8 +183,14 @@ class ClientController {
 
     def searchClientsByCountry = {
         
-        def clients = Client.findAllByCountry(Country.get(params.country),[sort:'name', order:'asc'])
-        
+        def clients = Client.withCriteria {
+            ne('status', 'Deleted')
+            country {
+                eq('id', params.country)
+            }
+            order("name", "asc")
+        }
+
         render clients as JSON
     }
 

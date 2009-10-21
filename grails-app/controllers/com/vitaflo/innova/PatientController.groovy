@@ -208,8 +208,8 @@ class PatientController {
 
     def searchAutocomplete = {
         def patients = Patient.withCriteria{
+            ne('status', 'Deleted')
             or{
-                ne('status', 'Deleted')
                 like('lastName', '%' + params.patient + '%')
                 like('firstName', '%' + params.patient + '%')
             }
