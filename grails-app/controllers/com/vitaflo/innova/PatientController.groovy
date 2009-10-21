@@ -19,6 +19,8 @@ class PatientController {
         if (!params.order) params.order = "asc"
 
         def query = {
+            ne('status', 'Deleted')
+
             if(params.patient) {
                 or{
                     like('lastName', '%' + params.patient + '%')
@@ -48,6 +50,8 @@ class PatientController {
         def patients = Patient.withCriteria {
             maxResults(params.max)
             firstResult(params.offset?.toInteger())
+            ne('status', 'Deleted')
+
             if (params.sort == 'clientName') {
                 client { order('name', params.order) }
             } else{
@@ -165,11 +169,19 @@ class PatientController {
         def patientInstance = Patient.get(params.id)
         if (patientInstance) {
             try {
-                patientInstance.delete()
-                flash.message = "patient.deleted"
-                flash.args = [params.id]
-                flash.defaultMessage = "Patient ${params.id} deleted"
-                redirect(action: "list")
+                //patientInstance.delete()
+                patientInstance.status = 'Deleted'
+                if(patientInstance.save()) {
+                    flash.message = "patient.deleted"
+                    flash.args = [params.id]
+                    flash.defaultMessage = "Patient ${params.id} deleted"
+                    redirect(action: "list")
+                } else {
+                    flash.message = "patient.not.deleted"
+                    flash.args = [params.id]
+                    flash.defaultMessage = "Patient ${params.id} could not be deleted"
+                    redirect(action: "show", id: params.id)
+                }
             }
             catch (org.springframework.dao.DataIntegrityViolationException e) {
                 flash.message = "patient.not.deleted"
@@ -189,6 +201,7 @@ class PatientController {
     def searchAutocomplete = {
         def patients = Patient.withCriteria{
             or{
+                ne('status', 'Deleted')
                 like('lastName', '%' + params.patient + '%')
                 like('firstName', '%' + params.patient + '%')
             }

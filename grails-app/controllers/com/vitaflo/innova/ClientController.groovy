@@ -17,6 +17,7 @@ class ClientController {
         if (!params.order) params.order = "asc"
 
         def query = {
+            ne('status', 'Deleted')
 
             if (params.clientName) {
                 like('name', '%' + params.clientName + '%')
@@ -39,6 +40,8 @@ class ClientController {
             maxResults(params.max)
             firstResult(params.offset?.toInteger())
             order(params.sort, params.order)
+            ne('status', 'Deleted')
+
             if (params.clientName) {
                 like('name', '%' + params.clientName + '%')
             }
@@ -135,11 +138,19 @@ class ClientController {
         def clientInstance = Client.get(params.id)
         if (clientInstance) {
             try {
-                clientInstance.delete()
-                flash.message = "client.deleted"
-                flash.args = [params.id]
-                flash.defaultMessage = "Client ${params.id} deleted"
-                redirect(action: "list")
+                //clientInstance.delete()
+                clientInstance.status = 'Deleted'
+                if(!clientInstance.hasErrors() && clientInstance.save()) {
+                    flash.message = "client.deleted"
+                    flash.args = [params.id]
+                    flash.defaultMessage = "Client ${params.id} deleted"
+                    redirect(action: "list")
+                } else {
+                    flash.message = "client.not.deleted"
+                    flash.args = [params.id]
+                    flash.defaultMessage = "Client ${params.id} could not be deleted"
+                    redirect(action: "show", id: params.id)
+                }
             }
             catch (org.springframework.dao.DataIntegrityViolationException e) {
                 flash.message = "client.not.deleted"
@@ -162,6 +173,7 @@ class ClientController {
         if (!params.order) params.order = "asc"
 
         def clients = Client.withCriteria{
+            ne('status', 'Deleted')
             like('name', '%' + params.name + '%')
             inList('country', session.countries)
         }

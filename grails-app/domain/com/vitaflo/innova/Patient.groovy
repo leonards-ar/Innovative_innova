@@ -16,7 +16,8 @@ class Patient {
     String clinicalStatus
     String clinicalHistory
     String adverseEvent
-  
+    String status = 'Enabled'
+    
     //Transient properties
     Date startNTBC
     Product product
@@ -39,6 +40,7 @@ class Patient {
         clinicalStatus(nullable:true)
         clinicalHistory(nullable:true)
         adverseEvent(nullable:true)
+        status(nullable:false, blank:false, inList:['Enabled','Disabled','Deleted'])
     }
 
     static mapping = {

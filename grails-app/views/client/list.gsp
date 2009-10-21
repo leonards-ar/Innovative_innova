@@ -19,10 +19,10 @@
   <div id="searchBox">
     <g:form 
         name="searchForm"
-        url="[controller:'client',action:'search']">
+        url="[controller:'client',action:'list']">
         <div><g:message code="client.name"/> </div>
               <g:textField name="clientName" value="${clientName}" />
-              <span class="button"><g:submitButton name="search" class="save" value="${message(code: 'find', 'default': 'Find')}" /></span>
+              <span class="button"><g:submitButton name="find" class="save" value="${message(code: 'find', 'default': 'Find')}" /></span>
 </g:form>
 
   </div>
