@@ -1,6 +1,6 @@
 package com.vitaflo.innova
 
-class User {
+class User implements Serializable {
     
     String username
     String passwd
