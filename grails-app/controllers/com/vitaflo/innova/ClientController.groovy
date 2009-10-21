@@ -185,9 +185,7 @@ class ClientController {
         
         def clients = Client.withCriteria {
             ne('status', 'Deleted')
-            country {
-                eq('id', params.country)
-            }
+            eq('country',Country.get(params.country))
             order("name", "asc")
         }
 
