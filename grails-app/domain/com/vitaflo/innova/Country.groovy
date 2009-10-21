@@ -1,6 +1,6 @@
 package com.vitaflo.innova
 
-class Country {
+class Country implements Serializable {
 
     String name
     String code
