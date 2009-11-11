@@ -13,6 +13,7 @@ insert into countries (id, version, code, name) values(3, 0, 'CO', 'Colombia');
 insert into countries (id, version, code, name) values(4, 0, 'CH', 'Chile');
 insert into countries (id, version, code, name) values(5, 0, 'CO', 'Ecuador');
 insert into countries (id, version, code, name) values(6, 0, 'VE', 'Venezuela');
+insert into countries (id, version, code, name) values(7, 0, 'UR', 'Uruguay');
 
 -- Relation User Countries
 insert into user_to_countries(user_countries_id, country_id) values(1, 1);
