@@ -41,6 +41,10 @@ class PatientController {
                     like('name', '%' + params.client + '%')
                 }
             }
+
+            if(params.pathology) {
+                eq('pathology', params.pathology)
+            }
         }
 
         def criteria = Patient.createCriteria()
@@ -79,9 +83,12 @@ class PatientController {
                     like('name', '%' + params.client + '%')
                 }
             }
+            if(params.pathology) {
+                eq('pathology', params.pathology)
+            }
         }
 
-        [patientInstanceList: patients, patientInstanceTotal: total, client: params.client, patient:params.patient, selectedCountry: params.selectedCountry]
+        [patientInstanceList: patients, patientInstanceTotal: total, client: params.client, patient:params.patient, selectedCountry: params.selectedCountry, pathology: params.pathology]
     }
 
     private getClientsForSelectList(country) {
@@ -222,7 +229,20 @@ class PatientController {
 
         patients?.each{p -> idList.append('<li>' + p.lastName +', ' + p.firstName + '</li>')}
 
-        idList.append('</ul')
+        idList.append('</ul>')
+
+        render idList.toString()
+    }
+
+    def searchAutocompletePathology = {
+        def pathologies = Patient.executeQuery("select distinct p.pathology from Patient p where p.pathology like ?", ["%" + params.pathology + "%"])
+
+        StringBuffer idList = new StringBuffer()
+        idList.append('<ul>')
+
+        pathologies?.each{p -> idList.append('<li>' + p + '</li>')}
+
+        idList.append('</ul>')
 
         render idList.toString()
     }

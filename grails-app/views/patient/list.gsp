@@ -40,6 +40,14 @@
           </g:javascript>
           </td>
           <td>
+            <div><g:message code="patient.pathology"/> </div>
+          <g:textField id="autocompletePathology" name="pathology" value="${pathology}" />
+          <div id="pathology_choices" class="autocomplete"></div>
+          <g:javascript>
+            new Ajax.Autocompleter("autocompletePathology", "pathology_choices", "${createLink(controller:'patient', action:'searchAutocompletePathology')}",{});
+          </g:javascript>
+          </td>
+          <td>
             <div>&nbsp;</div>
             <span class="button"><g:submitButton name="search" class="save" value="${message(code: 'find', 'default': 'Find')}" /></span>
           </td>
@@ -59,6 +67,7 @@
         <g:sortableColumn property="lastName" title="Name" params="${params}" titleKey="patient.firstName" />
         <th><g:message code="patient.country" default="Country" /></th>
         <g:sortableColumn property="clientName" title="Client" params="${params}" titleKey="patient.client" />
+        <g:sortableColumn property="pathology" title="Pathology" params="${params}" titleKey="patient.pathology" />
         </tr>
         </thead>
         <tbody>
@@ -70,6 +79,8 @@
           <td>${fieldValue(bean: patientInstance, field: "country")}</td>
 
           <td>${fieldValue(bean: patientInstance, field: "client")}</td>
+
+          <td>${fieldValue(bean: patientInstance, field: "pathology")}</td>
 
           </tr>
         </g:each>
