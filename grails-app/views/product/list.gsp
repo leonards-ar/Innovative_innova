@@ -54,6 +54,8 @@
             <tr>
           <g:sortableColumn property="name" title="Name" titleKey="product.name" />
 
+          <g:sortableColumn property="comercialName" title="Comercial Name" titleKey="product.comercialName" />
+
           <g:sortableColumn property="presentation" title="Presentation" titleKey="product.presentation" />
 
           <g:sortableColumn property="price" title="Price" titleKey="product.price" />
@@ -66,6 +68,8 @@
             <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
 
               <td><g:link action="show" id="${productInstance.id}">${fieldValue(bean: productInstance, field: "name")}</g:link></td>
+
+            <td>${fieldValue(bean: productInstance, field: "comercialName")}</td>
 
             <td>${fieldValue(bean: productInstance, field: "presentation")}</td>
 

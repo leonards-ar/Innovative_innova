@@ -6,6 +6,7 @@ class Product {
     String description
     Double price=0.0
     Double presentation
+    String comercialName
     
     Supplier supplier
     Drug drug
@@ -15,6 +16,7 @@ class Product {
         presentation(nullable:false, scale:4)
         supplier(nullable:false)
         drug(nullable:false)
+        comercialName(nullable:true)
     }
 
     static mapping = {

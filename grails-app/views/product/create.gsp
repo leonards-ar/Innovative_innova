@@ -35,7 +35,17 @@
 
                                 </td>
                             </tr>
-                        
+
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="name"><g:message code="product.comercialName" default="Comercial Name" />:</label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'comercialName', 'errors')}">
+                                    <g:textField name="comercialName" value="${productInstance?.comercialName}" />
+
+                                </td>
+                            </tr>
+
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="presentation"><g:message code="product.presentation" default="Presentation" />:</label>

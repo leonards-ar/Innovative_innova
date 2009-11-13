@@ -31,6 +31,13 @@
 
             </tr>
 
+              <tr class="prop">
+                <td valign="top" class="name"><g:message code="product.comercialName" default="Comercial Name" />:</td>
+
+                <td valign="top" class="value">${fieldValue(bean: productInstance, field: "comercialName")}</td>
+
+            </tr>
+
             <tr class="prop">
               <td valign="top" class="name"><g:message code="product.presentation" default="Presentation" />:</td>
 
