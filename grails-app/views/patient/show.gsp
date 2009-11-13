@@ -40,6 +40,13 @@
             </tr>
 
             <tr class="prop">
+              <td valign="top" class="name"><g:message code="patient.initials" default="Initials" />:</td>
+
+            <td valign="top" class="value">${fieldValue(bean: patientInstance, field: "initials")}</td>
+
+            </tr>
+
+            <tr class="prop">
               <td valign="top" class="name"><g:message code="patient.birth" default="Birth" />:</td>
 
             <td valign="top" class="value"><g:formatDate date="${patientInstance?.birth}" format="dd/MM/yyyy" /></td>

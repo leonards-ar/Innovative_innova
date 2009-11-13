@@ -17,6 +17,7 @@ class Patient {
     String clinicalHistory
     String adverseEvent
     String status = 'Enabled'
+    String initials
     
     //Transient properties
     Date startNTBC
@@ -28,8 +29,8 @@ class Patient {
     static transients = ['startNTBC', 'product', 'lastOrderedDate', 'orderedQuantity', 'reimbursement']
 
     static constraints = {
-        firstName(blank:false)
-        lastName(blank:false)
+        firstName(blank:false, nullable:true)
+        lastName(blank:false, nullable:true)
         country(blank:false)
         client(blank:false)
         dose(nullable:true, min:0.0d)
@@ -41,6 +42,7 @@ class Patient {
         clinicalHistory(nullable:true)
         adverseEvent(nullable:true)
         status(nullable:false, blank:false, inList:['Enabled','Disabled','Deleted'])
+        initials(blank:false)
     }
 
     static mapping = {

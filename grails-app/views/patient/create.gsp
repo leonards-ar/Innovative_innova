@@ -16,6 +16,10 @@
 
     }
 
+    function fillInitials() {
+      $('initials').value = $('firstName').value.substring(0,1) + $('lastName').value.substring(0,1);
+    }
+
   </g:javascript>
 </head>
 <body>
@@ -43,7 +47,7 @@
                 <label for="firstName"><g:message code="patient.firstName" default="First Name" />:</label>
               </td>
               <td valign="top" class="value ${hasErrors(bean: patientInstance, field: 'firstName', 'errors')}">
-          <g:textField name="firstName" value="${fieldValue(bean: patientInstance, field: 'firstName')}" />
+          <g:textField name="firstName" value="${fieldValue(bean: patientInstance, field: 'firstName')}" onChange="fillInitials()"/>
 
           </td>
           </tr>
@@ -53,7 +57,17 @@
               <label for="lastName"><g:message code="patient.lastName" default="Last Name" />:</label>
             </td>
             <td valign="top" class="value ${hasErrors(bean: patientInstance, field: 'lastName', 'errors')}">
-          <g:textField name="lastName" value="${fieldValue(bean: patientInstance, field: 'lastName')}" />
+          <g:textField name="lastName" value="${fieldValue(bean: patientInstance, field: 'lastName')}" onChange="fillInitials()" />
+
+          </td>
+          </tr>
+
+          <tr class="prop">
+            <td valign="top" class="name">
+              <label for="initials"><g:message code="patient.initials" default="Initials" />:</label>
+            </td>
+            <td valign="top" class="value ${hasErrors(bean: patientInstance, field: 'initials', 'errors')}">
+          <g:textField name="initials" value="${fieldValue(bean: patientInstance, field: 'initials')}" />
 
           </td>
           </tr>
