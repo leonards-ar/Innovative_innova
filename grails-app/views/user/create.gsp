@@ -82,7 +82,7 @@
                                   <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'countries', 'errors')}">
                                       <g:select name="selectedCountries"
                                             from="${com.vitaflo.innova.Country.list()}"
-                                            size="5" multiple="yes" optionKey="id"
+                                            size="${com.vitaflo.innova.Country.count()}" multiple="yes" optionKey="id"
                                             value="${userInstance?.countries?.id}" />
                                   </td>
                               </tr>
@@ -94,7 +94,7 @@
                                   <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'authorities', 'errors')}">
                                       <g:select name="selectedAuthorities"
                                             from="${com.vitaflo.innova.Role.list()}"
-                                            size="3" multiple="yes" optionKey="id"
+                                            size="${com.vitaflo.innova.Role.count()}" multiple="yes" optionKey="id"
                                             
                                             value="${userInstance?.authorities?.id}" />
                                   </td>
