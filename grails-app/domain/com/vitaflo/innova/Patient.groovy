@@ -10,6 +10,7 @@ class Patient {
     Client client
     Date birth
     Double dose
+    String doseUnit
     String pathology
     String deliveryAddress
     String physician
@@ -28,12 +29,15 @@ class Patient {
 
     static transients = ['startNTBC', 'product', 'lastOrderedDate', 'orderedQuantity', 'reimbursement']
 
+    static final def UNIT_LIST = ['mg', 'ml']
+
     static constraints = {
         firstName(blank:false, nullable:true)
         lastName(blank:false, nullable:true)
         country(blank:false)
         client(blank:false)
         dose(nullable:true, min:0.0d)
+        doseUnit(nullable:true, inList:UNIT_LIST)
         birth(nullable:true)
         pathology(nullable:true)
         deliveryAddress(nullable:true)

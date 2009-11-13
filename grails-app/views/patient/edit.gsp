@@ -139,8 +139,8 @@
               <label for="dose"><g:message code="patient.dose" default="Dose" />:</label>
             </td>
             <td valign="top" class="value ${hasErrors(bean: patientInstance, field: 'dose', 'errors')}">
-          <g:textField name="dose" value="${formatNumber(number:patientInstance?.dose, format:'#.##')}" />
-
+              <g:textField name="dose" value="${formatNumber(number:patientInstance?.dose, format:'#.##')}" />
+              <g:select name="doseUnit" from="${com.vitaflo.innova.Patient.UNIT_LIST}" noSelection="['':'']"/>
           </td>
           </tr>
 

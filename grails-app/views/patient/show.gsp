@@ -91,7 +91,7 @@
             <tr class="prop">
               <td valign="top" class="name"><g:message code="patient.dose" default="Dose" />:</td>
 
-            <td valign="top" class="value">${fieldValue(bean: patientInstance, field: "dose")}</td>
+              <td valign="top" class="value">${fieldValue(bean: patientInstance, field: "dose")} ${fieldValue(bean: patientInstance, field: "doseUnit")}</td>
 
             </tr>
 
