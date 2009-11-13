@@ -392,6 +392,7 @@ class ProformaController {
                     def auxProformaDetail = proformaInstance.details.find{it.id == updatedDetail.id}
                     auxProformaDetail.quantity = updatedDetail.quantity
                     auxProformaDetail.dailyDose = updatedDetail.dailyDose
+                    auxProformaDetail.doseUnit = updatedDetail.doseUnit
                     auxProformaDetail.price = updatedDetail.price
                     auxProformaDetail.product = updatedDetail.product
                 }
@@ -466,18 +467,20 @@ class ProformaController {
     def lookUpClient ={
 
         Double dose = 0.0
+        String doseUnit
         def client = null
         if (params.patientId != 'null'){
             def patientInstance = Patient.get(params.patientId)
             client = patientInstance?.client?.id
 
             if(patientInstance?.dose){
-                dose = patientInstance?.dose 
+                dose = patientInstance?.dose
+                doseUnit = patientInstance?.doseUnit
             }
         }
 
         def data = []
-        data = [client:client, dose:formatNumber(number:dose,format:"#.##")]
+        data = [client:client, dose:formatNumber(number:dose,format:"#.##"), doseUnit: doseUnit]
         render  data as JSON
     }
 
@@ -529,6 +532,7 @@ class AddProformaDetailsListCommand {
     Long addProductId
     Integer addQuantity
     Double addDailyDose
+    String addDoseUnit
     Double addPrice
 
 
@@ -536,12 +540,13 @@ class AddProformaDetailsListCommand {
         addProductId(nullable:false)
         addQuantity(nullable:false, min:1)
         addDailyDose(nullable:true, min:0.1d)
+        addDoseUnit(nullable:true, inList: com.vitaflo.innova.ProformaDetail.UNIT_LIST)
         addPrice(nullable:false, min:0d)
     }
 
     ProformaDetail createNewProformaDetail(){
         def auxProduct = Product.get(addProductId)
-        def proformaDetail = new ProformaDetail(product:auxProduct, quantity:addQuantity, dailyDose:addDailyDose, price:addPrice)
+        def proformaDetail = new ProformaDetail(product:auxProduct, quantity:addQuantity, dailyDose:addDailyDose, doseUnit:addDoseUnit, price:addPrice)
 
         return proformaDetail
     }
@@ -562,6 +567,7 @@ class UpdateProformaDetailsListCommand {
     List productIds = []
     List quantities = []
     List dailyDoses = []
+    List doseUnits = []
     List detailsIds = []
     List prices = []
     
@@ -570,7 +576,7 @@ class UpdateProformaDetailsListCommand {
         List proformaDetailList = []
         productIds.eachWithIndex(){ productId, i->
             def auxProduct = Product.get(productId)
-            def proformaDetail = new ProformaDetail(product:auxProduct, quantity:quantities[i], dailyDose:(dailyDoses[i])? dailyDoses[i].replace(',','.').toDouble():null, price:prices[i].replace(',','.').toDouble())
+            def proformaDetail = new ProformaDetail(product:auxProduct, quantity:quantities[i], dailyDose:(dailyDoses[i])? dailyDoses[i].replace(',','.').toDouble():null, doseUnit: doseUnits[i], price:prices[i].replace(',','.').toDouble())
             if(detailsIds[i]!=''){
                 proformaDetail.id = detailsIds[i].toLong()
             }

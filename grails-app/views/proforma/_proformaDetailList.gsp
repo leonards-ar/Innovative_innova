@@ -36,6 +36,7 @@
 
       <td valign="top" class="value ${hasErrors(field: 'addDailyDose', 'errors')}">
         <g:textField name="addDailyDose" value="${formatNumber(number:addCommand?.addDailyDose, format:'#.##')}"/>
+        <g:select name="addDoseUnit" from="${com.vitaflo.innova.ProformaDetail.UNIT_LIST}" noSelection="['':'']"/>
       </td>
       <td class="value ${hasErrors(field: 'addPrice', 'errors')}" style="vertical-align:middle;">
         <g:textField id="addPrice" name="addPrice" value="${formatNumber(number:addCommand?.addPrice, format:'0.00')}" style="text-align:center;vertical-align:middle"/>
@@ -60,6 +61,7 @@
 
       <td valign="top" class="value">
         <g:textField name="dailyDoses[${i}]" value="${formatNumber(number:proformaDetail?.dailyDose, format:'#.##')}"/>
+        <g:select name="doseUnits[${i}]" value="${fieldValue(bean: proformaDetail, field: 'doseUnit')}" from="${com.vitaflo.innova.ProformaDetail.UNIT_LIST}" noSelection="['':'']"/>
       </td>
       <td class="value" style="vertical-align:middle;">
           <g:textField id="prices[${i}]" name="prices[${i}]" value="${formatNumber(number:proformaDetail?.price, format:'0.00')}" style="text-align:center;vertical-align:middle"/>

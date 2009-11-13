@@ -5,7 +5,22 @@
   <meta name="layout" content="main"/>
   <title><g:message code="proforma.create" default="Create Proforma"/></title>
   <g:javascript library="prototype"/>
+
   <g:javascript>
+    function submitForm(name)
+    {
+      document.editProforma.action = name;
+      document.editProforma.submit();
+    }
+
+    function submitDeleteForm(){
+     if (confirm('${message(code: 'delete.confirm', 'default': 'Are you sure?')}')) {
+       submitForm('delete');
+     } else {
+       return false;
+     }
+    }
+
     function updateComponents(e) {
       var client = e.responseText.evalJSON().client;
 
@@ -19,8 +34,22 @@
       } else {
         $('client.id').options.selectedIndex = 0;
       }
-      
+
       $('addDailyDose').value = e.responseText.evalJSON().dose;
+
+      var units = e.responseText.evalJSON().doseUnit;
+
+      if (units != null) {
+        for (i = 0; i < $('addDoseUnit').options.length; i++) {
+          if ($('addDoseUnit').options[i].value == units) {
+            $('addDoseUnit').options[i].selected = true;
+            break;
+          }
+        }
+      } else {
+        $('addDoseUnit').options.selectedIndex = 0;
+      }
+
     }
 
     function updateAddPrice(e)
@@ -30,7 +59,7 @@
 
     function updateProformaDetailsPrice(e, index)
     {
-      document.getElementById('prices[' + index + ']').value = e.responseText;
+      document.getElementById('prices['+index+']').value = e.responseText;
     }
 
   </g:javascript>

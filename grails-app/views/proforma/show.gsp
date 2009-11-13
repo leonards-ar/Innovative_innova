@@ -106,7 +106,7 @@
 
                             <td>${fieldValue(bean:proformaDetail, field: "quantity")}</td>
 
-                            <td>${fieldValue(bean: proformaDetail, field: "dailyDose")}</td>
+                            <td>${fieldValue(bean: proformaDetail, field: "dailyDose")} ${fieldValue(bean: proformaDetail, field: "doseUnit")}</td>
 
                             <td class="currencyValue"><g:formatNumber number="${proformaDetail?.price}" format="0.00"/></td>
 
