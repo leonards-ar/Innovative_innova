@@ -115,10 +115,12 @@ ${proformaInstance?.patient?.firstName}, ${proformaInstance?.patient?.lastName}<
                 <td colspan="3"><g:message code="proforma.courier" default="Courier" /></td>
               <td class="currencyValue"><g:formatNumber number="${proformaInstance?.courier}" format="U\$S 0.00"/></td>
               </tr>
-              <tr class="${((detailsSize+2) % 2) == 0?'odd':'even'}">
-                <td colspan="3" style="color:red"><g:message code="proforma.discountAmount" default="Discount" /> <g:formatNumber number="${proformaInstance?.discount}" format="0.00"/> %</td>
-              <td class="currencyDiscountValue"><g:formatNumber number="${discountAmount}" format="U\$S 0.00"/></td>
-              </tr>
+              <g:if test="${discountAmount  > 0}">
+                <tr class="${((detailsSize+2) % 2) == 0?'odd':'even'}">
+                  <td colspan="3" style="color:red"><g:message code="proforma.discountAmount" default="Discount" /> <g:formatNumber number="${proformaInstance?.discount}" format="0.00"/> %</td>
+                  <td class="currencyDiscountValue"><g:formatNumber number="${discountAmount}" format="U\$S 0.00"/></td>
+                </tr>
+              </g:if>
               <tr class="${((detailsSize+3) % 2) == 0?'odd':'even'}">
                 <td colspan="2">&nbsp;</td>
                 <td><b><g:message code="proforma.totalAmount" default="Total Amount" /></b></td>

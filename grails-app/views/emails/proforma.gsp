@@ -92,10 +92,12 @@ ${proformaInstance?.patient?.firstName}, ${proformaInstance?.patient?.lastName}<
               <td colspan="3"><g:message code="proforma.courier" default="Courier" /></td>
             <td style="text-align:right"><g:formatNumber number="${proformaInstance?.courier}" format="U\$S 0.00"/></td>
             </tr>
-            <tr style="${((detailsSize+2) % 2) == 0?'background: #f7f7f7;':'background: #fff;'}">
-              <td colspan="3" style="color:red"><g:message code="proforma.discountAmount" default="Discount" /> <g:formatNumber number="${proformaInstance?.discount}" format="0.00"/> %</td>
-            <td style="color:red;text-align:right"><g:formatNumber number="${discountAmount}" format="U\$S 0.00"/></td>
-            </tr>
+            <g:if test="${discountAmount  > 0}">
+              <tr style="${((detailsSize+2) % 2) == 0?'background: #f7f7f7;':'background: #fff;'}">
+                <td colspan="3" style="color:red"><g:message code="proforma.discountAmount" default="Discount" /> <g:formatNumber number="${proformaInstance?.discount}" format="0.00"/> %</td>
+                <td style="color:red;text-align:right"><g:formatNumber number="${discountAmount}" format="U\$S 0.00"/></td>
+              </tr>
+            </g:if>
             <tr style="${((detailsSize+3) % 2) == 0?'background: #f7f7f7;':'background: #fff;'}">
               <td colspan="2">&nbsp;</td>
               <td><b><g:message code="proforma.totalAmount" default="Total Amount" /></b></td>
