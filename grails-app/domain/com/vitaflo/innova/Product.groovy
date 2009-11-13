@@ -6,10 +6,13 @@ class Product {
     String description
     Double price=0.0
     Double presentation
+    String doseUnit
     String comercialName
     
     Supplier supplier
     Drug drug
+
+    static final def UNIT_LIST = ['mg', 'ml']
 
     static constraints = {
         name(blank:false)
@@ -17,6 +20,7 @@ class Product {
         supplier(nullable:false)
         drug(nullable:false)
         comercialName(nullable:true)
+        doseUnit(nullable:true, inList:UNIT_LIST)
     }
 
     static mapping = {

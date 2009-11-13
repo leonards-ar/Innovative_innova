@@ -41,7 +41,7 @@
             <tr class="prop">
               <td valign="top" class="name"><g:message code="product.presentation" default="Presentation" />:</td>
 
-            <td valign="top" class="value">${fieldValue(bean: productInstance, field: "presentation")}</td>
+            <td valign="top" class="value">${fieldValue(bean: productInstance, field: "presentation")} ${fieldValue(bean: productInstance, field: "doseUnit")}</td>
 
             </tr>
 

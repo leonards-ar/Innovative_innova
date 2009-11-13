@@ -55,7 +55,7 @@
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'presentation', 'errors')}">
                                     <g:textField name="presentation" value="${fieldValue(bean: productInstance, field: 'presentation')}" />
-
+                                    <g:select name="doseUnit" from="${com.vitaflo.innova.Product.UNIT_LIST}" noSelection="['':'']"/>
                                 </td>
                             </tr>
 
