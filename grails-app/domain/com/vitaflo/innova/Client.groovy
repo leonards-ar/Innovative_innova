@@ -12,8 +12,8 @@ class Client {
     
     static constraints = {
         name(blank:false)
-        address(blank:false)
-        phone(blank:false)
+        address(blank:false,nullable:true)
+        phone(blank:false,nullable:true)
         email(email:true)
         country(blank: false)
         status(nullable:false, blank:false, inList:['Enabled','Disabled','Deleted'])
