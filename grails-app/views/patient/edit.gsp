@@ -140,7 +140,7 @@
             </td>
             <td valign="top" class="value ${hasErrors(bean: patientInstance, field: 'dose', 'errors')}">
               <g:textField name="dose" value="${formatNumber(number:patientInstance?.dose, format:'#.##')}" />
-              <g:select name="doseUnit" from="${com.vitaflo.innova.Patient.UNIT_LIST}" noSelection="['':'']"/>
+              <g:select name="doseUnit" from="${com.vitaflo.innova.Patient.UNIT_LIST}" value="${fieldValue(bean: patientInstance, field: 'doseUnit')}" noSelection="['':'']"/>
           </td>
           </tr>
 
