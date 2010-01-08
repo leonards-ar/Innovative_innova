@@ -59,5 +59,10 @@ class Patient {
         deliveryAddress column:'delivery_address'
     }
 
-   String toString(){return "${this.lastName}, ${this.firstName}"}
+   String toString(){
+       if(!this.lastName && !this.firstName)
+            return "${this.initials}"
+        return "${this.lastName}, ${this.firstName}"
+   }
+
 }
