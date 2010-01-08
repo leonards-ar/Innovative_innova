@@ -25,6 +25,7 @@ class PatientController {
                 or{
                     like('lastName', '%' + params.patient + '%')
                     like('firstName', '%' + params.patient + '%')
+                    like('initials', '%' + params.patient + '%')
                 }
             }
 
@@ -66,6 +67,7 @@ class PatientController {
                 or{
                     like('lastName', '%' + params.patient + '%')
                     like('firstName', '%' + params.patient+ '%')
+                    like('initials', '%' + params.patient + '%')
                 }
             }
 
@@ -219,6 +221,7 @@ class PatientController {
             or{
                 like('lastName', '%' + params.patient + '%')
                 like('firstName', '%' + params.patient + '%')
+                like('initials', '%' + params.patient + '%')
             }
             
             inList('country', session.countries)
@@ -227,7 +230,7 @@ class PatientController {
         StringBuffer idList = new StringBuffer()
         idList.append('<ul>')
 
-        patients?.each{p -> idList.append('<li>' + p.lastName +', ' + p.firstName + '</li>')}
+        patients?.each{p -> idList.append('<li>' + p + '</li>')}
 
         idList.append('</ul>')
 
