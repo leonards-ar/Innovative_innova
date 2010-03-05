@@ -84,8 +84,19 @@
 
           <td>${proformaInstance?.patient}</td>
 
-          <td>${message(code: 'proforma.status.list.'+proformaInstance.status)}</td>
+          <g:if test="${(proformaInstance?.status == 'Creada') || (proformaInstance?.status == 'Rechazada')}">
+                      <g:form name="statusForm" url="[controller:'proforma',action:'updateStatus']">
+             <g:hiddenField name="id" value="${proformaInstance?.id}" />
+             <g:hiddenField name="version" value="${proformaInstance?.version}" />
+            <td><g:select name="proformaStatus" from="${com.vitaflo.innova.Proforma.STATUS_LIST}" value="${proformaInstance.status}" noSelection="['':'']" valueMessagePrefix="proforma.status.list"
+                        onchange="submit()"/></td>
 
+            </g:form>
+          </g:if>
+          <g:else>
+
+          <td>${message(code: 'proforma.status.list.'+proformaInstance.status)}</td>
+          </g:else>
           <td><g:formatDate format="dd-MM-yyyy" date="${proformaInstance.createdAt}" /></td>
 
           </tr>

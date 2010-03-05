@@ -132,6 +132,7 @@ class ProformaController {
             inList('country',session.countries)
             order("lastName", "asc")
             order("firstName", "asc")
+            order("initials", "asc")
         }
     }
     
@@ -464,6 +465,29 @@ class ProformaController {
         }
     }
 
+    def updateStatus ={
+        def proformaInstance = Proforma.get(params.id)
+
+        if(params.version) {
+            if (params.version) {
+                def version = params.version.toLong()
+                if (proformaInstance.version > version) {
+
+                    proformaInstance.errors.rejectValue("version", "proforma.optimistic.locking.failure", "Another user has updated this Client while you were editing")
+                    redirect(action: "list", params:params)
+                    return
+                }
+            }
+
+        }
+        
+        proformaInstance.status = params.proformaStatus
+
+        proformaInstance.save()
+
+        redirect(action: "list", params:params)
+    }
+    
     def lookUpClient ={
 
         Double dose = 0.0
