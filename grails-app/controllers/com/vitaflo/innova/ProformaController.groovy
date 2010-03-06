@@ -468,6 +468,8 @@ class ProformaController {
     def updateStatus ={
         def proformaInstance = Proforma.get(params.id)
 
+        print proformaInstance.id
+            
         if(params.version) {
             if (params.version) {
                 def version = params.version.toLong()
@@ -485,7 +487,10 @@ class ProformaController {
 
         proformaInstance.save()
 
-        redirect(action: "list", params:params)
+        def data = []
+        data = [status:params.proformaStatus,proformaId:params.id]
+        render data as JSON
+        //redirect(action: "list", params:params)
     }
     
     def lookUpClient ={

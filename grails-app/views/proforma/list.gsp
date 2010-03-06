@@ -7,6 +7,26 @@
     <title><g:message code="proforma.list" default="Proforma List" /></title>
   <g:javascript library="prototype" />
   <g:javascript library="scriptaculous" />
+  <g:javascript>
+
+    var listStatus=new Array();
+      listStatus['Aprobada']='${message(code:'proforma.status.list.Aprobada')}';
+      listStatus['Anulada']='${message(code:'proforma.status.list.Anulada')}';
+      listStatus['Rechazada']='${message(code:'proforma.status.list.Rechazada')}';
+      listStatus['Creada']='${message(code:'proforma.status.list.Creada')}';
+    
+      function updateComponents(e){
+
+      var status = e.responseText.evalJSON().status;
+      var proformaId = e.responseText.evalJSON().proformaId;
+
+      if(status != 'Creada' && status != 'Rechazada'){
+        $('pepe' + proformaId).update(listStatus[status]);
+      }
+
+    }
+  </g:javascript>
+
 </head>
 <body>
   <div class="nav">
@@ -85,13 +105,11 @@
           <td>${proformaInstance?.patient}</td>
 
           <g:if test="${(proformaInstance?.status == 'Creada') || (proformaInstance?.status == 'Rechazada')}">
-                      <g:form name="statusForm" url="[controller:'proforma',action:'updateStatus']">
-             <g:hiddenField name="id" value="${proformaInstance?.id}" />
-             <g:hiddenField name="version" value="${proformaInstance?.version}" />
-            <td><g:select name="proformaStatus" from="${com.vitaflo.innova.Proforma.STATUS_LIST}" value="${proformaInstance.status}" noSelection="['':'']" valueMessagePrefix="proforma.status.list"
-                        onchange="submit()"/></td>
+            <td><div id="pepe${proformaInstance.id}"><g:select name="proformaStatus" from="${com.vitaflo.innova.Proforma.STATUS_LIST}" value="${proformaInstance.status}" noSelection="['':'']" valueMessagePrefix="proforma.status.list"
+                        onchange="${remoteFunction (controller:'proforma', id:proformaInstance.id, action:'updateStatus', onSuccess:'updateComponents(e)', params:'\'proformaStatus=\' + this.value')}"/>
+                </div>
+            </td>
 
-            </g:form>
           </g:if>
           <g:else>
 
