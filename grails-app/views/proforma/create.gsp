@@ -122,6 +122,15 @@
 
           </td>
         </tr>
+
+        <tr>
+          <td valign="top" class="name">
+            <label for="discount"><g:message code="proforma.donation" default="Donation"/>:</label>
+          </td>
+          <td valign="top" class="value ${hasErrors(bean: proformaInstance.donation, field: 'donation', 'errors')}">
+            <g:checkBox name="donation" value="${false}"/>
+          </td>
+        </tr>
         </tbody>
       </table>
     </div>

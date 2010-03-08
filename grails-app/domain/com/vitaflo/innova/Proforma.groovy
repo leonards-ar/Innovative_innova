@@ -7,7 +7,7 @@ class Proforma {
     Integer discount =0
     Double courier =200.0
     String status = 'Creada'
-
+    Boolean donation = false
     Patient patient
     Client client
 
