@@ -249,7 +249,7 @@ class ProformaController {
             Double totalDetails = proformaInstance.getTotalDetails();
 
             //Total Amount
-            Double totalAmount = proformaInstance.getTotalAmount();
+            Double totalAmount = (!proformaInstance.donation)?proformaInstance.getTotalAmount():0.0;
 
             //Discount Amount
             Double discountAmount = proformaInstance.getDiscountAmount();
@@ -272,7 +272,7 @@ class ProformaController {
         def totalDetails = proformaInstance.getTotalDetails();
 
         //Total Amount
-        def totalAmount = proformaInstance.getTotalAmount();
+        def totalAmount = (!proformaInstance.donation)?proformaInstance.getTotalAmount():0;
 
         //Discount Amount
         def discountAmount = proformaInstance.getDiscountAmount();
@@ -299,7 +299,7 @@ class ProformaController {
       def totalDetails = proformaInstance.getTotalDetails();
 
       //Total Amount
-      def totalAmount = proformaInstance.getTotalAmount();
+      def totalAmount = (!proformaInstance.donation)?proformaInstance.getTotalAmount():0;
 
       //Discount Amount
       def discountAmount = proformaInstance.getDiscountAmount();
@@ -316,7 +316,7 @@ class ProformaController {
         //Total Details
         def totalDetails = proformaInstance.getTotalDetails();
         //Total Amount
-        def totalAmount = proformaInstance.getTotalAmount();
+        def totalAmount = (!proformaInstance.donation)?proformaInstance.getTotalAmount():0;
         //Discount Amount
         def discountAmount = proformaInstance.getDiscountAmount();
 

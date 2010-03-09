@@ -10,7 +10,8 @@ class Proforma {
     Boolean donation = false
     Patient patient
     Client client
-
+    String destinationAirport
+    
     static final def STATUS_LIST = ['Creada','Aprobada','Rechazada','Anulada']
 
     static hasMany = [details:ProformaDetail]
@@ -20,6 +21,7 @@ class Proforma {
         client(nullable:false)
         status(inList:STATUS_LIST)
         details(nullable:false,minSize:1)
+        destinationAirport(nullable:true)
     }
 
     static mapping = {

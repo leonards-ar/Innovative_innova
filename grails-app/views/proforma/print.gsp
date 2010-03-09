@@ -111,7 +111,23 @@
       <p>US DOLLARS:
       <g:numToWords number="${totalAmount}" lang="en"/>
       (<g:numToWords number="${totalAmount}" lang="es"/>)<br/>
-      Sales Terms/Condiciones: 100% advanced payment. 100% pago adelantado.<br/>
+
+      <g:if test="${proformaInstance.patient?.country?.code == 'BR' || proformaInstance.client?.country?.code == 'BR'}">
+        Sales Condition: Letter of credit at sight, irrevocable, confirmed  and  issued by a first class bank. <br/>
+        Incoterm: Incoterms CPT. (Paraná, Brazil).<br/><br/>
+        Manufacturer: APOTEKET AB <br/>
+        Distributer: INNOVATIVE MEDICINES SA<br/>
+        Juan C. Gomez 1445 Ap. 505<br/>
+        Tel./Fax: (+ 598 2) 917 0953<br/>
+        Montevideo - Uruguay <br/><br/>
+        Port of Loading/Airport of Departure: Any port of Sweden. <br/>
+        Port of Discharge/Airport of destination: ${proformaInstance?.destinationAirport} <br/><br/>
+
+        NCM 30.04.90.99<br/><br/>
+      </g:if>
+      <g:else>
+        Sales Terms/Condiciones: 100% advanced payment. 100% pago adelantado.<br/>
+      </g:else>
       a/c Innovative Medicines SA<br/>
       Account Number/Cuenta Nro: 6410<br/>
       Banco:Santander Uruguay (Swift BSCHUYMM)<br/>
@@ -122,6 +138,10 @@
 
         <li>No se entregar&aacute;n productos sin constancia de transferencia o efectivo pago.</li>
       </ul>
+
+      <g:if test="${proformaInstance.patient?.country?.code == 'BR' || proformaInstance.client?.country?.code == 'BR'}">
+        Peso Líquido, 60 caps = 15,84 gr (Vary 5 % +/-)</br>
+      </g:if>
     </p>
   </div>
   <br/></br>
