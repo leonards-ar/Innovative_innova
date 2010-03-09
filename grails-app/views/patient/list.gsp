@@ -64,6 +64,7 @@
       <table>
         <thead>
           <tr>
+            <th>&nbsp;</th>
         <g:sortableColumn property="lastName" title="Name" params="${params}" titleKey="patient.firstName" />
         <th><g:message code="patient.initials" default="Initials"/></th>
         <th><g:message code="patient.country" default="Country" /></th>
@@ -74,8 +75,8 @@
         <tbody>
         <g:each in="${patientInstanceList}" status="i" var="patientInstance">
           <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
-
-          <td><g:link action="show" id="${patientInstance.id}">${patientInstance}</g:link></td>
+            <td>${i + params.offset.toInteger() + 1}</td>
+            <td><g:link action="show" id="${patientInstance.id}">${patientInstance}</g:link></td>
 
           <td><g:link action="show" id="${patientInstance.id}">${patientInstance?.initials}</g:link></td>
 

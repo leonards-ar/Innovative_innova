@@ -81,7 +81,7 @@
       <table>
         <thead>
           <tr>
-
+            <th>&nbsp;</th>
         <g:sortableColumn property="id" title="Id" titleKey="proforma.id" params="${params}"/>
 
         <th><g:message code="proforma.client" default="Client" /></th>
@@ -97,7 +97,7 @@
         <tbody>
         <g:each in="${proformaInstanceList}" status="i" var="proformaInstance">
           <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
-
+            <td>${i + params.offset.toInteger() + 1}</td>
             <td><g:link action="show" id="${proformaInstance.id}">${fieldValue(bean: proformaInstance, field: "id")}</g:link></td>
 
           <td>${proformaInstance?.client}</td>
