@@ -31,6 +31,11 @@
       </span>
       <g:ifAnyGranted role="ROLE_ADMIN">
         <span class="menuButton">
+          <g:link controller="report" action="index"><g:message code="innova.bar.report"/></g:link>
+        </span>
+      </g:ifAnyGranted>
+      <g:ifAnyGranted role="ROLE_ADMIN">
+        <span class="menuButton">
           <g:link controller="user" action="list"><g:message code="innova.bar.user"/></g:link>
         </span>
       </g:ifAnyGranted>
