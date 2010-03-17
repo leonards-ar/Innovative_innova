@@ -4,7 +4,7 @@ class ExportReportsService {
 
     boolean transactional = true
 
-    def exportConsolidatedReportToPDF(List purchases, ByteArrayOutputStream baos) {
+/*    def exportConsolidatedReportToPDF(List purchases, ByteArrayOutputStream baos) {
 
         Document document = new Document(PageSize.A4, 50, 50, 50, 50);
 
@@ -17,4 +17,5 @@ class ExportReportsService {
         }
 
     }
+*/
 }
