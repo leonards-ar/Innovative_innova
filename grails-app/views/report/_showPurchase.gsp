@@ -1,4 +1,4 @@
-<div class="body">
+<div>
   <h1><g:message code="purchase.show" default="Show Purchase" /></h1>
 
     <table>
@@ -49,7 +49,7 @@
     </table>
 
   <g:if test="${purchaseInstance?.invoices?.size()> 0}">
-    <div class="list">
+    <div>
       <table style="margin-top: 5px;">
         <thead>
           <tr>

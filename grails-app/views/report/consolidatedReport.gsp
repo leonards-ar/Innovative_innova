@@ -23,7 +23,7 @@
 <body>
   <div class="nav">
     <span class="menuButton"><a class="home" href="${createLinkTo(dir: '')}"><g:message code="home" default="Home" /></a></span>
-    <span class="menuButton"><g:link class="home" action="index"><g:message code="innova.bar.report" default="Report" /></g:link></span>
+    <span class="menuButton"><g:link class="report" action="index"><g:message code="innova.bar.report" default="Report" /></g:link></span>
   </div>
   <div class="body">
     <h1><g:message code="report.bar.consolidatedReport" default="Consolidated Report" /></h1>
@@ -34,13 +34,13 @@
         <table>
           <tr>
             <td>
-              <div><g:message code="purchase.codeNumber"/> </div>
-          <g:textField name="codeNumber" value="${codeNumber}" />
+              <div><g:message code="consolidated.report.purchaseNumber" default="Purchase Number"/> </div>
+          <g:textField name="codeNumber" size="30" value="${codeNumber}" />
           </td>
 
           <td>
-            <div><g:message code="invoice.number"/> </div>
-          <g:textField name="number" value="${number}" />
+            <div><g:message code="consolidated.report.invoiceNumber" default="Invoice Number"/> </div>
+          <g:textField name="number" size="30" value="${number}" />
           </td>
 
           <td>
@@ -65,7 +65,7 @@
       </g:form>
 
     </div>
-    <div class="list">
+    <div>
       <table>
         <thead>
           <tr>
@@ -82,20 +82,26 @@
         <g:each in="${invoiceList}" status="i" var="invoiceInstance">
 
           <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
-            <td></td>
+
             <td>
-                <${invoiceInstance?.purchase}</td>
-            <td>${invoiceInstance?.number}</td>
-            <td>${invoiceInstance?.purchase?.supplier}</td>
+              <g:remoteLink controller="report" action="showDetails" params="{purchaseId:${invoiceInstance?.purchase.id}, invoiceId:${invoiceInstance?.id}}" onComplete="Effect.Grow(${'purchase' + invoiceInstance?.purchase?.id +'_'+ invoiceInstance?.id})" update="${'purchase' + invoiceInstance?.purchase?.id +'_'+ invoiceInstance?.id}">
+              <img src="${resource(dir:'images',file:'information.png')}" alt="showDetails" />
+              </g:remoteLink>
+            </td>
+            <td>${invoiceInstance?.purchase}</td>
+
+          <td>${invoiceInstance?.number}</td>
+          <td>${invoiceInstance?.purchase?.supplier}</td>
+
           </tr>
           <tr>
-
             <td colspan="4">
-              <div id="${invoiceInstance?.purchase?.id +'_'+ invoiceInstance?.id}" style="display:true;">
-                <g:remoteLink controller="purchase" action="show" id="invoiceInstance?.purchase.id" />
-                <g:remoteLink controller="invoice" action="show" id="invoiceInstance.id"/>
-              </div></td>
+              <div id="${'purchase' + invoiceInstance?.purchase?.id +'_'+ invoiceInstance?.id}" style="display:true;" onclick="Effect.Squish('${'purchase' + invoiceInstance?.purchase?.id +'_'+ invoiceInstance?.id}'); return false;"/>
+
+            </td>
           </tr>
+
+
         </g:each>
 
         </tbody>

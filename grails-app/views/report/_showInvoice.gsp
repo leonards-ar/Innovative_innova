@@ -3,7 +3,7 @@
   and open the template in the editor.
 -->
 
-<div class="body">
+<div>
   <h1><g:message code="invoice.show" default="Show Invoice" /></h1>
 
 
@@ -55,7 +55,7 @@
   </table>
 
   <g:if test="${invoiceInstance?.proforma?.details?.size()> 0}">
-    <div id="detailListPanel" class="list">
+    <div id="detailListPanel">
       <table style="margin-top: 5px;">
         <thead>
           <tr>
