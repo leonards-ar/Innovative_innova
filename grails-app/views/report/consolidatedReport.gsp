@@ -8,16 +8,7 @@
     <title><g:message code="report.bar.consolidatedReport" default="Consolidated Report" /></title>
   <g:javascript library="prototype" />
   <g:javascript library="scriptaculous" />
-  <g:javascript>
-
-    function showPurchaseInvoice(purchase, invoice){
-
-    if(status != 'Creada' && status != 'Rechazada'){
-    $(purchase +'_' + invoice).update();
-    }
-
-    }
-  </g:javascript>
+  <export:resource/>
 
 </head>
 <body>
@@ -70,7 +61,7 @@
         <thead>
           <tr>
             <th>&nbsp;</th>
-            <th><g:message code="consolidated.report.purchase" /></th>
+            <th><g:message code="consolidated.report.purchase" default="Purchase"/></th>
 
         <th><g:message code="consolidated.report.invoice" default="Invoice"/></th>
 
@@ -110,7 +101,9 @@
     <div class="paginateButtons">
       <g:paginate total="${total}" params="${params}" />
     </div>
-
+    <div class="buttons">
+    <export:formats formats="['excel','pdf']" params="${params}"/>
+    </div>
   </div>
 </body>
 </html>
