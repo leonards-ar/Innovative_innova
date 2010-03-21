@@ -42,6 +42,7 @@ security {
     /purchase/**=ROLE_ADMIN,ROLE_USER
     /purchase/create=ROLE_ADMIN,ROLE_USER
     /purchase/edit=ROLE_ADMIN,ROLE_USER
+    /report/**=ROLE_REPORT
     /**/create=ROLE_ADMIN
     /**/edit=ROLE_ADMIN
     /emails/**=ROLE_ADMIN, ROLE_USER
