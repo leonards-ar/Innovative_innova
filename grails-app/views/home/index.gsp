@@ -29,7 +29,7 @@
       <span class="menuButton">
         <g:link controller="purchase" action="list"><g:message code="innova.bar.purchase"/></g:link>
       </span>
-      <g:ifAnyGranted role="ROLE_ADMIN">
+      <g:ifAnyGranted role="ROLE_REPORT">
         <span class="menuButton">
           <g:link controller="report" action="index"><g:message code="innova.bar.report"/></g:link>
         </span>
