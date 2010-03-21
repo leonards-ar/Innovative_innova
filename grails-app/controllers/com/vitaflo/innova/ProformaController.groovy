@@ -468,8 +468,6 @@ class ProformaController {
     def updateStatus ={
         def proformaInstance = Proforma.get(params.id)
 
-        print proformaInstance.id
-            
         if(params.version) {
             if (params.version) {
                 def version = params.version.toLong()
