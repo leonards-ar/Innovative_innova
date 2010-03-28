@@ -1,6 +1,7 @@
 package com.vitaflo.innova
 
 class Patient {
+    static auditable = true
 
     String firstName
     String lastName

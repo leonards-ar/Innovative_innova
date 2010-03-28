@@ -49,6 +49,11 @@ environments {
 
 }
 
+// Audit log
+auditLog {
+    verbose = false
+}
+
 // log4j configuration
 log4j = {
     // Example of changing the log pattern for the default console

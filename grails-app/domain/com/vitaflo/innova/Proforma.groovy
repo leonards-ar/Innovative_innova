@@ -1,6 +1,7 @@
 package com.vitaflo.innova
 
 class Proforma {
+    static auditable = true
 
     Date createdAt = new Date()
 

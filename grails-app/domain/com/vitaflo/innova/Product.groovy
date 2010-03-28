@@ -1,6 +1,7 @@
 package com.vitaflo.innova
 
 class Product {
+    static auditable = true
 
     String name
     String description
