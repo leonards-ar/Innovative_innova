@@ -1,6 +1,6 @@
 package com.vitaflo.innova
 
-class PurchaseController {
+class PurchaseController extends BaseController {
 
     def index = { redirect(action: "list", params: params) }
 
@@ -8,10 +8,7 @@ class PurchaseController {
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def list = {
-        params.max = Math.min(params.max ? params.max.toInteger() : 15,  100)
-        if (!params.offset) params.offset = 0
-        if (!params.sort) params.sort = "expireDate"
-        if (!params.order) params.order = "desc"
+        rememberListState([max: 15, offset: 0, sort: 'expireDate', order: 'asc'])
 
         def query = {
           if(params.codeNumber) {
@@ -35,7 +32,7 @@ class PurchaseController {
 
         def purchases = Purchase.withCriteria{
 
-          maxResults(params.max)
+          maxResults(params.max?.toInteger())
           firstResult(params.offset?.toInteger())
           order(params.sort, params.order)
 

@@ -2,7 +2,7 @@ package com.vitaflo.innova
 
 import org.grails.plugins.springsecurity.service.AuthenticateService
 
-class PatientController {
+class PatientController extends BaseController {
 
     def authenticateService
     
@@ -12,11 +12,7 @@ class PatientController {
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def list = {
-        params.max = Math.min(params.max ? params.max.toInteger() : 15,  100)
-
-        if (!params.offset) params.offset = 0
-        if (!params.sort) params.sort = "lastName"
-        if (!params.order) params.order = "asc"
+        rememberListState([max: 15, offset: 0, sort: 'lastName', order: 'asc'])
 
         def query = {
             ne('status', 'Deleted')
@@ -53,7 +49,7 @@ class PatientController {
         def total = criteria.count(query)
 
         def patients = Patient.withCriteria {
-            maxResults(params.max)
+            maxResults(params.max?.toInteger())
             firstResult(params.offset?.toInteger())
             ne('status', 'Deleted')
 

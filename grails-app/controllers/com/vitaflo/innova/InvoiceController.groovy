@@ -1,6 +1,6 @@
 package com.vitaflo.innova
 
-class InvoiceController {
+class InvoiceController extends BaseController {
   def patientProductStockService
 
   def index = { redirect(action: "list", params: params) }
@@ -9,10 +9,7 @@ class InvoiceController {
   static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
   def list = {
-    params.max = Math.min(params.max ? params.max.toInteger() : 15, 100)
-    if (!params.offset) params.offset = 0
-    if (!params.sort) params.sort = "date"
-    if (!params.order) params.order = "desc"
+    rememberListState([max: 15, offset: 0, sort: 'date', order: 'asc'])
 
     def query = {
 
@@ -79,7 +76,7 @@ class InvoiceController {
     def total = criteria.count(query)
 
     def invoices = Invoice.withCriteria {
-      maxResults(params.max)
+      maxResults(params.max?.toInteger())
       firstResult(params.offset?.toInteger())
       order(params.sort, params.order)
 

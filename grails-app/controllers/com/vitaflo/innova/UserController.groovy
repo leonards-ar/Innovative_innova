@@ -1,6 +1,6 @@
 package com.vitaflo.innova
 
-class UserController {
+class UserController extends BaseController {
     static final ROLE_ADMIN = "ROLE_ADMIN"
     def authenticateService
 
@@ -8,10 +8,9 @@ class UserController {
     static allowedMethods = [save: "POST", update: "POST"]
 
     def list = {
-        params.max = Math.min(params.max ? params.max.toInteger() : 15,  100)
+        rememberListState([max: 15, offset: 0, sort: 'username', order: 'asc'])
 
-        if (!params.sort) params.sort = "username"
-        if (!params.order) params.order = "asc"
+        params.max = Math.min(params.max ? params.max.toInteger() : 15,  100)
 
         [userInstanceList: User.list(params), userInstanceTotal: User.count()]
     }
