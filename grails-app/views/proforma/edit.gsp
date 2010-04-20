@@ -141,7 +141,7 @@
             <td valign="top" class="name">
               <label for="donation"><g:message code="proforma.donation" default="Donation"/>:</label>
             </td>
-            <td valign="top" class="value ${hasErrors(bean: proformaInstance.donation, field: 'donation', 'errors')}">
+            <td valign="top" class="value ${hasErrors(bean: proformaInstance, field: 'donation', 'errors')}">
           <g:checkBox name="donation" value="${proformaInstance.donation}"/>
           </td>
           </tr>
@@ -149,9 +149,18 @@
             <td valign="top" class="name">
               <label for="destinationAirport"><g:message code="proforma.destinationAirport" default="Port of Discharge"/>:</label>
             </td>
-            <td valign="top" class="value ${hasErrors(bean: proformaInstance.destinationAirport, field: 'destinationAirport', 'errors')}">
+            <td valign="top" class="value ${hasErrors(bean: proformaInstance, field: 'destinationAirport', 'errors')}">
           <g:textField name="destinationAirport" value="${proformaInstance.destinationAirport}" />
           </tr>
+          
+          <tr class="prop">
+              <td valign="top" class="name">
+                  <label for="deliveryDate"><g:message code="proforma.deliveryDate" default="Date of delivery" />:</label>
+              </td>
+              <td valign="top" class="value ${hasErrors(bean: proformaInstance, field: 'deliveryDate', 'errors')}">
+                  <g:datePicker default="none" noSelection="${['':message(code:'noselect.dash')]}" name="deliveryDate" value="${proformaInstance?.deliveryDate}" precision="day" years="${2007..2015}" />
+              </td>
+          </tr>          
           </tbody>
         </table>
       </div>
