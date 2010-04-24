@@ -28,9 +28,13 @@ security {
     /user/showprofile=ROLE_ADMIN,ROLE_USER
     /user/editprofile=ROLE_ADMIN,ROLE_USER
     /client/**=ROLE_ADMIN,ROLE_USER
+    /client/create=ROLE_ADMIN,ROLE_USER
+    /client/edit=ROLE_ADMIN,ROLE_USER
     /drug/**=ROLE_ADMIN,ROLE_USER
     /login/**=IS_AUTHENTICATED_ANONYMOUSLY
     /patient/**=ROLE_ADMIN,ROLE_USER
+    /patient/create=ROLE_ADMIN,ROLE_USER
+    /patient/edit=ROLE_ADMIN,ROLE_USER
     /product/**=ROLE_ADMIN,ROLE_USER
     /proforma/**=ROLE_ADMIN,ROLE_USER
     /proforma/create=ROLE_ADMIN,ROLE_USER
