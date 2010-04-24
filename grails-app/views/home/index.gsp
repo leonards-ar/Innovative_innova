@@ -5,9 +5,11 @@
   </head>
   <body>
     <div class="nav">
+      <g:ifAnyGranted role="ROLE_USER,ROLE_ADMIN">
       <span class="menuButton">
         <g:link controller="client" action="list"><g:message code="innova.bar.client"/></g:link>
       </span>
+
       <span class="menuButton">
         <g:link controller="patient" action="list"><g:message code="innova.bar.patient"/></g:link>
       </span>
@@ -29,7 +31,8 @@
       <span class="menuButton">
         <g:link controller="purchase" action="list"><g:message code="innova.bar.purchase"/></g:link>
       </span>
-      <g:ifAnyGranted role="ROLE_REPORT">
+      </g:ifAnyGranted>
+      <g:ifAnyGranted role="ROLE_REPORT,ROLE_ACCOUNTANT">
         <span class="menuButton">
           <g:link controller="report" action="index"><g:message code="innova.bar.report"/></g:link>
         </span>

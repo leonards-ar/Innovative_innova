@@ -20,7 +20,7 @@ security {
   requestMapString = """
     CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
     PATTERN_TYPE_APACHE_ANT
-    /home/**=ROLE_ADMIN,ROLE_USER
+    /home/**=ROLE_ADMIN,ROLE_USER,ROLE_ACCOUNTANT,ROLE_REPORT
     /user/show=ROLE_ADMIN
     /user/edit=ROLE_ADMIN
     /user/list=ROLE_ADMIN
@@ -46,7 +46,8 @@ security {
     /purchase/**=ROLE_ADMIN,ROLE_USER
     /purchase/create=ROLE_ADMIN,ROLE_USER
     /purchase/edit=ROLE_ADMIN,ROLE_USER
-    /report/**=ROLE_REPORT
+    /report/**=ROLE_REPORT,ROLE_ACCOUNTANT
+    /report/consolidatedreport=ROLE_REPORT,ROLE_ACCOUNTANT
     /**/create=ROLE_ADMIN
     /**/edit=ROLE_ADMIN
     /emails/**=ROLE_ADMIN, ROLE_USER
