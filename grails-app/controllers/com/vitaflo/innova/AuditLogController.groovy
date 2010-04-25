@@ -47,4 +47,23 @@ class AuditLogController extends BaseController {
         [auditLogRecordInstanceList: records, auditLogRecordTotal: total, actor: params.actor, eventName: params.eventName, object: params.object, objectId: params.objectId]
 
     }
+
+    def searchAutocomplete = {
+        def users = User.withCriteria{
+            or{
+                like('lastName', '%' + params.actor + '%')
+                like('firstName', '%' + params.actor + '%')
+                like('username', '%' + params.actor + '%')
+            }
+        }
+
+        StringBuffer idList = new StringBuffer()
+        idList.append('<ul>')
+
+        users?.each{u -> idList.append('<li>' + u + '</li>')}
+
+        idList.append('</ul>')
+
+        render idList.toString()
+    }
 }
