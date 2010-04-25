@@ -36,7 +36,31 @@ grails.converters.encoding="UTF-8"
 grails.enable.native2ascii = true
 
 // set per-environment serverURL stem for creating absolute links
+        application.emailFromAddress = "Innova-Sistema@vitaflo.com.ar"
+        application.name = "Innovative"
+        application.cssFile = "innova.css"
+        application.logoFile = "innovative-logo.gif"
+        application.template = "templateInnova"
+
 environments {
+    vitaflo {
+        grails.serverURL = "http://www.changeme.com"
+        grails.app.context = "/vitaflo"
+        application.emailFromAddress = "Vitaflo-Sistema@vitaflo.com.ar"
+        application.name = "Vitaflo"
+        application.cssFile = "vitaflo.css"
+        application.logoFile = "vitaflo-logo.gif"
+        application.template = "templateVitaflo"
+    }
+    innova {
+        grails.serverURL = "http://www.changeme.com"
+        grails.app.context = "/innova"
+        application.emailFromAddress = "Innova-Sistema@vitaflo.com.ar"
+        application.name = "Innovative"
+        application.cssFile = "innova.css"
+        application.logoFile = "innovative-logo.gif"
+        application.template = "templateInnova"
+    }
     production {
         grails.serverURL = "http://www.changeme.com"
     }

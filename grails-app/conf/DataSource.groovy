@@ -33,4 +33,17 @@ environments {
                         url = "jdbc:mysql://localhost/vitaflo_sistema?useUnicode=true&characterEncoding=utf-8"
 		}
 	}
+	vitaflo {
+		dataSource {
+			dbCreate = "update"
+                        url = "jdbc:mysql://localhost/vitaflo_db?useUnicode=true&characterEncoding=utf-8"
+		}
+	}
+
+	innova {
+		dataSource {
+			dbCreate = "update"
+                        url = "jdbc:mysql://localhost/vitaflo_sistema?useUnicode=true&characterEncoding=utf-8"
+		}
+	}
 }

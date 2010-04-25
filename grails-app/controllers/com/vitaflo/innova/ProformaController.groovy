@@ -319,7 +319,7 @@ class ProformaController extends BaseController {
             try{
                 mailService.sendMail {
                     to emailCmd.clientEmail
-                    from "Vitaflo-Sistema@vitaflo.com.ar"
+                    from grailsApplication.config.application.emailFromAddress
                     subject "Proforma ${proformaInstance.id}"
                     body (view:"/emails/proforma", model:[proformaInstance:proformaInstance, totalDetails:totalDetails, totalAmount:totalAmount,
                             discountAmount: discountAmount])

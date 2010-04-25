@@ -21,6 +21,7 @@ security {
     CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
     PATTERN_TYPE_APACHE_ANT
     /home/**=ROLE_ADMIN,ROLE_USER,ROLE_ACCOUNTANT,ROLE_REPORT
+    /auditlog/list=ROLE_ADMIN
     /user/show=ROLE_ADMIN
     /user/edit=ROLE_ADMIN
     /user/list=ROLE_ADMIN

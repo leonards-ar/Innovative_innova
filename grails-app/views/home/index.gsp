@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>Innovative</title>
+    <title>${grailsApplication.config.application.name}</title>
     <meta name="layout" content="main" />
   </head>
   <body>
@@ -40,6 +40,11 @@
       <g:ifAnyGranted role="ROLE_ADMIN">
         <span class="menuButton">
           <g:link controller="user" action="list"><g:message code="innova.bar.user"/></g:link>
+        </span>
+      </g:ifAnyGranted>
+      <g:ifAnyGranted role="ROLE_ADMIN">
+        <span class="menuButton">
+          <g:link controller="auditLog" action="list"><g:message code="innova.bar.auditLog"/></g:link>
         </span>
       </g:ifAnyGranted>
     </div>
