@@ -10,7 +10,7 @@ class ProformaController extends BaseController {
     def index = { redirect(action: "list", params: params) }
 
     def list = {
-        rememberListState([max: 15, offset: 0, sort: 'id', order: 'asc'])
+        rememberListState([max: 15, offset: 0, sort: 'id', order: 'desc'])
 
         def query = {
 
