@@ -1,1 +1,1 @@
-<g:render template="${grailsApplication.config.application.template}" model="[proformaInstance:proformaInstance]"/>
+<g:render template="${grailsApplication.config.application.template + 'Mail'}" model="[proformaInstance:proformaInstance]"/>
