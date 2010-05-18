@@ -137,6 +137,8 @@
         <li>Valid proforma for 30 days. Proforma v&aacute;lida por 30 d&iacute;as.</li>
 
         <li>No se entregar&aacute;n productos sin constancia de transferencia o efectivo pago.</li>
+
+        <li>Tiempo de entrega 20 días a partir de la aprobación de la proforma.</li>
       </ul>
 
       <g:if test="${proformaInstance.patient?.country?.code == 'BR' || proformaInstance.client?.country?.code == 'BR'}">

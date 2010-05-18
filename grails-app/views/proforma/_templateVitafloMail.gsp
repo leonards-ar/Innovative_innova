@@ -161,6 +161,8 @@ ${proformaInstance?.patient?.firstName}, ${proformaInstance?.patient?.lastName}<
           <li>Valid proforma for 30 days. Proforma válida por 30 días.</li>
 
           <li>No se entregarán productos sin constancia de transferencia o efectivo pago.</li>
+
+          <li>Tiempo de entrega 20 días a partir de la aprobación de la proforma.</li>
         </ul>
         <g:if test="${proformaInstance.patient?.country?.code == 'BR' || proformaInstance.client?.country?.code == 'BR'}">
           Peso Líquido, 60 caps = 15,84 gr (Vary 5 % +/-)</br>

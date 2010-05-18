@@ -1,3 +1,4 @@
+
 <%@ page contentType="text/html" %>
 <html>
   <head>
@@ -11,7 +12,7 @@
         <table border="1" style="margin-top: 5px;">
           <tbody>
             <tr>
-              <td colspan="2"><img src="${request.getScheme()}://${request.getServerName()}:${request.getServerPort()}${resource(dir:'images',file:'innovative.gif')}" alt="Innovative" /></td>
+              <td colspan="2"><img src="${request.getScheme()}://${request.getServerName()}:${request.getServerPort()}${resource(dir:'images',file:grailsApplication.config.application.logoFile)}" alt="${grailsApplication.config.application.name}" /></td>
             </tr>
             <tr>
               <td colspan="2" style="text-align:right">Montevideo,<g:formatDate date="${proformaInstance?.createdAt}" format="yyyy-MM-dd HH:mm:ss"/></td>
@@ -20,9 +21,9 @@
           <tr>
             <td style="vertical-align:middle">
               INNOVATIVE MEDICINES SA<br/>
-              <label>DirecciÛn </label>
+              <label>Direcci√≥n </label>
               Juan C. Gomez 1445 Ap. 505<br/>
-              <label>CÛdigo Postal </label>
+              <label>C√≥digo Postal </label>
               11100, Montevideo, Uruguay<br/>
               <label>Tel/Fax </label>
               (598 2) 917 0953<br/>
@@ -112,7 +113,7 @@ ${proformaInstance?.patient?.firstName}, ${proformaInstance?.patient?.lastName}<
       (<g:numToWords number="${totalAmount}" lang="es"/>)<br/>
       <g:if test="${proformaInstance.patient?.country?.code == 'BR' || proformaInstance.client?.country?.code == 'BR'}">
         Sales Condition: Letter of credit at sight, irrevocable, confirmed  and  issued by a first class bank. <br/>
-        Incoterm: Incoterms CPT. (Paran·, Brazil).<br/><br/>
+        Incoterm: Incoterms CPT. (Paran√°, Brazil).<br/><br/>
         Manufacturer: APOTEKET AB <br/>
         Distributer: INNOVATIVE MEDICINES SA<br/>
         Juan C. Gomez 1445 Ap. 505<br/>
@@ -129,15 +130,15 @@ ${proformaInstance?.patient?.firstName}, ${proformaInstance?.patient?.lastName}<
       a/c Innovative Medicines SA<br/>
       Account Number/Cuenta Nro: 6410<br/>
       Banco:Santander Uruguay (Swift BSCHUYMM)<br/>
-      Corresponsal en dÛlares<br/>
+      Corresponsal en d√≥lares<br/>
       Bank of New York, NY (Swift IRVTUS3N)<br/>
       <ul>
-        <li>Valid proforma for 30 days. Proforma v·lida por 30 dÌas.</li>
+        <li>Valid proforma for 30 days. Proforma v√°lida por 30 d√≠as.</li>
 
-        <li>No se entregar·n productos sin constancia de transferencia o efectivo pago.</li>
+        <li>No se entregar√°n productos sin constancia de transferencia o efectivo pago.</li>
       </ul>
       <g:if test="${proformaInstance.patient?.country?.code == 'BR' || proformaInstance.client?.country?.code == 'BR'}">
-        Peso LÌquido, 60 caps = 15,84 gr (Vary 5 % +/-)</br>
+        Peso L√≠quido, 60 caps = 15,84 gr (Vary 5 % +/-)</br>
       </g:if>
     </p>
   </div>
