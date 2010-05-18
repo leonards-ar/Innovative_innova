@@ -321,7 +321,7 @@ class ProformaController extends BaseController {
                     to emailCmd.clientEmail
                     from grailsApplication.config.application.emailFromAddress
                     subject "Proforma ${proformaInstance.id}"
-                    body (view:"/emails/proforma", model:[proformaInstance:proformaInstance, totalDetails:totalDetails, totalAmount:totalAmount,
+                    body (view:"/emails/${grailsApplication.config.application.template}Mail", model:[proformaInstance:proformaInstance, totalDetails:totalDetails, totalAmount:totalAmount,
                             discountAmount: discountAmount])
 
                     flash.message = "proforma.emailsent"
