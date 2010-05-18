@@ -9,7 +9,7 @@ class InvoiceController extends BaseController {
   static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
   def list = {
-    rememberListState([max: 15, offset: 0, sort: 'date', order: 'asc'])
+    rememberListState([max: 15, offset: 0, sort: 'date', order: 'desc'])
 
     def query = {
 

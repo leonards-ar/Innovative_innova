@@ -8,7 +8,7 @@ class PurchaseController extends BaseController {
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def list = {
-        rememberListState([max: 15, offset: 0, sort: 'expireDate', order: 'asc'])
+        rememberListState([max: 15, offset: 0, sort: 'expireDate', order: 'desc'])
 
         def query = {
           if(params.codeNumber) {
