@@ -106,7 +106,7 @@
 
           <g:if test="${(proformaInstance?.status == 'Creada') || (proformaInstance?.status == 'Rechazada')}">
             <td><div id="pepe${proformaInstance.id}"><g:select name="proformaStatus" from="${com.vitaflo.innova.Proforma.STATUS_LIST}" value="${proformaInstance.status}" noSelection="['':'']" valueMessagePrefix="proforma.status.list"
-                        onchange="${remoteFunction (controller:'proforma', id:proformaInstance.id, action:'updateStatus', onSuccess:'updateComponents(e)', params:'\'proformaStatus=\' + this.value')}"/>
+                        onchange="${remoteFunction (controller:'proforma', id:proformaInstance.id, action:'updateStatus', params:'\'proformaStatus=\' + this.value')}"/>
                 </div>
             </td>
 
