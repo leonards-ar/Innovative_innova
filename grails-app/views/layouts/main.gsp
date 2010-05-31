@@ -2,7 +2,7 @@
   <head>
     <title><g:layoutTitle default="Grails" /></title>
     <link rel="stylesheet" href="${resource(dir:'css',file:'main.css')}" />
-    <link rel="shortcut icon" href="${resource(dir:'images',file:'favicon.ico')}" type="image/x-icon" />
+    <link rel="shortcut icon" href="${resource(dir:'images',file:grailsApplication.config.application.favicon)}" type="image/x-icon" />
   <g:layoutHead />
   <link rel="stylesheet" href="${createLinkTo(dir:'css',file:grailsApplication.config.application.cssFile)}" type="text/css" media="screen" charset="utf-8">
   <g:javascript library="application" />
