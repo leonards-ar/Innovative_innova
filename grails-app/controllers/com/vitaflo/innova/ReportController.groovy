@@ -126,8 +126,8 @@ class ReportController {
         def paramssupplier = params.supplier
         def paramspatient = params.patient
         
-        Calendar actualDate = Calendar.getInstance()
-        Calendar lastDate = Calendar.getInstance()
+        Calendar actualDate = Calendar.instance
+        Calendar lastDate = Calendar.instance
         if(params.toDate){
             actualDate.setTime(params.toDate)
         }
@@ -180,13 +180,11 @@ class ReportController {
 
     def salesReportByProduct = {
 
-        println params
-
         def paramssupplier = params.supplier
         def paramspatient = params.patient
 
-        Calendar actualDate = Calendar.getInstance()
-        Calendar lastDate = Calendar.getInstance()
+        Calendar actualDate = Calendar.instance
+        Calendar lastDate = Calendar.instance
         if(params.toDate){
             actualDate.setTime(params.toDate)
         }
@@ -197,35 +195,51 @@ class ReportController {
             lastDate.setTime(params.fromDate)
         }
 
+        List productList = Invoice.executeQuery("select distinct pr from Invoice i inner join i.proforma p inner join p.details d inner join d.product pr where i.date >= :lastDate and i.date <= :actualDate", [lastDate:lastDate.getTime(), actualDate:actualDate.getTime()])
+
+        List monthList = Invoice.executequery("select distinct year(i.date), month(i.date) from Invoice where i.date between :lastDate and :actualDate", [lastDate:lastDate.getTime(), actualDate:actualDate.getTime()])
+
         StringBuilder salesSelect = new StringBuilder("select year(i.date), month(i.date), prod.name, sum(d.quantity * d.price) ");
         StringBuilder qtySelect = new StringBuilder("select year(i.date), month(i.date), prod.name, sum(d.quantity) ");
         StringBuilder salesFrom = new StringBuilder("from Invoice i inner join i.proforma p inner join p.details d right outer join d.product prod");
-        StringBuilder qtyFrom = new StringBuilder("from Invoice i inner join i.proforma p inner join p.details d right outer join d.product prod");
-        StringBuilder where = new StringBuilder("where i.date >= :lastDate and i.date <= :actualDate and i.status='Pagada' ")
+        StringBuilder qtyFrom = new StringBuilder("from Invoice i inner join i.proforma p inner join p.details d inner join d.product prod");
+        StringBuilder where = new StringBuilder("where i.date >= :lastDate and i.date <= :actualDate and i.status='Pagada' and d.product= :product ")
 
         Map parameters = [lastDate:lastDate.getTime(), actualDate:actualDate.getTime()]
 
         if(params.patient) {
-            salesFrom.append("inner join i.proforma p inner join p.patient pat ")
-            qtyFrom.append("inner join i.proforma p inner join p.patient pat ")
-            where.append("and pat.lastName=:patient ")
-            def str = params.patient.split(',')
-            parameters.put("patient", str[0])
+        salesFrom.append("inner join i.proforma p inner join p.patient pat ")
+        qtyFrom.append("inner join i.proforma p inner join p.patient pat ")
+        where.append("and pat.lastName=:patient ")
+        def str = params.patient.split(',')
+        parameters.put("patient", str[0])
         }
 
         if(params.supplier) {
-            salesFrom.append("inner join i.purchase pur inner join pur.supplier s ")
-            qtyFrom.append("inner join i.purchase pur inner join pur.supplier s ")
-            where.append("and s.name =:supplier and i.purchase is not null ");
-            parameters.put("supplier", params.supplier)
+        salesFrom.append("inner join i.purchase pur inner join pur.supplier s ")
+        qtyFrom.append("inner join i.purchase pur inner join pur.supplier s ")
+        where.append("and s.name =:supplier and i.purchase is not null ");
+        parameters.put("supplier", params.supplier)
         }
+
 
         salesSelect.append(salesFrom.toString()).append(where.toString()).append("group by year(date),month(date), prod.name order by year(date), month(date), prod.name ")
         //List moneySales = Invoice.executeQuery("select year(date), month(date), sum(amount) from Invoice where date >= :lastDate and date <= :actualDate and status='Pagada' group by year(date),month(date) order by year(date), month(date)", params)
 
-        List moneySales = Invoice.executeQuery(salesSelect.toString(), parameters)
-        List salesList = createSalesList(moneySales)
+        Map productMoneySalesMap = [:]
+        Map productQtysalesMap = [:]
 
+        productList.each{p ->
+            parameters.put("product", p)
+            List moneySales = Invoice.executeQuery(salesSelect.toString(), parameters)
+            List salesList = createSalesByProductList(moneySales, monthList)
+
+            productMoneySalesMap.put(p, salesList)
+            //List moneySales = Invoice.executeQuery(salesSelect.toString(), parameters)
+            //List salesList = createSalesList(moneySales)
+
+        }
+        /*
         qtySelect.append(qtyFrom.toString()).append(where.toString()).append("group by year(date),month(date), prod.name order by year(date), month(date), prod.name ")
         List qtySales = Invoice.executeQuery(qtySelect.toString(), parameters)
         //print qtySales
@@ -235,6 +249,7 @@ class ReportController {
         def qXml = createSalesReportXml(qtyList)
 
         return[salesList: salesList, sXml:sXml, qtyList:qtyList, qXml:qXml, fromDate: lastDate, toDate: actualDate, patient:paramspatient, supplier:paramssupplier]
+         */
     }
 
     String createSalesReportXml(List sales){
@@ -270,7 +285,7 @@ class ReportController {
     List createSalesList(List sales){
         List salesList = []
         sales.each({item ->
-                Calendar date =Calendar.getInstance()
+                Calendar date =Calendar.instance
                 date.set(Calendar.YEAR, item[0].toInteger())
                 date.set(Calendar.MONTH, item[1].toInteger()-1)
 
@@ -281,37 +296,40 @@ class ReportController {
 
     }
 
-    List createSalesByPorductList(List sales){
+    List createSalesByPorductList(List sales, List monthList){
         List salesList = []
-        sales.each({item ->
-                Calendar date =Calendar.getInstance()
-                date.set(Calendar.YEAR, item[0].toInteger())
-                date.set(Calendar.MONTH, item[1].toInteger()-1)
+        Double amount
+        Calendar idxDate = Calendar.instance
+        for(idxDate in monthList){
+            boolean found = false
+            sales.each({item ->
+                    if(idxDate[1] == item[1] && idxDate[0] == item[0]) {
+                        found = true
+                        break each
+                    }
+                })
 
-                salesList.add(new SalesByProductCommand(date:date.getTime(), product:item[2], amount:item[3]))
-            })
+            if(found) {
+                amount = item[3]
+            }
 
-        return salesList
+            Calendar date = Calendar.instance
+            date.set(Calendar.YEAR, idxDate[0])
+            data.set(Calendar.MONTH, idxDate[1] - 1)
 
-    }
+            salesList.add(new SalesCommand(date:date.time, amount:amount)
+        
+            }
+            return salesList
 
-}
-class SalesCommand {
-    Date date
-    Double amount
+        }
 
-    String toString(){
-        return "${this.date} - ${this.amount}"
-    }
-}
+        class SalesCommand {
+            Date date
+            Double amount
 
-class SalesByProductCommand {
-    Date date
-    String product
-    Double amount
+            String toString(){
+                return "${this.date} - ${this.amount}"
+            }
+        }
 
-    String toString(){
-        return "${this.date} - ${this.product} - ${this.amount}"
-    }
-
-}
