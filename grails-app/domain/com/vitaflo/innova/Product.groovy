@@ -34,6 +34,11 @@ class Product {
         return name
     }
 
+    String shortName() {
+      def words = name.split(" ")
+      return "${words[0]} ${presentation}${(doseUnit != null)? doseUnit:""}"
+    }
+
     Integer getDeliveryPeriod() {
         return supplier?.deliveryPeriod;
     }

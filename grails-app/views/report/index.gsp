@@ -12,6 +12,9 @@
       <g:ifAnyGranted role="ROLE_REPORT">
         <span class="menuButton"><g:link class="chart" controller="report" action="salesReport"><g:message code="report.bar.salesReport"/></g:link></span>
       </g:ifAnyGranted>
+      <g:ifAnyGranted role="ROLE_REPORT">
+        <span class="menuButton"><g:link class="chart" controller="report" action="salesReportByProduct"><g:message code="report.bar.salesReportByProduct"/></g:link></span>
+      </g:ifAnyGranted>
     </div>
   </body>
 </html>
