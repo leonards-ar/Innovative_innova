@@ -2,7 +2,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="layout" content="main" />
-    <title><g:message code="report.bar.consolidatedReport" default="Consolidated Report" /></title>
+    <title><g:message code="report.bar.salesReport" default="Sales Report" /></title>
   <g:javascript library="prototype" />
   <g:javascript library="scriptaculous" />
   <g:javascript library="FusionCharts"/>
