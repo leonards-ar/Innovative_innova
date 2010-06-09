@@ -123,8 +123,6 @@ class ReportController {
 
   def salesReport = {
 
-    println params
-
     def paramssupplier = params.supplier
     def paramspatient = params.patient
 
@@ -171,7 +169,7 @@ class ReportController {
 
     qtySelect.append(qtyFrom.toString()).append(where.toString()).append("group by year(date),month(date) order by year(date), month(date) ")
     List qtySales = Invoice.executeQuery(qtySelect.toString(), parameters)
-    //print qtySales
+
     List qtyList = createSalesList(qtySales)
 
     def sXml = createSalesReportXml(salesList)
@@ -259,7 +257,6 @@ class ReportController {
       formatMonthList.add(date)
     })
 
-    print qXml    
     return [salesMap: productMoneySalesMap, sXml: sXml, qtyMap: productQtySalesMap, qXml: qXml, monthList: formatMonthList, fromDate: lastDate, toDate: actualDate, patient: paramspatient, supplier: paramssupplier]
 
   }
