@@ -237,7 +237,7 @@ class InvoiceController extends BaseController {
       }
 
       if (!invoiceInstance.hasErrors() && invoiceInstance.save()) {
-        if (invoice.proforma.patient) {
+        if (invoiceInstance.proforma.patient) {
           patientProductStockService.updatePatientProductStock(invoiceInstance);
         }
         flash.message = "invoice.updated"
