@@ -11,19 +11,33 @@ class PurchaseController extends BaseController {
         rememberListState([max: 15, offset: 0, sort: 'expireDate', order: 'desc'])
 
         def query = {
-          if(params.codeNumber) {
-            eq('codeNumber', params.codeNumber)
-          }
-
-          if(params.supplier) {
-            supplier {
-              eq('name', params.supplier)
+            if(params.codeNumber) {
+                eq('codeNumber', params.codeNumber)
             }
-          }
 
-          if(params.status) {
-            eq('status', params.status)
-          }
+            if(params.supplier) {
+                supplier {
+                    eq('name', params.supplier)
+                }
+            }
+
+            if(params.status) {
+                eq('status', params.status)
+            }
+
+            invoices {
+                proforma{
+                    or {
+                        client {
+                            inList('country', session.countries)
+                        }
+                        patient {
+                            inList('country', session.countries)
+                        }
+
+                    }
+                }
+            }
         }
 
         def criteria = Purchase.createCriteria()
@@ -32,23 +46,37 @@ class PurchaseController extends BaseController {
 
         def purchases = Purchase.withCriteria{
 
-          maxResults(params.max?.toInteger())
-          firstResult(params.offset?.toInteger())
-          order(params.sort, params.order)
+            maxResults(params.max?.toInteger())
+            firstResult(params.offset?.toInteger())
+            order(params.sort, params.order)
 
-          if(params.codeNumber) {
-            eq('codeNumber', params.codeNumber)
-          }
-
-          if(params.supplier) {
-            supplier {
-              eq('name', params.supplier)
+            if(params.codeNumber) {
+                eq('codeNumber', params.codeNumber)
             }
-          }
 
-          if(params.status) {
-            eq('status', params.status)
-          }
+            if(params.supplier) {
+                supplier {
+                    eq('name', params.supplier)
+                }
+            }
+
+            if(params.status) {
+                eq('status', params.status)
+            }
+
+            invoices {
+                proforma{
+                    or {
+                        client {
+                            inList('country', session.countries)
+                        }
+                        patient {
+                            inList('country', session.countries)
+                        }
+
+                    }
+                }
+            }
         }
       
         [purchaseInstanceList: purchases, purchaseInstanceTotal: total, codeNumber:params.codeNumber, supplier:params.supplier, status:params.status]
@@ -57,7 +85,30 @@ class PurchaseController extends BaseController {
     def create = {
         def purchaseInstance = new Purchase()
         purchaseInstance.properties = params
-        return [purchaseInstance: purchaseInstance]
+        def invoices = Invoice.withCriteria{
+            order('number', 'asc')
+            isNull('purchase')
+            proforma{
+                or {
+                    client {
+                        if (params.client) {
+                            eq('name', params.client)
+                        }
+
+                        inList('country', session.countries)
+                    }
+                    patient {
+                        if (params.patient) {
+                            def str = params.patient.split(',')
+                            eq('lastName', str[0])
+                        }
+                        inList('country', session.countries)
+                    }
+
+                }
+            }
+        }
+        return [purchaseInstance: purchaseInstance, invoices:invoices]
     }
 
     def save = { PurchaseInvoicesCommand invoicesCmd ->
@@ -89,7 +140,31 @@ class PurchaseController extends BaseController {
             redirect(action: "list")
         }
         else {
-            return [purchaseInstance: purchaseInstance]
+            def invoices = Invoice.withCriteria{
+                order('number', 'asc')
+                isNull('purchase')
+                proforma{
+                    or {
+                        client {
+                            if (params.client) {
+                                eq('name', params.client)
+                            }
+
+                            inList('country', session.countries)
+                        }
+                        patient {
+                            if (params.patient) {
+                                def str = params.patient.split(',')
+                                eq('lastName', str[0])
+                            }
+                            inList('country', session.countries)
+                        }
+
+                    }
+                }
+            }
+            return [purchaseInstance: purchaseInstance, invoices:invoices]
+
         }
     }
 
@@ -234,16 +309,16 @@ class PurchaseController extends BaseController {
     }
 
 
-   void addInvoice(Purchase purchaseInstance){
+    void addInvoice(Purchase purchaseInstance){
 
         def invoice = Invoice.get(params.invoiceSelected)
         purchaseInstance.addToInvoices(invoice)
 
         def updatedAmount = purchaseInstance.amount?purchaseInstance.amount + invoice.amount:invoice.amount
         purchaseInstance.amount = updatedAmount < 0? invoice.amount : updatedAmount
-   }
+    }
 
-   void removeInvoice(Purchase purchaseInstance){
+    void removeInvoice(Purchase purchaseInstance){
 
         def invoiceId = params.invoiceToRemove
 
@@ -252,7 +327,7 @@ class PurchaseController extends BaseController {
 
         def updatedAmount = purchaseInstance.amount?purchaseInstance.amount - invoice.amount:0
         purchaseInstance.amount = updatedAmount < 0? 0 : updatedAmount
-   }
+    }
 
 
     def updateExpireDate ={
