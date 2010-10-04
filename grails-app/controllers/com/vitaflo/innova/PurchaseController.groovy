@@ -11,6 +11,7 @@ class PurchaseController extends BaseController {
         rememberListState([max: 15, offset: 0, sort: 'expireDate', order: 'desc'])
 
         def query = {
+			
             if(params.codeNumber) {
                 eq('codeNumber', params.codeNumber)
             }
@@ -50,6 +51,9 @@ class PurchaseController extends BaseController {
             firstResult(params.offset?.toInteger())
             order(params.sort, params.order)
 
+			projections {
+				distinct('id')
+			}
             if(params.codeNumber) {
                 eq('codeNumber', params.codeNumber)
             }
@@ -79,36 +83,16 @@ class PurchaseController extends BaseController {
             }
         }
       
-        [purchaseInstanceList: purchases, purchaseInstanceTotal: total, codeNumber:params.codeNumber, supplier:params.supplier, status:params.status]
+		def purchasesList = Purchase.getAll(purchases)
+        [purchaseInstanceList: purchasesList, purchaseInstanceTotal: total, codeNumber:params.codeNumber, supplier:params.supplier, status:params.status]
     }
 
     def create = {
         def purchaseInstance = new Purchase()
         purchaseInstance.properties = params
-        def invoices = Invoice.withCriteria{
-            order('number', 'asc')
-            isNull('purchase')
-            proforma{
-                or {
-                    client {
-                        if (params.client) {
-                            eq('name', params.client)
-                        }
-
-                        inList('country', session.countries)
-                    }
-                    patient {
-                        if (params.patient) {
-                            def str = params.patient.split(',')
-                            eq('lastName', str[0])
-                        }
-                        inList('country', session.countries)
-                    }
-
-                }
-            }
-        }
-        return [purchaseInstance: purchaseInstance, invoices:invoices]
+        def invoices = getInvoicesForSelect()
+		
+		return [purchaseInstance: purchaseInstance, invoices:invoices]
     }
 
     def save = { PurchaseInvoicesCommand invoicesCmd ->
@@ -140,30 +124,8 @@ class PurchaseController extends BaseController {
             redirect(action: "list")
         }
         else {
-            def invoices = Invoice.withCriteria{
-                order('number', 'asc')
-                isNull('purchase')
-                proforma{
-                    or {
-                        client {
-                            if (params.client) {
-                                eq('name', params.client)
-                            }
-
-                            inList('country', session.countries)
-                        }
-                        patient {
-                            if (params.patient) {
-                                def str = params.patient.split(',')
-                                eq('lastName', str[0])
-                            }
-                            inList('country', session.countries)
-                        }
-
-                    }
-                }
-            }
-            return [purchaseInstance: purchaseInstance, invoices:invoices]
+            def invoices = getInvoicesForSelect() 
+			return [purchaseInstance: purchaseInstance, invoices:invoices]
 
         }
     }
@@ -177,7 +139,9 @@ class PurchaseController extends BaseController {
             redirect(action: "list")
         }
         else {
-            return [purchaseInstance: purchaseInstance]
+			def invoices = getInvoicesForSelect()
+			
+            return [purchaseInstance: purchaseInstance, purchaseInvoicesList:purchaseInstance.invoices, invoices:invoices]
         }
     }
 
@@ -197,7 +161,7 @@ class PurchaseController extends BaseController {
             purchaseInstance.properties = params
 
             //We need to apply the delete manually as the update provided by the scaffolding didn't work out of the box with sets.
-            def invoicesToRemove = []
+/*            def invoicesToRemove = []
 
             purchaseInstance.invoices.each { invoice ->
                 def auxInvoiceId = invoicesCmd.invoicesCommand.find{(it.toLong()) == invoice.id}
@@ -210,7 +174,15 @@ class PurchaseController extends BaseController {
                 purchaseInstance.removeFromInvoices(auxInvoice)
             }
             //End of the manual removal
-            
+*/
+			List invoices = invoicesCmd.createAnInvoiceList()
+			invoices.each {invoice ->
+				
+				invoice.purchase = purchaseInstance
+				
+			}
+			//purchaseInstance.invoices = invoices
+			            
             if (!purchaseInstance.hasErrors() && purchaseInstance.save(flush:true)) {
                 purchaseInstance.clearErrors()
                 flash.message = "purchase.updated"
@@ -290,22 +262,37 @@ class PurchaseController extends BaseController {
         render(view: "create", model: [purchaseInstance: purchaseInstance])
     }
 
-    def addInvoiceForUpdate = {
+    def addInvoiceForUpdate = {PurchaseInvoicesCommand purchaseInvoiceCommand ->
+		
         def purchaseInstance = Purchase.get(params.id)
-        purchaseInstance.properties = params
+        //purchaseInstance.properties = params
 
-        addInvoice(purchaseInstance)
+        //addInvoice(purchaseInstance)
 
-        render(view: "edit", model: [purchaseInstance: purchaseInstance])
+		//purchaseInstance.invoices*.discard()
+
+		purchaseInvoiceCommand.addInvoice(params.invoiceSelected)
+		
+		def purchaseInvoicesList = purchaseInvoiceCommand.createAnInvoiceList()
+		
+		def invoices = getInvoicesForSelect()
+		
+		invoices -= purchaseInvoicesList
+		
+        render(template: "invoicePurchase", model: [purchaseInstance: purchaseInstance, purchaseInvoicesList:purchaseInvoicesList, invoices:invoices])
     }
 
     def removeInvoiceForUpdate = {
+		
         def purchaseInstance = Purchase.get(params.id)
-        purchaseInstance.properties = params
+        //purchaseInstance.properties = params
 
         removeInvoice(purchaseInstance)
 
-        render(view: "edit", model: [purchaseInstance: purchaseInstance])
+		//purchaseInstance.invoices*.discard()
+		
+		def invoices = getInvoicesForSelect()
+        render(template: "invoicePurchase", model: [purchaseInstance: purchaseInstance, invoices:invoices])
     }
 
 
@@ -317,6 +304,14 @@ class PurchaseController extends BaseController {
         def updatedAmount = purchaseInstance.amount?purchaseInstance.amount + invoice.amount:invoice.amount
         purchaseInstance.amount = updatedAmount < 0? invoice.amount : updatedAmount
     }
+	
+	void addInvoice(Purchase purchaseInstance, PurchaseInvoicesCommand purchaseInvoiceCommand){
+		
+				purchaseInvoiceCommand.addToInvoicesCommand(params.invoiceSelected)
+		
+				def updatedAmount = purchaseInstance.amount?purchaseInstance.amount + invoice.amount:invoice.amount
+				purchaseInstance.amount = updatedAmount < 0? invoice.amount : updatedAmount
+	}
 
     void removeInvoice(Purchase purchaseInstance){
 
@@ -355,11 +350,43 @@ class PurchaseController extends BaseController {
         //https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/Date/parse
         render formatDate(date:expireDateUpdated, format:"MMM d, yyyy")
     }
+	
+	private getInvoicesForSelect(){
+		return Invoice.withCriteria{
+
+                order('number', 'asc')
+                isNull('purchase')
+                proforma{
+	
+                    or {
+                        client {
+                            if (params.client) {
+                                eq('name', params.client)
+                            }
+
+                            inList('country', session.countries)
+                        }
+                        patient {
+                            if (params.patient) {
+                                def str = params.patient.split(',')
+                                eq('lastName', str[0])
+                            }
+                            inList('country', session.countries)
+                        }
+
+                    }
+                }
+            }
+	}
 }
 
 class PurchaseInvoicesCommand{
     List invoicesCommand = []
 
+	void addInvoice(invoiceId) {
+		invoicesCommand.add(invoiceId)
+	}
+	
     List createAnInvoiceList(){
         List invoiceList = []
 
