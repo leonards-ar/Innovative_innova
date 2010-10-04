@@ -1,6 +1,6 @@
 package com.vitaflo.innova
 
-class PurchaseController extends BaseController {
+class PurchaseController {
 
     def index = { redirect(action: "list", params: params) }
 
@@ -8,37 +8,25 @@ class PurchaseController extends BaseController {
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def list = {
-        rememberListState([max: 15, offset: 0, sort: 'expireDate', order: 'desc'])
+        params.max = Math.min(params.max ? params.max.toInteger() : 15,  100)
+        if (!params.offset) params.offset = 0
+        if (!params.sort) params.sort = "expireDate"
+        if (!params.order) params.order = "desc"
 
         def query = {
-			
-            if(params.codeNumber) {
-                eq('codeNumber', params.codeNumber)
-            }
+          if(params.codeNumber) {
+            eq('codeNumber', params.codeNumber)
+          }
 
-            if(params.supplier) {
-                supplier {
-                    eq('name', params.supplier)
-                }
+          if(params.supplier) {
+            supplier {
+              eq('name', params.supplier)
             }
+          }
 
-            if(params.status) {
-                eq('status', params.status)
-            }
-
-            invoices {
-                proforma{
-                    or {
-                        client {
-                            inList('country', session.countries)
-                        }
-                        patient {
-                            inList('country', session.countries)
-                        }
-
-                    }
-                }
-            }
+          if(params.status) {
+            eq('status', params.status)
+          }
         }
 
         def criteria = Purchase.createCriteria()
@@ -47,52 +35,32 @@ class PurchaseController extends BaseController {
 
         def purchases = Purchase.withCriteria{
 
-            maxResults(params.max?.toInteger())
-            firstResult(params.offset?.toInteger())
-            order(params.sort, params.order)
+          maxResults(params.max)
+          firstResult(params.offset?.toInteger())
+          order(params.sort, params.order)
 
-			projections {
-				distinct('id')
-			}
-            if(params.codeNumber) {
-                eq('codeNumber', params.codeNumber)
+          if(params.codeNumber) {
+            eq('codeNumber', params.codeNumber)
+          }
+
+          if(params.supplier) {
+            supplier {
+              eq('name', params.supplier)
             }
+          }
 
-            if(params.supplier) {
-                supplier {
-                    eq('name', params.supplier)
-                }
-            }
-
-            if(params.status) {
-                eq('status', params.status)
-            }
-
-            invoices {
-                proforma{
-                    or {
-                        client {
-                            inList('country', session.countries)
-                        }
-                        patient {
-                            inList('country', session.countries)
-                        }
-
-                    }
-                }
-            }
+          if(params.status) {
+            eq('status', params.status)
+          }
         }
       
-		def purchasesList = Purchase.getAll(purchases)
-        [purchaseInstanceList: purchasesList, purchaseInstanceTotal: total, codeNumber:params.codeNumber, supplier:params.supplier, status:params.status]
+        [purchaseInstanceList: purchases, purchaseInstanceTotal: total, codeNumber:params.codeNumber, supplier:params.supplier, status:params.status]
     }
 
     def create = {
         def purchaseInstance = new Purchase()
         purchaseInstance.properties = params
-        def invoices = getInvoicesForSelect()
-		
-		return [purchaseInstance: purchaseInstance, invoices:invoices]
+        return [purchaseInstance: purchaseInstance]
     }
 
     def save = { PurchaseInvoicesCommand invoicesCmd ->
@@ -124,9 +92,7 @@ class PurchaseController extends BaseController {
             redirect(action: "list")
         }
         else {
-            def invoices = getInvoicesForSelect() 
-			return [purchaseInstance: purchaseInstance, invoices:invoices]
-
+            return [purchaseInstance: purchaseInstance]
         }
     }
 
@@ -139,9 +105,7 @@ class PurchaseController extends BaseController {
             redirect(action: "list")
         }
         else {
-			def invoices = getInvoicesForSelect()
-			
-            return [purchaseInstance: purchaseInstance, purchaseInvoicesList:purchaseInstance.invoices, invoices:invoices]
+            return [purchaseInstance: purchaseInstance]
         }
     }
 
@@ -161,7 +125,7 @@ class PurchaseController extends BaseController {
             purchaseInstance.properties = params
 
             //We need to apply the delete manually as the update provided by the scaffolding didn't work out of the box with sets.
-/*            def invoicesToRemove = []
+            def invoicesToRemove = []
 
             purchaseInstance.invoices.each { invoice ->
                 def auxInvoiceId = invoicesCmd.invoicesCommand.find{(it.toLong()) == invoice.id}
@@ -174,15 +138,7 @@ class PurchaseController extends BaseController {
                 purchaseInstance.removeFromInvoices(auxInvoice)
             }
             //End of the manual removal
-*/
-			List invoices = invoicesCmd.createAnInvoiceList()
-			invoices.each {invoice ->
-				
-				invoice.purchase = purchaseInstance
-				
-			}
-			//purchaseInstance.invoices = invoices
-			            
+            
             if (!purchaseInstance.hasErrors() && purchaseInstance.save(flush:true)) {
                 purchaseInstance.clearErrors()
                 flash.message = "purchase.updated"
@@ -262,58 +218,35 @@ class PurchaseController extends BaseController {
         render(view: "create", model: [purchaseInstance: purchaseInstance])
     }
 
-    def addInvoiceForUpdate = {PurchaseInvoicesCommand purchaseInvoiceCommand ->
-		
+    def addInvoiceForUpdate = {
         def purchaseInstance = Purchase.get(params.id)
-        //purchaseInstance.properties = params
+        purchaseInstance.properties = params
 
-        //addInvoice(purchaseInstance)
+        addInvoice(purchaseInstance)
 
-		//purchaseInstance.invoices*.discard()
-
-		purchaseInvoiceCommand.addInvoice(params.invoiceSelected)
-		
-		def purchaseInvoicesList = purchaseInvoiceCommand.createAnInvoiceList()
-		
-		def invoices = getInvoicesForSelect()
-		
-		invoices -= purchaseInvoicesList
-		
-        render(template: "invoicePurchase", model: [purchaseInstance: purchaseInstance, purchaseInvoicesList:purchaseInvoicesList, invoices:invoices])
+        render(view: "edit", model: [purchaseInstance: purchaseInstance])
     }
 
     def removeInvoiceForUpdate = {
-		
         def purchaseInstance = Purchase.get(params.id)
-        //purchaseInstance.properties = params
+        purchaseInstance.properties = params
 
         removeInvoice(purchaseInstance)
 
-		//purchaseInstance.invoices*.discard()
-		
-		def invoices = getInvoicesForSelect()
-        render(template: "invoicePurchase", model: [purchaseInstance: purchaseInstance, invoices:invoices])
+        render(view: "edit", model: [purchaseInstance: purchaseInstance])
     }
 
 
-    void addInvoice(Purchase purchaseInstance){
+   void addInvoice(Purchase purchaseInstance){
 
         def invoice = Invoice.get(params.invoiceSelected)
         purchaseInstance.addToInvoices(invoice)
 
         def updatedAmount = purchaseInstance.amount?purchaseInstance.amount + invoice.amount:invoice.amount
         purchaseInstance.amount = updatedAmount < 0? invoice.amount : updatedAmount
-    }
-	
-	void addInvoice(Purchase purchaseInstance, PurchaseInvoicesCommand purchaseInvoiceCommand){
-		
-				purchaseInvoiceCommand.addToInvoicesCommand(params.invoiceSelected)
-		
-				def updatedAmount = purchaseInstance.amount?purchaseInstance.amount + invoice.amount:invoice.amount
-				purchaseInstance.amount = updatedAmount < 0? invoice.amount : updatedAmount
-	}
+   }
 
-    void removeInvoice(Purchase purchaseInstance){
+   void removeInvoice(Purchase purchaseInstance){
 
         def invoiceId = params.invoiceToRemove
 
@@ -322,7 +255,7 @@ class PurchaseController extends BaseController {
 
         def updatedAmount = purchaseInstance.amount?purchaseInstance.amount - invoice.amount:0
         purchaseInstance.amount = updatedAmount < 0? 0 : updatedAmount
-    }
+   }
 
 
     def updateExpireDate ={
@@ -350,43 +283,11 @@ class PurchaseController extends BaseController {
         //https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/Date/parse
         render formatDate(date:expireDateUpdated, format:"MMM d, yyyy")
     }
-	
-	private getInvoicesForSelect(){
-		return Invoice.withCriteria{
-
-                order('number', 'asc')
-                isNull('purchase')
-                proforma{
-	
-                    or {
-                        client {
-                            if (params.client) {
-                                eq('name', params.client)
-                            }
-
-                            inList('country', session.countries)
-                        }
-                        patient {
-                            if (params.patient) {
-                                def str = params.patient.split(',')
-                                eq('lastName', str[0])
-                            }
-                            inList('country', session.countries)
-                        }
-
-                    }
-                }
-            }
-	}
 }
 
 class PurchaseInvoicesCommand{
     List invoicesCommand = []
 
-	void addInvoice(invoiceId) {
-		invoicesCommand.add(invoiceId)
-	}
-	
     List createAnInvoiceList(){
         List invoiceList = []
 
