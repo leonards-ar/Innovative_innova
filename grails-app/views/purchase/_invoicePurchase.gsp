@@ -13,14 +13,14 @@
           </tr>
           <tr class="prop">
                 <td valign="middle">
-                   <span class="button"><g:submitToRemote controller="purchase" update="invoicesListPanel" action="addInvoiceForUpdate" value="${message(code: 'add', 'default': 'Add')}" /></span>
+                   <span class="button"><g:submitButton class="add" name="addInvoice" onclick="submitAddInvoice()" value="${message(code: 'add', 'default': 'Add')}" /></span>
                 </td>
           </tr>
         </tbody>
     </table>
 </div>
 
-<g:if test="${purchaseInvoicesList.size()> 0}">
+<g:if test="${purchaseInstance?.invoices?.size()> 0}">
 
 <g:hiddenField name="invoiceToRemove"/>
 <div class="list">
@@ -42,7 +42,7 @@
             </tr>
         </thead>
         <tbody>
-        <g:each in="${purchaseInvoicesList}" status="i" var="invoiceInstance">
+        <g:each in="${purchaseInstance?.invoices}" status="i" var="invoiceInstance">
             <g:hiddenField name="invoicesCommand[${i}]" value="${invoiceInstance.id}"/>
             <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                 <td>${fieldValue(bean: invoiceInstance, field: "number")}</td>
@@ -55,7 +55,7 @@
 
                 <td><g:formatDate date="${invoiceInstance.date}" format="dd/MM/yyyy"/></td>
 
-                <td><g:submitToRemote controller="purchase" update="invoicesListPanel" action="removeInvoiceForUpdate" id="${invoiceInstance.id}" value="${message(code: 'remove', 'default': 'Remove')}" /></td>
+                <td><g:submitButton class="remove" name="removeInvoice" onclick="submitRemoveInvoice(${invoiceInstance.id})" value="${message(code: 'remove', 'default': 'Remove')}" /></td>
             </tr>
         </g:each>
         </tbody>
