@@ -8,8 +8,8 @@
     </head>
     <body>
         <div class="nav">
-            <span class="menuButton"><a class="home" href="${createLinkTo(dir: '')}"><g:message code="home" default="Home" /></a></span>
-            <span class="menuButton"><g:link class="create" action="create"><g:message code="clinicalHistory.new" default="New ClinicalHistory" /></g:link></span>
+            <span class="menuButton"><g:link class="patient" controller="patient" action="list"><g:message code="patients" default="Patients" /></g:link></span>
+            <span class="menuButton"><g:link class="create" action="create" id="${patient}"><g:message code="clinicalHistory.new" default="New ClinicalHistory" /></g:link></span>
         </div>
         <div class="body">
             <h1><g:message code="clinicalHistory.list" default="ClinicalHistory List" /></h1>
@@ -34,9 +34,7 @@
                         
                             <td><g:link action="show" id="${clinicalHistoryInstance.id}"><g:formatDate date="${clinicalHistoryInstance.date}" /></g:link></td>
                         
-                            <td>${fieldValue(bean: clinicalHistoryInstance, field: "description")}</td>
-                        
-                            <td>${fieldValue(bean: clinicalHistoryInstance, field: "patient")}</td>
+                            <td>${clinicalHistoryInstance?.description.decodeHTML()}</td>
                         
                         </tr>
                     </g:each>

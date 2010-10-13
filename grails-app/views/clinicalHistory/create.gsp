@@ -8,11 +8,12 @@
     </head>
     <body>
         <div class="nav">
-            <span class="menuButton"><a class="home" href="${createLinkTo(dir: '')}"><g:message code="home" default="Home" /></a></span>
-            <span class="menuButton"><g:link class="list" action="list"><g:message code="clinicalHistory.list" default="ClinicalHistory List" /></g:link></span>
+            <span class="menuButton"><g:link class="patient" controller="patient" action="list"><g:message code="patients" default="Patients" /></g:link></span>
+            <span class="menuButton"><g:link class="list" action="list" id="${clinicalHistoryInstance?.patient?.id}"><g:message code="clinicalHistory.list" default="ClinicalHistory List" /></g:link></span>
         </div>
         <div>
             <h1><g:message code="clinicalHistory.create" default="Create ClinicalHistory" /></h1>
+            <h1>${clinicalHistoryInstance?.patient?.lastName}, ${clinicalHistoryInstance?.patient?.firstName}</h1>
             <g:if test="${flash.message}">
             <div class="message"><g:message code="${flash.message}" args="${flash.args}" default="${flash.defaultMessage}" /></div>
             </g:if>
@@ -25,13 +26,13 @@
                 <div class="dialog">
                     <table>
                         <tbody>
-                        
+                            <input type="hidden" name="patient" value="${clinicalHistoryInstance?.patient?.id}"/>
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="date"><g:message code="clinicalHistory.date" default="Date" />:</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: clinicalHistoryInstance, field: 'date', 'errors')}">
-                                    <g:datePicker name="date" value="${clinicalHistoryInstance?.date}"  />
+                                    <g:datePicker name="date" value="${clinicalHistoryInstance?.date}" precision="day" years="${2008..2020}" />
 
                                 </td>
                             </tr>
@@ -47,16 +48,6 @@
                                         fileBrowser="default">
                                     Initial text
                                     </fckeditor:editor>
-
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="patient"><g:message code="clinicalHistory.patient" default="Patient" />:</label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: clinicalHistoryInstance, field: 'patient', 'errors')}">
-                                    <g:select name="patient.id" from="${com.vitaflo.innova.Patient.list()}" optionKey="id" value="${clinicalHistoryInstance?.patient?.id}"  />
 
                                 </td>
                             </tr>

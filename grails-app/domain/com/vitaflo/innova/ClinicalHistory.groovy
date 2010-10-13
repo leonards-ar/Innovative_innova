@@ -13,6 +13,9 @@ class ClinicalHistory {
 
     static mapping = {
       table 'clinical_history'
+      columns {
+        description type: "text"
+      }
     }
 
 }

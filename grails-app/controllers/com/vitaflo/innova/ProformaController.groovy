@@ -7,6 +7,8 @@ class ProformaController extends BaseController {
 
     def mailService
 
+    def exportService
+  
     def index = { redirect(action: "list", params: params) }
 
     def list = {
