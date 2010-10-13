@@ -16,28 +16,23 @@
             <g:if test="${flash.message}">
             <div class="message"><g:message code="${flash.message}" args="${flash.args}" default="${flash.defaultMessage}" /></div>
             </g:if>
+            <h1>${patientName} </h1>
             <div class="list">
                 <table>
                     <thead>
                         <tr>
                         
-                   	    <g:sortableColumn property="id" title="Id" titleKey="clinicalHistory.id" />
-                        
                    	    <g:sortableColumn property="date" title="Date" titleKey="clinicalHistory.date" />
                         
                    	    <g:sortableColumn property="description" title="Description" titleKey="clinicalHistory.description" />
                         
-                   	    <th><g:message code="clinicalHistory.patient" default="Patient" /></th>
-                   	    
                         </tr>
                     </thead>
                     <tbody>
                     <g:each in="${clinicalHistoryInstanceList}" status="i" var="clinicalHistoryInstance">
                         <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                         
-                            <td><g:link action="show" id="${clinicalHistoryInstance.id}">${fieldValue(bean: clinicalHistoryInstance, field: "id")}</g:link></td>
-                        
-                            <td><g:formatDate date="${clinicalHistoryInstance.date}" /></td>
+                            <td><g:link action="show" id="${clinicalHistoryInstance.id}"><g:formatDate date="${clinicalHistoryInstance.date}" /></g:link></td>
                         
                             <td>${fieldValue(bean: clinicalHistoryInstance, field: "description")}</td>
                         

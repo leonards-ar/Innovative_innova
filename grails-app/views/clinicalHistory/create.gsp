@@ -11,7 +11,7 @@
             <span class="menuButton"><a class="home" href="${createLinkTo(dir: '')}"><g:message code="home" default="Home" /></a></span>
             <span class="menuButton"><g:link class="list" action="list"><g:message code="clinicalHistory.list" default="ClinicalHistory List" /></g:link></span>
         </div>
-        <div class="body">
+        <div>
             <h1><g:message code="clinicalHistory.create" default="Create ClinicalHistory" /></h1>
             <g:if test="${flash.message}">
             <div class="message"><g:message code="${flash.message}" args="${flash.args}" default="${flash.defaultMessage}" /></div>
@@ -37,15 +37,12 @@
                             </tr>
                         
                             <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="description"><g:message code="clinicalHistory.description" default="Description" />:</label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: clinicalHistoryInstance, field: 'description', 'errors')}">
+                                <td colspan="2" valign="top" class="value ${hasErrors(bean: clinicalHistoryInstance, field: 'description', 'errors')}">
                                     <!--g:textField name="description" value="${fieldValue(bean: clinicalHistoryInstance, field: 'description')}" /-->
                                     <fckeditor:editor
                                         name="description"
-                                        width="80%"
-                                        height="400"
+                                        width="85%"
+                                        height="350"
                                         toolbar="Default"
                                         fileBrowser="default">
                                     Initial text
