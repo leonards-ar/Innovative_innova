@@ -22,20 +22,19 @@
                     <thead>
                         <tr>
                         
-                   	    <g:sortableColumn property="date" title="Date" titleKey="clinicalHistory.date" />
-                        
-                   	    <g:sortableColumn property="description" title="Description" titleKey="clinicalHistory.description" />
-                        
+                            <g:sortableColumn property="date" title="Date" titleKey="clinicalHistory.date" />
+
+                            <th><g:message code="clinicalHistory.title" default="Title" /></th>
+
                         </tr>
                     </thead>
                     <tbody>
                     <g:each in="${clinicalHistoryInstanceList}" status="i" var="clinicalHistoryInstance">
                         <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                         
-                            <td><g:link action="show" id="${clinicalHistoryInstance.id}"><g:formatDate date="${clinicalHistoryInstance.date}" /></g:link></td>
+                            <td><g:link action="show" id="${clinicalHistoryInstance.id}" params="${[patient:patient]}"><g:formatDate date="${clinicalHistoryInstance.date}" format="dd/MM/yyyy"/></g:link></td>
                         
-                            <td>${clinicalHistoryInstance?.description.decodeHTML()}</td>
-                        
+                            <td>${clinicalHistoryInstance?.title}</td>
                         </tr>
                     </g:each>
                     </tbody>

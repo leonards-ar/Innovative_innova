@@ -4,7 +4,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="layout" content="main" />
-        <title><g:message code="clinicalHistory.create" default="Create ClinicalHistory" /></title>
+        <title><g:message code="clinicalHistory.create" default="Create Clinical History" /></title>
     </head>
     <body>
         <div class="nav">
@@ -23,10 +23,10 @@
             </div>
             </g:hasErrors>
             <g:form action="save" method="post" >
+                <g:hiddenField name="patient" value="${clinicalHistoryInstance?.patient?.id}" />
                 <div class="dialog">
                     <table>
                         <tbody>
-                            <input type="hidden" name="patient" value="${clinicalHistoryInstance?.patient?.id}"/>
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="date"><g:message code="clinicalHistory.date" default="Date" />:</label>
@@ -36,17 +36,33 @@
 
                                 </td>
                             </tr>
-                        
+
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="title"><g:message code="clinicalHistory.title" default="Title" />:</label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: clinicalHistoryInstance, field: 'date', 'errors')}">
+                                    <g:textField name="date" value="${clinicalHistoryInstance?.title}"/>
+
+                                </td>
+                            </tr>                        
                             <tr class="prop">
                                 <td colspan="2" valign="top" class="value ${hasErrors(bean: clinicalHistoryInstance, field: 'description', 'errors')}">
                                     <!--g:textField name="description" value="${fieldValue(bean: clinicalHistoryInstance, field: 'description')}" /-->
+                                    <fckeditor:config
+                                            AutoDetectLanguage="false"
+                                            ImageDlgHideLink="true"
+                                            ImageDlgHideAdvanced="true"
+                                            LinkDlgHideAdvanced="true"
+                                            SourcePopup="true"
+                                            LinkUpload="false"
+                                            ForcePasteAsPlainText="true"/>
                                     <fckeditor:editor
                                         name="description"
                                         width="85%"
                                         height="350"
                                         toolbar="Default"
                                         fileBrowser="default">
-                                    Initial text
                                     </fckeditor:editor>
 
                                 </td>
