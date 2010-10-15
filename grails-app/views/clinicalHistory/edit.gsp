@@ -60,8 +60,7 @@
                                         ImageDlgHideAdvanced="true"
                                         LinkDlgHideAdvanced="true"
                                         SourcePopup="true"
-                                        LinkUpload="false"
-                                        ForcePasteAsPlainText="true"/>
+                                        LinkUpload="false"/>
                                     <fckeditor:editor
                                         name="description"
                                         value="${clinicalHistoryInstance?.description}"

@@ -98,7 +98,7 @@ class ClinicalHistoryController extends BaseController {
         flash.message = "clinicalHistory.updated"
         flash.args = [params.id]
         flash.defaultMessage = "Clinical History ${params.id} updated"
-        redirect(action: "list", id: params.patient)
+        redirect(action: "show", id: clinicalHistoryInstance.id)
       } else {
         render(view: "edit", model: [clinicalHistoryInstance: clinicalHistoryInstance])
       }
@@ -108,6 +108,33 @@ class ClinicalHistoryController extends BaseController {
       flash.defaultMessage = "Clinical History not found with id ${params.id}"
       redirect(action: "edit", id: params.id)
     }
+  }
+
+  def delete = {
+      def clinicalHistoryInstance = ClinicalHistory.get(params.id)
+      def id = clinicalHistoryInstance?.patient?.id
+      if (clinicalHistoryInstance) {
+          try {
+              clinicalHistoryInstance.delete()
+            flash.message = "clinicalHistory.deleted"
+            flash.args = [params.id]
+            flash.defaultMessage = "Clincal History ${params.id} deleted"
+            redirect(action: "list", id: id)
+
+          }
+          catch (org.springframework.dao.DataIntegrityViolationException e) {
+              flash.message = "clinicalHistory.not.deleted"
+              flash.args = [params.id]
+              flash.defaultMessage = "Clinical History ${params.id} could not be deleted"
+              redirect(action: "show", id: params.id)
+          }
+      }
+      else {
+          flash.message = "client.not.found"
+          flash.args = [params.id]
+          flash.defaultMessage = "Client not found with id ${params.id}"
+          redirect(action: "list")
+      }
   }
 
 }
