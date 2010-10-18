@@ -41,8 +41,8 @@
                                 <td valign="top" class="name">
                                     <label for="title"><g:message code="clinicalHistory.title" default="Title" />:</label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: clinicalHistoryInstance, field: 'date', 'errors')}">
-                                    <g:textField name="date" value="${clinicalHistoryInstance?.title}"/>
+                                <td valign="top" class="value ${hasErrors(bean: clinicalHistoryInstance, field: 'title', 'errors')}">
+                                    <g:textField name="title" size="50" value="${clinicalHistoryInstance?.title}"/>
 
                                 </td>
                             </tr>                        
@@ -58,10 +58,12 @@
                                             LinkUpload="false"/>
                                     <fckeditor:editor
                                         name="description"
+                                        value="${clinicalHistoryInstance?.description}"
                                         width="85%"
                                         height="350"
                                         toolbar="Default"
                                         fileBrowser="default">
+                                        ${(clinicalHistoryInstance?.description)?clinicalHistoryInstance?.description.decodeHTML():""}
                                     </fckeditor:editor>
 
                                 </td>

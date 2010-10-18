@@ -47,7 +47,7 @@
                                     <label for="date"><g:message code="clinicalHistory.title" default="Title" />:</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: clinicalHistoryInstance, field: 'date', 'errors')}">
-                                    <g:textField name="title" value="${clinicalHistoryInstance?.title}"/>
+                                    <g:textField name="title" size="50" value="${clinicalHistoryInstance?.title}"/>
 
                                 </td>
                             </tr>

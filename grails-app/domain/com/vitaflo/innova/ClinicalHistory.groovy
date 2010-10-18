@@ -10,7 +10,7 @@ class ClinicalHistory {
     static constraints = {
       date(nullable:false)
       title(nullable:false, blank:false)
-      description(blank:false, maxLength: 1000)
+      description(blank:false)
     }
 
     static mapping = {
