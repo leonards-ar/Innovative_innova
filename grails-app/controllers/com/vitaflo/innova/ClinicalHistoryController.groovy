@@ -18,10 +18,8 @@ class ClinicalHistoryController extends BaseController {
 		
 		def patient = Patient.get(params.id)
 		def clinicalHistoryList = ClinicalHistory.findAllByPatient(patient, [max: max, sort: sort, order: order, offset: offset])
-		def list = ClinicalHistory.findByPatient(patient)
-		def total = list ? list?.count() : 0
-		
-		
+		def total = ClinicalHistory.countByPatient(patient)
+
 		render(view: "list", model: [clinicalHistoryInstanceList: clinicalHistoryList, clinicalHistoryInstanceTotal: total, patient: params.id, patientName: "${patient.lastName}, ${patient.firstName}"])
 	}
 	
