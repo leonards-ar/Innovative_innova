@@ -187,7 +187,7 @@ class ProformaController extends BaseController {
       def patientLabel = g.message(code: "proforma.patient")
       def statusLabel = g.message(code: "proforma.status")
       def dateLabel = g.message(code: "proforma.createdAt")
-      Map labels = ["id": "${idLabel}", "client": "${clientLabel}", "patient": "${patientLabel}", "status": "${statusLabel}", "createdAT": "${dateLabel}"]
+      Map labels = ["id": "${idLabel}", "client": "${clientLabel}", "patient": "${patientLabel}", "status": "${statusLabel}", "createdAt": "${dateLabel}"]
       exportService.export(params.format, response.outputStream, exportProformas, fields, labels, [:], [:])
     }
     [proformaInstanceList: proformas, proformaInstanceTotal: total, client: params.client, patient: params.patient, status: params.status, selectedCountry: params.selectedCountry]
