@@ -5,9 +5,9 @@ class Proforma {
 	
 	Date createdAt = new Date()
 	Date deliveryDate
-	
-	Integer discount =0
-	Double courier =200.0
+	String code
+	Integer discount = 0
+	Double courier = 200.0
 	String status = 'Creada'
 	Boolean donation = false
 	Patient patient
@@ -24,7 +24,8 @@ class Proforma {
 		status(inList:STATUS_LIST)
 		details(nullable:false,minSize:1)
 		destinationAirport(nullable:true)
-		deliveryDate(nullable:true, blank:true)		
+		deliveryDate(nullable:true, blank:true)
+        code(nullable:true, blank:true)
 	}
 	
 	static mapping = {
@@ -59,6 +60,6 @@ class Proforma {
 	
 	
 	String toString(){
-		return "${this.id} - ${this.client} - ${(this.patient)?this.patient:'---'}"
+		return "${this.code} - ${this.client} - ${(this.patient)?this.patient:'---'}"
 	}
 }

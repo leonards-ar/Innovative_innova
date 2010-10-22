@@ -239,6 +239,10 @@ class ProformaController extends BaseController {
     if (!proformaInstance.hasErrors()) {
 
       if (proformaInstance.save()) {
+        
+        if(!(proformaInstance?.code)) {
+          proformaInstance.code = proformaInstance.id
+        }
         //update the patient with the client selected in the proforma
         updatePatient(proformaInstance)
         flash.message = "proforma.created"

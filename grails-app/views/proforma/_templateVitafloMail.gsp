@@ -77,7 +77,7 @@ ${proformaInstance?.patient?.firstName}, ${proformaInstance?.patient?.lastName}<
           </table>
         </div>
 
-        <h4><g:message code="proforma.number"/> ${proformaInstance?.id}</h4>
+        <h4><g:message code="proforma.number"/> ${proformaInstance?.code}</h4>
         <g:if test="${proformaInstance?.details?.size()> 0}">
           <div id="detailListPanel" class="list">
             <table style="margin-top: 5px;" border="1">
