@@ -92,7 +92,7 @@
                 <label for="code"><g:message code="proforma.id" default="id" />:</label>
               </td>
               <td valign="top" class="value ${hasErrors(bean: proformaInstance, field: 'code', 'errors')}">
-            <g:textField name="courier" value="${proformaInstance.code}" />
+            <g:textField name="code" value="${proformaInstance.code}" />
 
             </td>
             </tr>
