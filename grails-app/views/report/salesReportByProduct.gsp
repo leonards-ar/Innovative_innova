@@ -78,6 +78,7 @@
     </g:form>
 
   </div>
+  <br/>
   <div id="searchBox">
     <table>
       <tr>
@@ -92,7 +93,7 @@
     </table>
   </div>
 
-  <br/><br/>
+  <br/>
 
   <div id="saleByProductChart">
     <g:render template="salesByProduct" model="[proformaDetailList:proformaDetailList]"/>

@@ -195,7 +195,7 @@ class ReportController {
       lastDate.setTime(params.fromDate)
     }
 
-    List productList = Invoice.executeQuery("select distinct pr from Invoice i inner join i.proforma p inner join p.details d inner join d.product pr where i.date >= :lastDate and i.date <= :actualDate", [lastDate: lastDate.getTime(), actualDate: actualDate.getTime()])
+    List productList = Invoice.executeQuery("select distinct pr from Invoice i inner join i.proforma p inner join p.details d inner join d.product pr where i.date >= :lastDate and i.date <= :actualDate order by pr.name", [lastDate: lastDate.getTime(), actualDate: actualDate.getTime()])
 
     List monthList = Invoice.executeQuery("select distinct year(i.date), month(i.date) from Invoice i where i.date >= :lastDate and i.date <= :actualDate order by year(i.date), month(i.date) ", [lastDate: lastDate.getTime(), actualDate: actualDate.getTime()])
 
