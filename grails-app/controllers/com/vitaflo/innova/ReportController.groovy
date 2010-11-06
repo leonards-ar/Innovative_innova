@@ -229,17 +229,25 @@ class ReportController {
     Map productMoneySalesMap = [:]
     Map productQtySalesMap = [:]
 
+
+    def selectedProductIds = (params.selProductList)? params.selProductList : ""
+
     productList.each {p ->
-      parameters.put("product", p)
-      List moneySales = Invoice.executeQuery(salesSelect.toString(), parameters)
-      List salesList = createSalesByPorductList(moneySales, monthList)
 
-      productMoneySalesMap.put(p.shortName() , salesList)
 
-      List qtySales = Invoice.executeQuery(qtySelect.toString(), parameters)
-      List qtyList = createSalesByPorductList(qtySales, monthList)
-      productQtySalesMap.put(p.shortName(), qtyList)
+      def putProduct = (!params.selProductList) || (selectedProductIds?.split(' ').collect{it.toLong()}.contains(p.id))
+      if(putProduct){
+          parameters.put("product", p)
+          List moneySales = Invoice.executeQuery(salesSelect.toString(), parameters)
+          List salesList = createSalesByPorductList(moneySales, monthList)
+          if(!params.selProductList) selectedProductIds += p.id + " "
 
+          productMoneySalesMap.put(p.shortName() , salesList)
+
+          List qtySales = Invoice.executeQuery(qtySelect.toString(), parameters)
+          List qtyList = createSalesByPorductList(qtySales, monthList)
+          productQtySalesMap.put(p.shortName(), qtyList)
+      }
     }
 
     def sXml = createSalesByProductReportXml(productMoneySalesMap, monthList)
@@ -257,7 +265,10 @@ class ReportController {
       formatMonthList.add(date)
     })
 
-    return [salesMap: productMoneySalesMap, sXml: sXml, qtyMap: productQtySalesMap, qXml: qXml, monthList: formatMonthList, fromDate: lastDate, toDate: actualDate, patient: paramspatient, supplier: paramssupplier]
+    return [salesMap: productMoneySalesMap, sXml: sXml, qtyMap: productQtySalesMap, qXml: qXml,
+            monthList: formatMonthList, fromDate: lastDate, toDate: actualDate,
+            patient: params.patient, supplier: params.supplier,
+            productList: productList, selProductList: selectedProductIds]
 
   }
 
@@ -278,7 +289,7 @@ class ReportController {
     StringBuilder dataset = new StringBuilder();
     monthList.each({item ->
       Calendar date = Calendar.instance
-      date.set(Calendar.MONTH, item[1])
+      date.set(Calendar.MONTH, item[1].toInteger() - 1)
       date.set(Calendar.YEAR, item[0])
       category.append("<category name='${formatDate(date: date, format: 'MMM yyyy')}'/>")
     })
