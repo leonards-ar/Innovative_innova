@@ -78,8 +78,19 @@
                             <td><g:formatDate date="${purchaseInstance.expireDate}" format="dd/MM/yyyy" /></td>
                         
                             <td class="currencyValue"><g:formatNumber number="${purchaseInstance?.amount}" format="0.00"/></td>
-                        
-                            <td>${message(code: 'purchase.status.'+purchaseInstance?.status)}</td>
+
+                          <g:if test="${(purchaseInstance?.status == 'Pending') || (purchaseInstance?.status == 'Free')}">
+                            <td><div id="pepe${purchaseInstance?.id}"><g:select name="purchaseStatus" from="${com.vitaflo.innova.Purchase.STATUS_LIST}" value="${purchaseInstance.status}" noSelection="['':'']" valueMessagePrefix="purchase.status"
+                                        onchange="${remoteFunction (controller:'purchase', id:purchaseInstance?.id, action:'updateStatus', params:'\'purchaseStatus=\' + this.value')}"/>
+                                </div>
+                            </td>
+
+                          </g:if>
+                          <g:else>
+
+                          <td>${message(code: 'purchase.status.'+purchaseInstance.status)}</td>
+                          </g:else>
+
                         </tr>
                     </g:each>
                     </tbody>

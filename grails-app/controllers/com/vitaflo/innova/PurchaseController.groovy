@@ -1,5 +1,7 @@
 package com.vitaflo.innova
 
+import grails.converters.JSON
+
 class PurchaseController extends BaseController {
 
     def index = { redirect(action: "list", params: params) }
@@ -56,7 +58,7 @@ class PurchaseController extends BaseController {
 			projections {
 				distinct("id")
 			}
-			
+
             if(params.codeNumber) {
                 eq('codeNumber', params.codeNumber)
             }
@@ -85,9 +87,9 @@ class PurchaseController extends BaseController {
                 }
             }
         }
-		
+
 		def purchases = Purchase.getAll(purchasesIds)
-      
+
         [purchaseInstanceList: purchases, purchaseInstanceTotal: total, codeNumber:params.codeNumber, supplier:params.supplier, status:params.status]
     }
 
@@ -176,7 +178,7 @@ class PurchaseController extends BaseController {
             if (params.version) {
                 def version = params.version.toLong()
                 if (purchaseInstance.version > version) {
-                    
+
                     purchaseInstance.errors.rejectValue("version", "purchase.optimistic.locking.failure", "Another user has updated this Purchase while you were editing")
                     render(view: "edit", model: [purchaseInstance: purchaseInstance])
                     return
@@ -198,7 +200,7 @@ class PurchaseController extends BaseController {
                 purchaseInstance.removeFromInvoices(auxInvoice)
             }
             //End of the manual removal
-            
+
             if (!purchaseInstance.hasErrors() && purchaseInstance.save(flush:true)) {
                 purchaseInstance.clearErrors()
                 flash.message = "purchase.updated"
@@ -223,7 +225,7 @@ class PurchaseController extends BaseController {
         if (purchaseInstance) {
             try {
                 def invoiceList = []
-                
+
                 purchaseInstance.invoices.each {invoice ->
                     invoiceList.add(invoice)
                 }
@@ -231,7 +233,7 @@ class PurchaseController extends BaseController {
                 invoiceList.each {invoice ->
                     purchaseInstance.removeFromInvoices(invoice)
                 }
-                
+
                 purchaseInstance.delete()
                 flash.message = "purchase.deleted"
                 flash.args = [params.id]
@@ -255,7 +257,7 @@ class PurchaseController extends BaseController {
 
 
     def addInvoiceForCreate = { PurchaseInvoicesCommand invoicesCmd ->
-        def purchaseInstance = new Purchase(params)       
+        def purchaseInstance = new Purchase(params)
 
         def invoicesList = invoicesCmd.createAnInvoiceList()
         purchaseInstance.invoices = invoicesList
@@ -264,7 +266,7 @@ class PurchaseController extends BaseController {
 
 		def invoices = getInvoicesForSelect()
 		invoices -= purchaseInstance.invoices
-		
+
         purchaseInstance.invoices*.discard()
         render(view: "create", model: [purchaseInstance: purchaseInstance, invoices:invoices])
     }
@@ -280,7 +282,7 @@ class PurchaseController extends BaseController {
         purchaseInstance.invoices*.discard()
 
 		def invoices = getInvoicesForSelect()
-		
+
         render(view: "create", model: [purchaseInstance: purchaseInstance, invoices:invoices])
     }
 
@@ -303,7 +305,7 @@ class PurchaseController extends BaseController {
 
 		def invoiceId = params.invoiceToRemove
 		def invoice = Invoice.get(invoiceId)
-		
+
 		def invoices = getInvoicesForSelect()
 		invoices.add(invoice)
 		invoices.sort {it.number}
@@ -357,8 +359,34 @@ class PurchaseController extends BaseController {
         //https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/Date/parse
         render formatDate(date:expireDateUpdated, format:"MMM d, yyyy")
     }
-	
-	private getInvoicesForSelect(){
+
+    def updateStatus = {
+      def purchaseInstance = Purchase.get(params.id)
+
+      if (params.version) {
+        if (params.version) {
+          def version = params.version.toLong()
+          if (purchaseInstance.version > version) {
+
+            purchaseInstance.errors.rejectValue("version", "purchase.optimistic.locking.failure", "Another user has updated this Purchase while you were editing")
+            redirect(action: "list", params: params)
+            return
+          }
+        }
+
+      }
+
+      purchaseInstance.status = params.purchaseStatus
+
+      purchaseInstance.save()
+
+      def data = []
+      data = [status: params.purchaseStatus, purchaseId: params.id]
+      render data as JSON
+      //redirect(action: "list", params:params)
+    }
+
+    private getInvoicesForSelect(){
 		return Invoice.withCriteria{
 			order('number', 'asc')
 			isNull('purchase')
@@ -395,7 +423,7 @@ class PurchaseInvoicesCommand{
             def anInvoice = Invoice.get(invoiceId)
             invoiceList.add(anInvoice)
         }
-        
+
         return invoiceList
     }
 }
