@@ -36,7 +36,7 @@ class Product {
 
     String shortName() {
       def words = name.split(" ")
-      return "${words[0]} ${presentation}${(doseUnit != null)? doseUnit:""}"
+      return "${words[0]} ${(presentation)?presentation:""}${(doseUnit)? doseUnit:""}"
     }
 
     Integer getDeliveryPeriod() {
