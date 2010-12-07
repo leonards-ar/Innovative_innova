@@ -102,12 +102,16 @@ class ReportController {
       def exportCriteria = Invoice.createCriteria()
       def exportInvoices = exportCriteria.list(query)
 
-      List fields = ["purchase", "number", "purchase.supplier"]
+      List fields = ["purchase", "purchase.amount", "number", "amount", "purchase.supplier"]
       def purchaseLabel = g.message(code: "consolidated.report.purchase")
       def invoiceLabel = g.message(code: "consolidated.report.invoice")
       def supplierLabel = g.message(code: "consolidated.report.supplier")
-      Map labels = ["purchase": "${purchaseLabel}", "number": "${invoiceLabel}", "purchase.supplier": "${supplierLabel}"]
-      exportService.export(params.format, response.outputStream, exportInvoices, fields, labels, [:], [:])
+      def amountLabel = g.message(code: "consolidated.report.amount")
+      def formatedAmount = {domain, value -> formatNumber(number:value, format:'0.00')}
+
+      Map labels = ["purchase": "${purchaseLabel}", "purchase.amount": "${amountLabel}" ,"number": "${invoiceLabel}", "amount": "${amountLabel}", "purchase.supplier": "${supplierLabel}"]
+      Map formatters = ["purchase.amount": formattedAmount, "amount": formattedAmount]
+      exportService.export(params.format, response.outputStream, exportInvoices, fields, labels, formatters, [:])
     }
     render(view: 'consolidatedReport', model: [invoiceList: invoices, total: total])
 

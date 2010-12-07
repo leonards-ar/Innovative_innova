@@ -62,9 +62,10 @@
           <tr>
             <th>&nbsp;</th>
             <th><g:message code="consolidated.report.purchase" default="Purchase"/></th>
+            <th><g:message code="consolidated.report.amount" default="Amount"/></th>
 
         <th><g:message code="consolidated.report.invoice" default="Invoice"/></th>
-
+        <th><g:message code="consolidated.report.amount" default="Amount"/></th>
         <th><g:message code="consolidated.report.supplier" default="Supplier"/></th>
 
         </tr>
@@ -80,8 +81,10 @@
               </g:remoteLink>
             </td>
             <td>${invoiceInstance?.purchase}</td>
+            <td>${formatNumber(number:invoiceInstance?.purchase.amount, format:'0.00')}</td>
 
           <td>${invoiceInstance?.number}</td>
+          <td>${formatNumber(number:invoiceInstance?.amount, format:'0.00')}</td>
           <td>${invoiceInstance?.purchase?.supplier}</td>
 
           </tr>
