@@ -99,6 +99,16 @@
 
             <tr class="prop">
               <td valign="top" class="name">
+                <label for="createdAt"><g:message code="proforma.createdAt" default="Created At" />:</label>
+              </td>
+              <td valign="top" class="value ${hasErrors(bean: proformaInstance, field: 'createdAt', 'errors')}">
+            <g:datePicker name="createdAt" value="${proformaInstance?.createdAt}" precision="day" year="${1990..2020}" />
+
+            </td>
+            </tr>
+
+            <tr class="prop">
+              <td valign="top" class="name">
                 <label for="patient"><g:message code="proforma.patient" default="Patient" />:</label>
               </td>
               <td valign="top" class="value ${hasErrors(bean: proformaInstance, field: 'patient', 'errors')}">

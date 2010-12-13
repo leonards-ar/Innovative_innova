@@ -16,7 +16,7 @@ class ProformaController extends BaseController {
   def index = { redirect(action: "list", params: params) }
 
   def list = {
-    rememberListState([max: 15, offset: 0, sort: 'id', order: 'desc'])
+    rememberListState([max: 15, offset: 0, sort: 'createdAt', order: 'desc'])
 
     def filterCountry = params.selectedCountry ? Country.findByCode(params.selectedCountry) : null;
     def query = {
