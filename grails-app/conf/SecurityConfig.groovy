@@ -38,14 +38,14 @@ security {
     /patient/create=ROLE_ADMIN,ROLE_USER
     /patient/edit=ROLE_ADMIN,ROLE_USER
     /product/**=ROLE_ADMIN,ROLE_USER
-    /proforma/**=ROLE_ADMIN,ROLE_USER
+    /proforma/**=ROLE_ADMIN,ROLE_USER,ROLE_ACCOUNTANT
     /proforma/create=ROLE_ADMIN,ROLE_USER
     /proforma/edit=ROLE_ADMIN,ROLE_USER
     /supplier/**=ROLE_ADMIN,ROLE_USER
-    /invoice/**=ROLE_ADMIN,ROLE_USER
+    /invoice/**=ROLE_ADMIN,ROLE_USER,ROLE_ACCOUNTANT
     /invoice/create=ROLE_ADMIN,ROLE_USER
     /invoice/edit=ROLE_ADMIN,ROLE_USER
-    /purchase/**=ROLE_ADMIN,ROLE_USER
+    /purchase/**=ROLE_ADMIN,ROLE_USER,ROLE_ACCOUNTANT
     /purchase/create=ROLE_ADMIN,ROLE_USER
     /purchase/edit=ROLE_ADMIN,ROLE_USER
     /report/**=ROLE_REPORT,ROLE_ACCOUNTANT
