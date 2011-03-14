@@ -2,8 +2,9 @@ import com.mindprod.inwords.*
 class NumToWordsTagLib {
     
     def numToWords ={attrs ->
-        long dollars = Math.floor(attrs.number?.toDouble())
-        long cents = Math.floor((attrs.number?.toDouble() - dollars) * 100d )
+        BigDecimal amount = new BigDecimal(attrs.number)
+        long dollars = amount.longValue()
+        long cents = amount.subtract(new BigDecimal(dollars)).multiply(new BigDecimal(100))
         
         StringBuilder wordAmount = new StringBuilder()
         if(attrs.lang =='en') {
