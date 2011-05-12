@@ -110,7 +110,7 @@ class ReportController {
       def formatedAmount = {domain, value -> formatNumber(number:value, format:'0.00')}
 
       Map labels = ["purchase": "${purchaseLabel}", "purchase.amount": "${amountLabel}" ,"number": "${invoiceLabel}", "amount": "${amountLabel}", "purchase.supplier": "${supplierLabel}"]
-      Map formatters = ["purchase.amount": formattedAmount, "amount": formattedAmount]
+      Map formatters = ["purchase.amount": formatedAmount, "amount": formatedAmount]
       exportService.export(params.format, response.outputStream, exportInvoices, fields, labels, formatters, [:])
     }
     render(view: 'consolidatedReport', model: [invoiceList: invoices, total: total])
