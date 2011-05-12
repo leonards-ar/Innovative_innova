@@ -109,8 +109,8 @@ ${proformaInstance?.patient?.firstName}, ${proformaInstance?.patient?.lastName}<
 
       <br/>
       <p>US DOLLARS:
-      <g:numToWords number="${totalAmount}" lang="en"/>
-      (<g:numToWords number="${totalAmount}" lang="es"/>)<br/>
+        <g:numToWords number="${formatNumber(number:totalAmount, format:'0.00')}" lang="en"/>
+        (<g:numToWords number="${formatNumber(number:totalAmount, format:'0.00')}" lang="es"/>)<br/>
       <g:if test="${proformaInstance.patient?.country?.code == 'BR' || proformaInstance.client?.country?.code == 'BR'}">
         Sales Condition: Letter of credit at sight, irrevocable, confirmed  and  issued by a first class bank. <br/>
         Incoterm: Incoterms CPT. (Paraná, Brazil).<br/><br/>
