@@ -2,7 +2,7 @@ import com.mindprod.inwords.*
 class NumToWordsTagLib {
     
     def numToWords ={attrs ->
-        BigDecimal amount = new BigDecimal(attrs.number)
+        BigDecimal amount = new BigDecimal(attrs.number.replace(",","."))
         long dollars = amount.longValue()
         long cents = amount.subtract(new BigDecimal(dollars)).multiply(new BigDecimal(100))
         
