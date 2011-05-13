@@ -88,7 +88,7 @@ class PurchaseController extends BaseController {
             }
         }
 
-		def purchases = Purchase.getAll(purchasesIds)
+		def purchases = (purchasesIds.size() > 0)? Purchase.getAll(purchasesIds):[]
 
         [purchaseInstanceList: purchases, purchaseInstanceTotal: total, codeNumber:params.codeNumber, supplier:params.supplier, status:params.status]
     }
