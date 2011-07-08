@@ -1,7 +1,8 @@
 package com.vitaflo.innova
 
 class PatientController extends BaseController {
-
+	def patientProductStockService
+	
     def index = { redirect(action: "list", params: params) }
 
     // the delete, save and update actions only accept POST requests
@@ -81,6 +82,11 @@ class PatientController extends BaseController {
                 eq('pathology', params.pathology)
             }
         }
+		
+		patients.each{patient -> 
+			patient.indicator = patientProductStockService.patientProductStockIndicator(patient.id)
+			println "${patient} - ${patient.indicator}"
+		}
 
         [patientInstanceList: patients, patientInstanceTotal: total, client: params.client, patient:params.patient, selectedCountry: params.selectedCountry, pathology: params.pathology]
     }
@@ -124,7 +130,9 @@ class PatientController extends BaseController {
             redirect(action: "list")
         }
         else {
-            return [patientInstance: patientInstance]
+			def patientProductStockList = patientProductStockService.getLastOrderedProductsByPatient(patientInstance.id)
+			patientInstance.indicator = patientProductStockService.patientProductStockIndicator(patientInstance.id)
+            return [patientInstance: patientInstance, productStockList:patientProductStockList]
         }
     }
 

@@ -76,6 +76,23 @@ class PatientProductStockService {
         }
     }
 
+	def getLastPatientProductStock(Patient patient) {
+		def result = PatientProductStock.withCriteria {
+			patient {
+				eq("id", patientProductStock.patient.id)
+			}
+			lt("runningOutOfStockDate", patientProductStock.startDate)
+			maxResults(1)
+			order("runningOutOfStockDate", "desc")
+		}
+		
+		if(result != null && result.size() > 0) {
+			return result.get(0);
+		}
+		 
+		return null;
+		
+	}
     private getPatientProductStock(Patient patient, Product product, Proforma proforma) {
         def result = PatientProductStock.findAllWhere(product:product, patient:patient, proforma:proforma);
         if(result != null && result.size() > 0) {
@@ -172,6 +189,67 @@ class PatientProductStockService {
         }
         return patientProductStocksToNotify;
     }
+
+	def getLastOrderedProductsByPatient(Long patientId) {
+
+		PatientProductStock.withCriteria {
+			patient {
+					eq("id", patientId)
+			}
+			isNull("next") // Is the last item of the linked list!
+				
+		}
+
+	}
+	def patientProductStockIndicator(Long patientId) {
+		def patientProductStocksToNotify = []
+		def today = clearTime(new Date())
+
+		def candidateProducts = PatientProductStock.withCriteria {
+            projections {
+                distinct("product")
+            }
+			patient {
+				eq("id", patientId)
+			}
+            isNull("next") // Is the last item of the linked list!
+            
+        }
+		
+		candidateProducts.each {
+			def deliveryPeriod = it?.deliveryPeriod != null ? it.deliveryPeriod : 0;
+			def productId = it?.id;
+
+			patientProductStocksToNotify.addAll(
+				PatientProductStock.withCriteria {
+					if(productId != null) {
+						product {
+							eq("id", productId)
+						}
+						patient {
+							eq("id", patientId)
+						}
+					}
+					isNull("next") // Is the last item of the linked list!
+
+				}
+		   )
+		}
+		
+		//if patient is not registered then don't show anything
+		if(!patientProductStocksToNotify) return "none"
+		
+		// if patient has ran out of medicine, then show it in red.
+		if(patientProductStocksToNotify.findAll{it -> it.runningOutOfStockDate <= today}.size() > 0) return "red"
+		
+		// if patient will run out of medicine then show in yellow.
+		if(patientProductStocksToNotify.findAll{it -> def deliveryPeriod = it.product?.deliveryPeriod != null ? it.product?.deliveryPeriod : 0
+			 it.runningOutOfStockDate <= (today + deliveryPeriod)}.size() > 0) return "yellow"
+		
+		// if none of the others are shown, then the patient is ok.
+		return "green"
+
+	}
 
     private clearTime(Date dt) {
         def strDate = dt.format("yyyy-MM-dd");
