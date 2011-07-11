@@ -108,7 +108,7 @@
               <label for="contactName"><g:message code="patient.contactName" default="Contact Name" />:</label>
             </td>
             <td valign="top" class="value ${hasErrors(bean: patientInstance, field: 'contactName', 'errors')}">
-          <g:textField name="contactName" value="${fieldValue(bean: patientInstance, field: 'contactName')}" />
+          <g:textField name="contactName" value="${patientInstance?.contactName}" />
 
           </td>
           </tr>
@@ -159,7 +159,7 @@
               <label for="pathology"><g:message code="patient.pathology" default="Pathology" />:</label>
             </td>
             <td valign="top" class="value ${hasErrors(bean: patientInstance, field: 'pathology', 'errors')}">
-          <g:textField name="pathology" value="${fieldValue(bean: patientInstance, field: 'pathology')}" />
+          <g:select name="pathology.id" from="${com.vitaflo.innova.Pathology.list(sort:'name')}" optionKey="id" value="${patientInstance?.pathology?.id}" noSelection="['':'']"/>
 
           </td>
           </tr>
@@ -189,7 +189,7 @@
               <label for="adverseEvent"><g:message code="patient.adverseEvent" default="Adverse Event" />:</label>
             </td>
             <td valign="top" class="value ${hasErrors(bean: patientInstance, field: 'adverseEvent', 'errors')}">
-          <g:textField name="adverseEvent" value="${fieldValue(bean: patientInstance, field: 'adverseEvent')}" />
+          <g:textField name="adverseEvent" value="${patientInstance?.adverseEvent}" />
 
           </td>
           </tr>
