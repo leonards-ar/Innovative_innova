@@ -147,7 +147,7 @@
 					<tr class="prop">
 						<td colspan="2" valign="top" class="name"><g:message
 							code="patient.doseWarning"
-							args="${[patientInstance?.pathology?.minDose,patientInstance?.pathology?.maxDose ] }" />:</td>
+							args="${[patientInstance?.pathology?.minDose,patientInstance?.pathology?.maxDose ] }" /></td>
 				</g:if>
 			</tr>
 			<tr class="prop">
@@ -155,7 +155,7 @@
 					code="patient.pathology" default="Pathology" />:</td>
 
 				<td valign="top" class="value">
-				${fieldValue(bean: patientInstance, field: "pathology")}
+				${patientInstance?.pathology.toStringWithDose()}
 				</td>
 
 			</tr>
@@ -205,7 +205,8 @@
 
 						<g:each in="${productStockList}" status="i"	var="patientProductStock">
 
-							<tr class="${(patientInstance?.indicator == 'none')? (((i%2) == 0)?'even':'odd'):patientInstance?.indicator}">
+              
+							<tr class="${productIndicator[i]}">
 								<td valign="top" class="value">
 								${patientProductStock?.product?.encodeAsHTML()}
 								</td>

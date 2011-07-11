@@ -66,7 +66,7 @@ class Patient {
 	
 	//Returns true if the dosePerWeight is between the minDose and the MaxDose of the Pathology
 	def isRegularDose() {
-		if(!pathology || !pathology?.minDose || !pathology.maxDose) return true
+		if(!this.pathology) return true
 		return (getDosePerWeight() >= pathology?.minDose && getDosePerWeight() <= pathology?.maxDose)
 	}
 

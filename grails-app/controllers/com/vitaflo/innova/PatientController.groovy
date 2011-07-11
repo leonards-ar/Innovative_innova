@@ -84,7 +84,7 @@ class PatientController extends BaseController {
 		}
 		
 		patients.each{patient ->
-			patient.indicator = getIndicator(patient.id)
+			patient.indicator = getIndicator(patient)
 		}
 		
 		[patientInstanceList: patients, patientInstanceTotal: total, client: params.client, patient:params.patient, selectedCountry: params.selectedCountry, pathology: params.pathology]
@@ -98,20 +98,23 @@ class PatientController extends BaseController {
 		}
 	}
 	
-	private getIndicator(patientId) {
+	private getIndicator(patient) {
 		def patientProductStocksToNotify = []
 		def today = new Date()
 		
 		patientProductStocksToNotify.addAll(
 				
 				PatientProductStock.executeQuery(
-				"select p.product as product,max(p.runningOutOfStockDate) as runningOutOfDate from PatientProductStock p where p.next is null and p.patient.id=? group by p.product",
-				[patientId])
+				"select p.product as product,max(p.runningOutOfStockDate) as runningOutOfDate from PatientProductStock p where p.next is null and p.patient.id=? group by p.product.drug",
+				[patient.id])
 				
 				)
 		
 		//if patient is not registered then don't show anything
-		if(!patientProductStocksToNotify) return "none"
+		if(!patientProductStocksToNotify) {
+			if(!patient.isRegularDose()) return "yellow"
+			return "none"
+		}
 		
 		// if patient has ran out of medicine, then show it in red.
 		if(patientProductStocksToNotify.findAll{item -> item[1] <= today}.size() > 0) return "red"
@@ -121,8 +124,8 @@ class PatientController extends BaseController {
 			def product = item[0]
 			def deliveryPeriod = product?.deliveryPeriod != null ? product?.deliveryPeriod : 0
 			item[1] <= (today + deliveryPeriod)
-		}.size() > 0) return  "yellow"
-		
+		}.size() > 0 || !patient.isRegularDose()) return  "yellow"
+	
 		// if none of the others are shown, then the patient is ok.
 		return  "green"
 		
@@ -160,13 +163,33 @@ class PatientController extends BaseController {
 		}
 		else {
 			def patientProductStockList = []
-			PatientProductStock.executeQuery("select p.product, max(p.startDate), p.runningOutOfStockDate from PatientProductStock p where p.next is null and p.patient = ? group by p.product", [patientInstance]).each {
-				p -> patientProductStockList.add(new PatientProductStock(product:p[0], startDate:p[1], runningOutOfStockDate:p[2])
-					)
-			}
+			//this query gets last orderded date and the last runningOutOfStockDate
+			// suppose that exists for a product to entries
+			def productStartDate =  PatientProductStock.executeQuery("select p.product, max(p.startDate) from PatientProductStock p where p.next is null and p.patient = ? group by p.product", [patientInstance])
 			
-			patientInstance.indicator = getIndicator(patientInstance.id)
-			return [patientInstance: patientInstance, productStockList:patientProductStockList]
+			productStartDate.each{ item ->
+				patientProductStockList.addAll(PatientProductStock.withCriteria {
+					eq("startDate", item[1])
+					patient {
+						eq("id",patientInstance.id)
+					}
+					product{
+						eq("id",item[0].id)
+					}
+			})
+		}
+			
+			
+			def productIndicator = []
+			def today = new Date()
+			patientProductStockList.each { patientProductStock->
+				def deliveryPeriod = (patientProductStock?.product?.deliveryPeriod != null)? patientProductStock.product.deliveryPeriod : 0
+				if( patientProductStock.runningOutOfStockDate <= today) productIndicator.add("red")
+				else if(patientProductStock.runningOutOfStockDate <= (today + deliveryPeriod)) productIndicator.add("yellow")
+				else productIndicator.add("green")
+			}
+			patientInstance.pathology
+			return [patientInstance: patientInstance, productStockList:patientProductStockList, productIndicator:productIndicator]
 		}
 	}
 	
