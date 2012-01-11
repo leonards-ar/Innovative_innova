@@ -86,17 +86,6 @@
 
           <tr class="prop">
             <td valign="top" class="name">
-              <label for="birth"><g:message code="patient.weight" default="Weight" />:</label>
-            </td>
-            <td valign="top" class="value ${hasErrors(bean: patientInstance, field: 'weight', 'errors')}">
-          <g:textField name="weight" value="${formatNumber(number:patientInstance?.weight,format:'0.00')}" />
-
-
-          </td>
-          </tr>
-
-          <tr class="prop">
-            <td valign="top" class="name">
               <label for="phone"><g:message code="patient.phone" default="Phone" />:</label>
             </td>
             <td valign="top" class="value ${hasErrors(bean: patientInstance, field: 'phone', 'errors')}">
@@ -110,7 +99,7 @@
               <label for="contactName"><g:message code="patient.contactName" default="Contact Name" />:</label>
             </td>
             <td valign="top" class="value ${hasErrors(bean: patientInstance, field: 'contactName', 'errors')}">
-          <g:textField name="contactName" value="${patientInstance?.contactName}" />
+          <g:textField name="contactName" value="${fieldValue(bean: patientInstance, field: 'contactName')}" />
 
           </td>
           </tr>
@@ -160,7 +149,8 @@
               <label for="pathology"><g:message code="patient.pathology" default="Pathology" />:</label>
             </td>
             <td valign="top" class="value ${hasErrors(bean: patientInstance, field: 'pathology', 'errors')}">
-            <g:select name="pathology.id" from="${com.vitaflo.innova.Pathology.list(sort:'name')}" optionKey="id" value="${patientInstance?.pathology?.id}" noSelection="['':'']"/>
+          <g:textField name="pathology" value="${fieldValue(bean: patientInstance, field: 'pathology')}" />
+
           </td>
           </tr>
 
@@ -189,7 +179,7 @@
               <label for="adverseEvent"><g:message code="patient.adverseEvent" default="Adverse Event" />:</label>
             </td>
             <td valign="top" class="value ${hasErrors(bean: patientInstance, field: 'adverseEvent', 'errors')}">
-          <g:textField name="adverseEvent" value="${patientInstance?.adverseEvent}" />
+          <g:textField name="adverseEvent" value="${fieldValue(bean: patientInstance, field: 'adverseEvent')}" />
 
           </td>
           </tr>

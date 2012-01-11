@@ -73,7 +73,7 @@
         </thead>
         <tbody>
         <g:each in="${patientInstanceList}" status="i" var="patientInstance">
-          <tr class="${(patientInstance?.indicator == 'none')? (((i%2) == 0)?'even':'odd'):patientInstance?.indicator}">
+          <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
             <td>${i + params.offset.toInteger() + 1}</td>
             <td><g:link action="show" id="${patientInstance.id}">${patientInstance}</g:link></td>
 
