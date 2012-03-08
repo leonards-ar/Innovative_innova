@@ -7,7 +7,7 @@ class Proforma {
 	Date deliveryDate
 	String code
 	Integer discount = 0
-	Double courier = 200.0
+	Double courier = 250.0
 	String status = 'Creada'
 	Boolean donation = false
 	Patient patient

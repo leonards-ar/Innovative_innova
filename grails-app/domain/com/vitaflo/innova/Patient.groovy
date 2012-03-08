@@ -10,23 +10,26 @@ class Patient {
     Country country
     Client client
     Date birth
-	Double weight
     Double dose
     String doseUnit
-    Pathology pathology
+    String pathology
     String deliveryAddress
     String physician
     String clinicalStatus
     String adverseEvent
     String status = 'Enabled'
     String initials
-	
-	//Transient properties
-	String indicator
+    
+    //Transient properties
+    Date startNTBC
+    Product product
+    Date lastOrderedDate
+    Float orderedQuantity
+    String reimbursement
 
     static hasMany = [clinicalHistories: ClinicalHistory]
   
-    static transients = ['indicator']
+    static transients = ['startNTBC', 'product', 'lastOrderedDate', 'orderedQuantity', 'reimbursement']
 
     static final def UNIT_LIST = ['mg', 'ml']
 
@@ -37,7 +40,6 @@ class Patient {
         client(blank:false)
         dose(nullable:true, min:0.0d)
         doseUnit(nullable:true, inList:UNIT_LIST)
-		weight(nullable:true, min:1.00d, max:1000.00d)
         birth(nullable:true)
         pathology(nullable:true)
         deliveryAddress(nullable:true)
@@ -57,18 +59,6 @@ class Patient {
         contactName column:'contact'
         deliveryAddress column:'delivery_address'
     }
-	
-	def getDosePerWeight() {
-		if(weight) return dose/weight
-		
-		return 0.00
-	}
-	
-	//Returns true if the dosePerWeight is between the minDose and the MaxDose of the Pathology
-	def isRegularDose() {
-		if(!this.pathology) return true
-		return (getDosePerWeight() >= pathology?.minDose && getDosePerWeight() <= pathology?.maxDose)
-	}
 
    String toString(){
        if(!this.lastName && !this.firstName)
