@@ -116,7 +116,8 @@ class PurchaseController extends BaseController {
         }
         else {
             purchaseInstance.invoices*.discard()
-            render(view: "create", model: [purchaseInstance: purchaseInstance])
+            def invoices = getInvoicesForSelect()
+            render(view: "create", model: [purchaseInstance: purchaseInstance,, invoices:invoices ])
         }
     }
 
@@ -180,7 +181,8 @@ class PurchaseController extends BaseController {
                 if (purchaseInstance.version > version) {
 
                     purchaseInstance.errors.rejectValue("version", "purchase.optimistic.locking.failure", "Another user has updated this Purchase while you were editing")
-                    render(view: "edit", model: [purchaseInstance: purchaseInstance])
+                    def invoices = getInvoicesForSelect()
+                    render(view: "edit", model: [purchaseInstance: purchaseInstance, invoices:invoices])
                     return
                 }
             }
@@ -209,7 +211,8 @@ class PurchaseController extends BaseController {
                 redirect(action: "show", id: purchaseInstance.id)
             }
             else {
-                render(view: "edit", model: [purchaseInstance: purchaseInstance])
+                def invoices = getInvoicesForSelect()
+                render(view: "edit", model: [purchaseInstance: purchaseInstance,invoices:invoices])
             }
         }
         else {
