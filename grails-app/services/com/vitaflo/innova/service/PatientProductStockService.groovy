@@ -237,6 +237,7 @@ class PatientProductStockService {
 		User.withCriteria {
 			projections { distinct("email") }
 			isNotNull("email")
+			like("email", '%@%')
 			
 			if(patientProductStock?.patient?.country != null) {
 				countries {
