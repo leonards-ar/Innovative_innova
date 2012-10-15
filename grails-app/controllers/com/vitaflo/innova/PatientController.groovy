@@ -11,35 +11,40 @@ class PatientController extends BaseController {
 	def list = {
 		rememberListState([max: 15, offset: 0, sort: 'lastName', order: 'asc'])
 		
-		def query = {
-			ne('status', 'Deleted')
+        def query = {
+            ne('status', 'Deleted')
+
+            if(params.patient) {
+                or{
+                    like('lastName', '%' + params.patient + '%')
+                    like('firstName', '%' + params.patient + '%')
+                }
+            }
 			
-			if(params.patient) {
-				or{
-					like('lastName', '%' + params.patient + '%')
-					like('firstName', '%' + params.patient + '%')
-					like('initials', '%' + params.patient + '%')
+			if(params.patientInitials) {
+				like('initials', params.patientInitials + '%')
+			}
+			
+            if(params.selectedCountry){
+                country{
+                    eq('code', params.selectedCountry)
+                }
+            } else {
+                inList('country', session.countries)
+            }
+
+            if(params.client) {
+                client{
+                    like('name', '%' + params.client + '%')
+                }
+            }
+
+            if(params.pathology) {
+				pathologies {
+					like('name', params.pathology + '%')
 				}
-			}
-			
-			if(params.selectedCountry){
-				country{
-					eq('code', params.selectedCountry)
-				}
-			} else {
-				inList('country', session.countries)
-			}
-			
-			if(params.client) {
-				client{
-					like('name', '%' + params.client + '%')
-				}
-			}
-			
-			if(params.pathology) {
-				eq('pathology', params.pathology)
-			}
-		}
+            }
+        }
 		
 		def criteria = Patient.createCriteria()
 		
@@ -61,10 +66,13 @@ class PatientController extends BaseController {
 				or{
 					like('lastName', '%' + params.patient + '%')
 					like('firstName', '%' + params.patient+ '%')
-					like('initials', '%' + params.patient + '%')
 				}
 			}
 			
+			if(params.patientInitials) {
+				like('initials', params.patientInitials + '%')
+			}
+
 			if(params.selectedCountry){
 				country{
 					eq('code', params.selectedCountry)
@@ -78,9 +86,11 @@ class PatientController extends BaseController {
 					like('name', '%' + params.client + '%')
 				}
 			}
-			if(params.pathology) {
-				eq('pathology', params.pathology)
-			}
+            if(params.pathology) {
+				pathologies {
+					like('name', params.pathology + '%')
+				}
+            }
 		}
 		
 		patients.each{patient ->
@@ -94,6 +104,12 @@ class PatientController extends BaseController {
 		Client.withCriteria {
 			ne('status', 'Deleted')
 			eq('country',country)
+			order("name", "asc")
+		}
+	}
+	
+	private getPathologiesForSelectList(country) {
+		Pathology.withCriteria {
 			order("name", "asc")
 		}
 	}
@@ -136,11 +152,18 @@ class PatientController extends BaseController {
 		patientInstance.properties = params
 		
 		def clientList = getClientsForSelectList(session.countries[0])
-		return [patientInstance: patientInstance, clientList: clientList]
+		def pathologyList = getPathologiesForSelectList(session.countries[0])
+		
+		return [patientInstance: patientInstance, clientList: clientList, pathologyList: pathologyList]
 	}
 	
 	def save = {
 		def patientInstance = new Patient(params)
+		
+		if(!patientInstance.hasErrors()) {
+			addPathologies(patientInstance)
+		}
+		
 		if (!patientInstance.hasErrors() && patientInstance.save()) {
 			flash.message = "patient.created"
 			flash.args = [patientInstance.id]
@@ -149,7 +172,9 @@ class PatientController extends BaseController {
 		}
 		else {
 			def clientList = getClientsForSelectList(patientInstance.country)
-			render(view: "create", model: [patientInstance: patientInstance, clientList: clientList])
+			def pathologyList = getPathologiesForSelectList(patientInstance.country)
+			
+			render(view: "create", model: [patientInstance: patientInstance, clientList: clientList, pathologyList: pathologyList])
 		}
 	}
 	
@@ -203,7 +228,8 @@ class PatientController extends BaseController {
 		}
 		else {
 			def clientList = getClientsForSelectList(patientInstance.country)
-			return [patientInstance: patientInstance, clientList: clientList]
+			def pathologyList = getPathologiesForSelectList(patientInstance.country)
+			return [patientInstance: patientInstance, clientList: clientList, pathologyList: pathologyList]
 		}
 	}
 	
@@ -220,6 +246,11 @@ class PatientController extends BaseController {
 				}
 			}
 			patientInstance.properties = params
+	
+			if(!patientInstance.hasErrors()) {
+				addPathologies(patientInstance)
+			}
+			
 			if (!patientInstance.hasErrors() && patientInstance.save()) {
 				flash.message = "patient.updated"
 				flash.args = [params.id]
@@ -228,7 +259,8 @@ class PatientController extends BaseController {
 			}
 			else {
 				def clientList = getClientsForSelectList(patientInstance.country)
-				render(view: "edit", model: [patientInstance: patientInstance, clientList: clientList])
+				def pathologyList = getPathologiesForSelectList(patientInstance.country)
+				render(view: "edit", model: [patientInstance: patientInstance, clientList: clientList, pathologyList: pathologyList])
 			}
 		}
 		else {
@@ -296,7 +328,7 @@ class PatientController extends BaseController {
 	}
 	
 	def searchAutocompletePathology = {
-		def pathologies = Patient.executeQuery("select distinct p.pathology from Patient p where p.pathology like ?", ["%" + params.pathology + "%"])
+        def pathologies = Patient.executeQuery("select p.name from Pathology p where p.name like ?", ["%" + params.pathology + "%"])
 		
 		StringBuffer idList = new StringBuffer()
 		idList.append('<ul>')
@@ -309,5 +341,22 @@ class PatientController extends BaseController {
 		render idList.toString()
 	}
 	
-	
+	private void addPathologies(patient) {
+		// This fixes the problem when only one pathology is selected and it has two digits.
+		if(!params.selectedPathologies) {
+			patient?.pathologies?.clear()
+		} else if(params.selectedPathologies instanceof String) {
+			def p = Pathology.findById(params.selectedPathologies)
+			if(p) {
+				patient.addToPathologies(p)
+			}
+		} else {
+			for (String key in params.selectedPathologies) {
+				def p = Pathology.findById(key);
+				if(p) {
+					patient.addToPathologies(p)
+				}
+			}
+		}
+	}
 }

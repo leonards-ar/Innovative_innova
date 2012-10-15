@@ -13,7 +13,6 @@ class Patient {
 	Double weight
     Double dose
     String doseUnit
-    Pathology pathology
     String deliveryAddress
     String physician
     String clinicalStatus
@@ -24,9 +23,9 @@ class Patient {
 	//Transient properties
 	String indicator
 
-    static hasMany = [clinicalHistories: ClinicalHistory]
+    static hasMany = [clinicalHistories: ClinicalHistory, pathologies: Pathology]
   
-    static transients = ['indicator']
+    static transients = ['indicator', 'pathology']
 
     static final def UNIT_LIST = ['mg', 'ml']
 
@@ -39,7 +38,6 @@ class Patient {
         doseUnit(nullable:true, inList:UNIT_LIST)
 		weight(nullable:true, min:1.00d, max:1000.00d)
         birth(nullable:true)
-        pathology(nullable:true)
         deliveryAddress(nullable:true)
         physician(nullable:true)
         clinicalStatus(nullable:true)
@@ -66,8 +64,8 @@ class Patient {
 	
 	//Returns true if the dosePerWeight is between the minDose and the MaxDose of the Pathology
 	def isRegularDose() {
-		if(!this.pathology) return true
-		return (getDosePerWeight() >= pathology?.minDose && getDosePerWeight() <= pathology?.maxDose)
+		if(!this.getPathology()) return true
+		return (getDosePerWeight() >= getPathology()?.minDose && getDosePerWeight() <= getPathology()?.maxDose)
 	}
 
    String toString(){
@@ -76,4 +74,8 @@ class Patient {
         return "${this.lastName}, ${this.firstName}"
    }
 
+   Pathology getPathology() {
+	   def it = this.pathologies?.iterator();
+	   return it?.hasNext() ? it?.next() : null
+   }
 }

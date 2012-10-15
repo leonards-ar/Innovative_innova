@@ -158,9 +158,8 @@
             <td valign="top" class="name">
               <label for="pathology"><g:message code="patient.pathology" default="Pathology" />:</label>
             </td>
-            <td valign="top" class="value ${hasErrors(bean: patientInstance, field: 'pathology', 'errors')}">
-          <g:select name="pathology.id" from="${com.vitaflo.innova.Pathology.list(sort:'name')}" optionKey="id" value="${patientInstance?.pathology?.id}" noSelection="['':'']"/>
-
+            <td valign="top" class="value ${hasErrors(bean: patientInstance, field: 'pathologies', 'errors')}">
+            <g:select name="selectedPathologies" from="${pathologyList}" optionKey="id" value="${patientInstance?.pathology?.id}" size="1" noSelection="['':'']"/>
           </td>
           </tr>
 

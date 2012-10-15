@@ -25,6 +25,10 @@
               <div><g:message code="patient.lastName"/> </div>
           <g:textField name="patient" value="${patient}" />
           </td>
+            <td>
+              <div><g:message code="patient.initials"/> </div>
+	          <g:textField name="patientInitials" value="${patientInitials}" />
+          </td>
           <td>
             <div><g:message code="patient.country"/> </div>
           <g:select name="selectedCountry" from="${session?.countries}" optionKey="code" optionValue="name" noSelection="['':'']"/>
