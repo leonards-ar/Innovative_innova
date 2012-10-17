@@ -19,90 +19,14 @@ class ProformaController extends BaseController {
     rememberListState([max: 15, offset: 0, sort: 'createdAt', order: 'desc'])
 
     def filterCountry = params.selectedCountry ? Country.findByCode(params.selectedCountry) : null;
-    def query = {
-
-      if (params.status) {
-        eq('status', params.status)
-      }
-      if (params.client && params.patient) {
-        client {
-          eq('name', params.client)
-          if (params.selectedCountry) {
-            eq('country', filterCountry)
-          } else {
-            inList('country', session.countries)
-          }
-        }
-        patient {
-          def str = params.patient.split(',')
-          eq('lastName', str[0])
-
-          if (params.selectedCountry) {
-            eq('country', filterCountry)
-          } else {
-            inList('country', session.countries)
-          }
-        }
-      } else
-        if (params.client) {
-          client {
-            eq('name', params.client)
-
-            if (params.selectedCountry) {
-              eq('country', filterCountry)
-            } else {
-              inList('country', session.countries)
-            }
-          }
-        } else
-          if (params.patient) {
-            patient {
-              def str = params.patient.split(',')
-              eq('lastName', str[0])
-
-              if (params.selectedCountry) {
-                eq('country', filterCountry)
-              } else {
-                inList('country', session.countries)
-              }
-            }
-          } else {
-            or {
-              client {
-                if (params.client) {
-                  eq('name', params.client)
-                }
-
-                if (params.selectedCountry) {
-                  eq('country', filterCountry)
-                } else {
-                  inList('country', session.countries)
-                }
-              }
-              patient {
-                if (params.patient) {
-                  def str = params.patient.split(',')
-                  eq('lastName', str[0])
-                }
-                if (params.selectedCountry) {
-                  eq('country', filterCountry)
-                } else {
-                  inList('country', session.countries)
-                }
-              }
-
-            }
-          }
-    }
-
     def criteria = Proforma.createCriteria()
-    def total = criteria.count(query)
 
-    def proformas = Proforma.withCriteria {
-      maxResults(params.max?.toInteger())
-      firstResult(params.offset?.toInteger())
+    def proformas = criteria.list(max:params.max?.toInteger(), offset:params.offset?.toInteger()){
       order(params.sort, params.order)
 
+      if(params.codeNumber){
+          eq('id', Long.parseLong(params.codeNumber))
+      }
       if (params.status) {
         eq('status', params.status)
       }
@@ -194,7 +118,7 @@ class ProformaController extends BaseController {
 	  Map formatters = [createdAt:formatedDate] 
       exportService.export(params.format, response.outputStream, exportProformas, fields, labels, formatters, [:])
     }
-    [proformaInstanceList: proformas, proformaInstanceTotal: total, client: params.client, patient: params.patient, status: params.status, selectedCountry: params.selectedCountry]
+    [proformaInstanceList: proformas, proformaInstanceTotal: proformas.totalCount, codeNumber:params.codeNumber, client: params.client, patient: params.patient, status: params.status, selectedCountry: params.selectedCountry]
   }
 
   private getPatientsForSelectList() {
