@@ -10,49 +10,10 @@ class PatientController extends BaseController {
 	
 	def list = {
 		rememberListState([max: 15, offset: 0, sort: 'lastName', order: 'asc'])
-		
-        def query = {
-            ne('status', 'Deleted')
-
-            if(params.patient) {
-                or{
-                    like('lastName', '%' + params.patient + '%')
-                    like('firstName', '%' + params.patient + '%')
-                }
-            }
-			
-			if(params.patientInitials) {
-				like('initials', params.patientInitials + '%')
-			}
-			
-            if(params.selectedCountry){
-                country{
-                    eq('code', params.selectedCountry)
-                }
-            } else {
-                inList('country', session.countries)
-            }
-
-            if(params.client) {
-                client{
-                    like('name', '%' + params.client + '%')
-                }
-            }
-
-            if(params.pathology) {
-				pathologies {
-					like('name', params.pathology + '%')
-				}
-            }
-        }
-		
 		def criteria = Patient.createCriteria()
 		
-		def total = criteria.count(query)
 		
-		def patients = Patient.withCriteria {
-			maxResults(params.max?.toInteger())
-			firstResult(params.offset?.toInteger())
+		def patients = criteria.list(max:params.max?.toInteger(),offset:params.offset?.toInteger() ) {
 			ne('status', 'Deleted')
 			
 			if (params.sort == 'clientName') {
@@ -97,7 +58,7 @@ class PatientController extends BaseController {
 			patient.indicator = getIndicator(patient)
 		}
 		
-		[patientInstanceList: patients, patientInstanceTotal: total, client: params.client, patient:params.patient, selectedCountry: params.selectedCountry, pathology: params.pathology]
+		[patientInstanceList: patients, patientInstanceTotal: patients.totalCount, client: params.client, patient:params.patient, selectedCountry: params.selectedCountry, pathology: params.pathology]
 	}
 	
 	private getClientsForSelectList(country) {
