@@ -236,6 +236,7 @@ class PatientProductStockService {
 	private getRecipientsToNotify(PatientProductStock patientProductStock) {
 		User.withCriteria {
 			projections { distinct("email") }
+			eq("enabled", true)
 			isNotNull("email")
 			like("email", '%@%')
 			
