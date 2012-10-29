@@ -103,7 +103,7 @@
                                   <td valign="top" class="name">
                                       <label for="lastName"><g:message code="user.enabled" default="Enabled" />:</label>
                                   </td>
-                                  <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'lastName', 'errors')}">
+                                  <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'enabled', 'errors')}">
                                       <g:checkBox name="enabled" value="${userInstance?.enabled}" />
                                   </td>
                               </tr>

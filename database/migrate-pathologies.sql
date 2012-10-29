@@ -136,3 +136,4 @@ mysqldump -uvitaflo -pjava1234 vitaflo_sistema pathologies patients_pathologies 
 
 ALTER TABLE pathologies drop pathology_id;
 ALTER TABLE pathologies drop pathology;
+
