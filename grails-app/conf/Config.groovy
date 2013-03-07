@@ -42,6 +42,7 @@ grails.enable.native2ascii = true
         application.logoFile = "innovative-logo.gif"
         application.template = "templateInnova"
         application.favicon = "innova-favicon.ico"
+        application.urls = ["http://localhost:8081/innova"]
         
 environments {
     vitaflo {
