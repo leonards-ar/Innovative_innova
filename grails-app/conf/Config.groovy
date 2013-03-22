@@ -42,7 +42,7 @@ grails.enable.native2ascii = true
         application.logoFile = "innovative-logo.gif"
         application.template = "templateInnova"
         application.favicon = "innova-favicon.ico"
-        application.urls = ["http://localhost:8081/innova"]
+        application.urls = ["http://localhost:8082/innova","http://localhost:8082/innova","http://localhost:8084/innova"]
         
 environments {
     vitaflo {
@@ -54,7 +54,7 @@ environments {
         application.logoFile = "vitaflo-logo.gif"
         application.template = "templateVitaflo"
         application.favicon = "vitaflo-favicon.ico"
-        application.urls = ["http://localhost:8081/innova", "http://localhost:8081/medgen"]
+        application.urls = ["http://localhost:8080/innova", "http://localhost:8080/medgen"]
     }
     innova {
         grails.serverURL = "http://www.changeme.com"
@@ -65,6 +65,7 @@ environments {
         application.logoFile = "innovative-logo.gif"
         application.template = "templateInnova"
         application.favicon = "innova-favicon.ico"
+        application.urls = ["http://localhost:8080/vitaflo", "http://localhost:8080/medgen"]
     }
     production {
         grails.serverURL = "http://www.changeme.com"
