@@ -127,18 +127,28 @@ ${proformaInstance?.patient?.firstName}, ${proformaInstance?.patient?.lastName}<
         Sales Terms/Condiciones: 100% advanced payment. 100% pago adelantado.<br/>
       </g:else>
 
-      a/c Innovative Medicines SA<br/>
-      Account Number/Cuenta Nro: 6410<br/>
-      Banco:Santander Uruguay (Swift BSCHUYMM)<br/>
-      Corresponsal en dólares<br/>
-      Bank of New York, NY (Swift IRVTUS3N)<br/>
+        <b>Benef Bank:</b><br/>
+        <b>Santander</b> (Sucursal Ciudad Vieja) Montevideo – Uruguay<br/>
+        Swift: BSCHUYMM<br/>
+        Benef Account: C/A Nro. 64106<br/>
+        Benef Name: INNOVATIVE MEDICINES S.A.Benef Name: INNOVATIVE MEDICINES S.A. <br/>
+        Benef Address: Rincón 487 oficina 403 – Montevideo – Uruguay<br/>
+
+        <b>Corresponsal Bank<br/>
+        Wells Fargo Bank,N.A. - New York</b><br/>
+        New York International Branch<br/>
+        375 Park Avenue 4080<br/>
+        Zip code 10152<br/>
+        United States.<br/>
+        Swift code PNBPUS3NNYC<br/>
+        ABA 026005092<br/>      
       <ul>
         <li>Valid proforma for 30 days. Proforma válida por 30 días.</li>
 
         <li>No se entregarán productos sin constancia de transferencia o efectivo pago.</li>
       </ul>
       <g:if test="${proformaInstance.patient?.country?.code == 'BR' || proformaInstance.client?.country?.code == 'BR'}">
-        Peso Líquido, 60 caps = 15,84 gr (Vary 5 % +/-)</br>
+        Peso Líquido, 60 caps = 15,84 gr (Vary 5 % +/-)<br/>
       </g:if>
     </p>
   </div>
