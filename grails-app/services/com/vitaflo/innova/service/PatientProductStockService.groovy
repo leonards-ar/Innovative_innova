@@ -239,6 +239,7 @@ class PatientProductStockService {
 			eq("enabled", true)
 			isNotNull("email")
 			like("email", '%@%')
+			eq('enabled',true)
 			
 			if(patientProductStock?.patient?.country != null) {
 				countries {
