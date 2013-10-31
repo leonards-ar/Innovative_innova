@@ -83,7 +83,7 @@
       <div class="dialog">
         <table>
           <tbody>
-
+			<g:ifAllGranted role="ROLE_ADMIN">
             <tr class="prop">
               <td valign="top" class="name">
                 <label for="code"><g:message code="proforma.id" default="id" />:</label>
@@ -93,7 +93,7 @@
 
             </td>
             </tr>
-
+			</g:ifAllGranted>
             <tr class="prop">
               <td valign="top" class="name">
                 <label for="createdAt"><g:message code="proforma.createdAt" default="Created At" />:</label>

@@ -92,8 +92,12 @@
                 <label for="code"><g:message code="proforma.id" default="id" />:</label>
               </td>
               <td valign="top" class="value ${hasErrors(bean: proformaInstance, field: 'code', 'errors')}">
-            <g:textField name="code" value="${proformaInstance.code}" />
-
+              <g:ifAllGranted role="ROLE_ADMIN">
+                <g:textField name="code" value="${proformaInstance.code}" />
+              </g:ifAllGranted>
+              <g:ifNotGranted role="ROLE_ADMIN">
+              	<g:textField name="code" value="${proformaInstance.code}" readonly="readonly"/>
+              </g:ifNotGranted>
             </td>
             </tr>
 
