@@ -151,6 +151,75 @@
           <g:checkBox name="donation" value="${proformaInstance.donation}"/>
           </td>
           </tr>
+          <tr>
+          <div id="manufacturer" class="dialog">
+          <tr class="prop">
+            <td valign="top" class="name">
+              <label for="manufacturer"><g:message code="proforma.manufacturer" default="Manufacturer"/>:</label>
+            </td>
+            <td>
+          		<table name="manufacturer">
+           		  <tr class="pop">
+          		    <td valign="top" class="name">
+          		      <label for="name"><g:message code="manufacturer.name" default="Manufacturer"/>:</label>
+          		    </td>
+          		    <td valign="top" class="value ${hasErrors(bean: proformaInstance.manufacturer, field: 'name', 'errors')}">
+	          	      <g:textField name="manufacturer.name" value="${proformaInstance?.manufacturer?.name}" size="40"/>
+          	        </td>
+          		  </tr>
+           		  <tr class="pop">
+          		    <td valign="top" class="name">
+          		      <label for="name"><g:message code="manufacturer.street" default="Street"/>:</label>
+          		    </td>
+          		    <td valign="top" class="value ${hasErrors(bean: proformaInstance.manufacturer, field: 'street', 'errors')}">
+	          	      <g:textField name="manufacturer.street" value="${proformaInstance?.manufacturer?.street}" size="40"/>
+          	        </td>
+          		  </tr>
+           		  <tr class="pop">
+          		    <td valign="top" class="name">
+          		      <label for="name"><g:message code="manufacturer.city" default="City"/>:</label>
+          		    </td>
+          		    <td valign="top" class="value ${hasErrors(bean: proformaInstance.manufacturer, field: 'city', 'errors')}">
+	          	      <g:textField name="manufacturer.city" value="${proformaInstance?.manufacturer?.city}" size="40"/>
+          	        </td>
+          		  </tr>
+           		  <tr class="pop">
+          		    <td valign="top" class="name">
+          		      <label for="name"><g:message code="manufacturer.pob" default="POB"/>:</label>
+          		    </td>
+          		    <td valign="top" class="value ${hasErrors(bean: proformaInstance.manufacturer, field: 'pob', 'errors')}">
+	          	      <g:textField name="manufacturer.pob" value="${proformaInstance?.manufacturer?.pob}" size="40"/>
+          	        </td>
+          		  </tr>
+           		  <tr class="pop">
+          		    <td valign="top" class="name">
+          		      <label for="name"><g:message code="manufacturer.country" default="Country"/>:</label>
+          		    </td>
+          		    <td valign="top" class="value ${hasErrors(bean: proformaInstance.manufacturer, field: 'country', 'errors')}">
+	          	      <g:textField name="manufacturer.country" value="${proformaInstance?.manufacturer?.country}" size="40"/>
+          	        </td>
+          		  </tr>
+          		</table>
+          	</td>
+          </tr>
+          </div>
+          <tr>
+          	<td>
+          		<label for=""><g:message code="proforma.distributer" default="Distributer"/></label>
+          	</td>
+          	<td valign="top">
+          		<g:textArea name="distributer" value="${proformaInstance?.distributer}" rows="4" cols="40" style="width: 322px; height: 61px;"/>
+          	</td>
+          </tr>
+          
+          <tr class="prop">
+            <td valign="top" class="name">
+              <label for="loadingAirport"><g:message code="proforma.loadingAirport" default="Airport of Departure"/>:</label>
+            </td>
+            <td valign="top" class="value ${hasErrors(bean: proformaInstance, field: 'loadingAirport', 'errors')}">
+          	  <g:textField name="loadingAirport" value="${proformaInstance.loadingAirport}" />
+          	</td>
+          </tr>
           <tr class="prop">
             <td valign="top" class="name">
               <label for="destinationAirport"><g:message code="proforma.destinationAirport" default="Port of Discharge"/>:</label>

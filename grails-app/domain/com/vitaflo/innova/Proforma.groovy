@@ -13,6 +13,9 @@ class Proforma {
 	Patient patient
 	Client client
 	String destinationAirport
+	String loadingAirport
+	Manufacturer manufacturer
+	String distributer
 	
 	static final def STATUS_LIST = ['Creada','Aprobada','Rechazada','Anulada']
 	
@@ -24,8 +27,11 @@ class Proforma {
 		status(inList:STATUS_LIST)
 		details(nullable:false,minSize:1)
 		destinationAirport(nullable:true)
+		loadingAirport(nullable:true)
 		deliveryDate(nullable:true, blank:true)
         code(nullable:true, blank:true)
+		manufacturer(nullable:true)
+		distributer(nullable:true, blank:true)
 	}
 	
 	static mapping = {
