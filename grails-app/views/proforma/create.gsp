@@ -203,14 +203,6 @@
           	</td>
           </tr>
           </div>
-          <tr>
-          	<td>
-          		<label for=""><g:message code="proforma.distributer" default="Distributer"/></label>
-          	</td>
-          	<td valign="top">
-          		<g:textArea name="distributer" value="${proformaInstance?.distributer}" rows="4" cols="40" style="width: 322px; height: 61px;"/>
-          	</td>
-          </tr>
           
           <tr class="prop">
             <td valign="top" class="name">

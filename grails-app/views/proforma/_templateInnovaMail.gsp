@@ -137,12 +137,16 @@ ${proformaInstance?.patient?.firstName}, ${proformaInstance?.patient?.lastName}<
         <g:if test="${proformaInstance.patient?.country?.code == 'BR' || proformaInstance.client?.country?.code == 'BR'}">
           Sales Condition: Letter of credit at sight, irrevocable, confirmed  and  issued by a first class bank. <br/>
           Incoterm: Incoterms CPT. (Paraná, Brazil).<br/><br/>
-          Manufacturer: APOTEKET AB <br/>
+          Manufacturer: <b>${proformaInstance?.manufacturer?.name ? proformaInstance?.manufacturer?.name : 'APOTEKET AB'}</b><br/>
+          <g:if test="${proformaInstance?.manufacturer?.street}">Street:${proformaInstance?.manufacturer?.street}<br/></g:if>
+          <g:if test="${proformaInstance?.manufacturer?.city}">City:${proformaInstance?.manufacturer?.city}<br/></g:if>
+          <g:if test="${proformaInstance?.manufacturer?.pob}">POB:${proformaInstance?.manufacturer?.pob}<br/></g:if>
+          <g:if test="${proformaInstance?.manufacturer?.country}">Country:${proformaInstance?.manufacturer?.country}<br/></g:if><br/>
           Distributer: INNOVATIVE MEDICINES SA<br/>
           Juan C. Gomez 1445 Ap. 505<br/>
           Tel./Fax: (+ 598 2) 917 0953<br/>
           Montevideo - Uruguay <br/><br/>
-          Port of Loading/Airport of Departure: Any port of Sweden. <br/>
+          Port of Loading/Airport of Departure: ${proformaInstance.loadingAirport ? proformaInstance.loadingAirport : 'Any port of Sweden.'} <br/>
           Port of Discharge/Airport of destination: ${proformaInstance?.destinationAirport} <br/><br/>
 
           NCM 30.04.90.99<br/><br/>
