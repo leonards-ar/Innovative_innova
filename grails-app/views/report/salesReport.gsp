@@ -44,6 +44,10 @@
           <g:select name="supplier" from="${com.vitaflo.innova.Supplier.list()}" value="${supplier}" noSelection="['':'']" />
           </td>
           <td>
+            <div><g:message code="client.country"/> </div>
+          <g:select name="selectedCountry" from="${session?.countries}" optionKey="code" optionValue="name" noSelection="['':'']" value="${selectedCountry}"/>
+          </td>          
+          <td>
             <div>&nbsp;</div>
             <span class="button"><g:submitButton name="search" class="save" value="${message(code: 'find', 'default': 'Find')}" /></span>
           </td>
@@ -68,16 +72,21 @@
         </tr>
         </thead>
         <tbody>
+        
         <g:each in="${salesList}" status="i" var="salesInstance">
 
           <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
 
             <td><g:formatDate date="${salesInstance?.date}" format="MMM yyyy"/></td>
 
-          <td class="currencyValue">${formatNumber(number:salesInstance?.amount, format:"0.00")}</td>
+            <td class="currencyValue">${formatNumber(number:salesInstance?.amount, format:"0.00")}</td>
+
           </tr>
         </g:each>
-
+          <tr class="${(salesList.size() % 2) == 0 ? 'odd' : 'even'}">
+          	<td><b>Total</b></td>
+          	<td class="currencyValue">${formatNumber(number:totalAmount, format:"0.00")}</td>
+          </tr>
         </tbody>
       </table>
       </td>
@@ -114,17 +123,22 @@
               </tr>
               </thead>
               <tbody>
+
               <g:each in="${qtyList}" status="i" var="salesInstance">
 
                 <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
 
                   <td><g:formatDate date="${salesInstance?.date}" format="MMM yyyy"/></td>
 
-                <td class="currencyValue">${formatNumber(number:salesInstance?.amount, format:"0")}</td>
+                  <td class="currencyValue">${formatNumber(number:salesInstance?.amount, format:"0")}</td>
+
                 </tr>
               </g:each>
-
-              </tbody>
+	          <tr class="${(qtyList?.size() % 2) == 0 ? 'odd' : 'even'}">
+	          	<td><b>Total</b></td>
+	          	<td class="currencyValue">${formatNumber(number:totalQty, format:"0")}</td>
+	          </tr>
+             </tbody>
             </table>
           </td>
           </tr>

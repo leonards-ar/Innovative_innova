@@ -97,7 +97,7 @@ class ReportController {
     }
 
     if (params?.format && params.format != "html") {
-      def extension = (params?.format = 'excel')? 'xsl':params?.format
+      def extension = (params?.format = 'excel')? 'xls':params?.format
       response.contentType = ConfigurationHolder.config.grails.mime.types[params.format]
       response.setHeader("Content-disposition", "attachment; filename=ConsolidatedReport.${extension}")
       def exportCriteria = Invoice.createCriteria()
@@ -157,8 +157,18 @@ class ReportController {
       where.append("and pat.lastName=:patient ")
       def str = params.patient.split(',')
       parameters.put("patient", str[0])
-    }
-
+	  
+	  if(params.selectedCountry){
+		  where.append("and pat.country=:country ")
+		  parameters.put("country", Country.findByCode(params.selectedCountry))
+	  }
+	} else if(params.selectedCountry){
+		  salesFrom.append("inner join i.proforma p inner join p.patient pat inner join p.client cli ")
+		  qtyFrom.append("inner join i.proforma p inner join p.patient pat inner join p.client cli ")
+		  where.append("and (pat.country=:country or cli.country=:country) ")
+		  parameters.put("country", Country.findByCode(params.selectedCountry))
+	}
+    
     if (params.supplier) {
       salesFrom.append("inner join i.purchase pur inner join pur.supplier s ")
       qtyFrom.append("inner join i.purchase pur inner join pur.supplier s ")
@@ -171,16 +181,22 @@ class ReportController {
 
     List moneySales = Invoice.executeQuery(salesSelect.toString(), parameters)
     List salesList = createSalesList(moneySales)
+	
+	def totalAmount = 0
+	salesList.each { sale -> totalAmount += sale.amount }
 
     qtySelect.append(qtyFrom.toString()).append(where.toString()).append("group by year(date),month(date) order by year(date), month(date) ")
     List qtySales = Invoice.executeQuery(qtySelect.toString(), parameters)
-
+	
     List qtyList = createSalesList(qtySales)
+	
+	def totalQty = 0
+	qtyList.each { sale -> totalQty += sale.amount }
 
     def sXml = createSalesReportXml(salesList)
     def qXml = createSalesReportXml(qtyList)
 
-    return [salesList: salesList, sXml: sXml, qtyList: qtyList, qXml: qXml, fromDate: lastDate, toDate: actualDate, patient: paramspatient, supplier: paramssupplier]
+    return [salesList: salesList, sXml: sXml, qtyList: qtyList, qXml: qXml, fromDate: lastDate, toDate: actualDate, patient: paramspatient, supplier: paramssupplier, selectedCountry:params.selectedCountry, totalAmount: totalAmount, totalQty: totalQty]
   }
 
   def salesReportByProduct = {
@@ -218,6 +234,16 @@ class ReportController {
       where.append("and pat.lastName=:patient ")
       def str = params.patient.split(',')
       parameters.put("patient", str[0])
+	  
+	  if(params.selectedCountry){
+		  where.append("and pat.country=:country ")
+		  parameters.put("country", Country.findByCode(params.selectedCountry))
+	  }
+	} else if(params.selectedCountry){
+		  salesFrom.append("inner join i.proforma p inner join p.patient pat inner join p.client cli ")
+		  qtyFrom.append("inner join i.proforma p inner join p.patient pat inner join p.client cli ")
+		  where.append("and (pat.country=:country or cli.country=:country) ")
+		  parameters.put("country", Country.findByCode(params.selectedCountry))
     }
 
     if (params.supplier) {
@@ -237,6 +263,9 @@ class ReportController {
 
     def selectedProductIds = (params.selProductList)? params.selProductList : ""
 
+	List productTotalAmount = []
+	List productTotalQty = []
+	
     productList.each {p ->
 
 
@@ -245,13 +274,24 @@ class ReportController {
           parameters.put("product", p)
           List moneySales = Invoice.executeQuery(salesSelect.toString(), parameters)
           List salesList = createSalesByPorductList(moneySales, monthList)
+		  
+		  def totalSales = 0
+		  salesList.each {sales -> totalSales += sales.amount }
+		  productTotalAmount.add(totalSales)
+		  
           if(!params.selProductList) selectedProductIds += p.id + " "
 
           productMoneySalesMap.put(p.shortName() , salesList)
 
           List qtySales = Invoice.executeQuery(qtySelect.toString(), parameters)
           List qtyList = createSalesByPorductList(qtySales, monthList)
+		  
+		  def totalQty = 0
+		  qtyList.each {sales -> totalQty += sales.amount }
+		  
+		  productTotalQty.add(totalQty)
           productQtySalesMap.put(p.shortName(), qtyList)
+		  
       }
     }
 
@@ -273,7 +313,8 @@ class ReportController {
     return [salesMap: productMoneySalesMap, sXml: sXml, qtyMap: productQtySalesMap, qXml: qXml,
             monthList: formatMonthList, fromDate: lastDate, toDate: actualDate,
             patient: params.patient, supplier: params.supplier,
-            productList: productList, selProductList: selectedProductIds]
+            productList: productList, selProductList: selectedProductIds,selectedCountry:params.selectedCountry,
+			productTotalAmount: productTotalAmount, productTotalQty:productTotalQty ]
 
   }
 

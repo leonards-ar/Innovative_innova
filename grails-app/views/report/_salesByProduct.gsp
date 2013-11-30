@@ -9,7 +9,7 @@
             <g:each in="${monthList}" status="i" var="date">
               <th><g:formatDate date="${date}" format="MM/yyyy"/></th>
             </g:each>
-
+            <th><b>Total</b></th>
           </tr>
           </thead>
           <tbody>
@@ -20,7 +20,7 @@
               <g:each in="${entry.value}" status="j" var="salesInstance">
                 <td class="currencyValue">${formatNumber(number: salesInstance?.amount, format: "0.00")}</td>
               </g:each>
-
+			  	<td class="currencyValue">${formatNumber(number: productTotalAmount[i], format: "0.00")}</td>
             </tr>
           </g:each>
 
@@ -52,6 +52,7 @@
             <g:each in="${monthList}" status="i" var="date">
               <th><g:formatDate date="${date}" format="M/yyyy"/></th>
             </g:each>
+            <th><b>Total</b></th>
 
           </tr>
           </thead>
@@ -63,7 +64,7 @@
               <g:each in="${entry.value}" status="j" var="salesInstance">
                 <td class="currencyValue">${formatNumber(number: salesInstance?.amount, format: "0")}</td>
               </g:each>
-
+              <td class="currencyValue">${formatNumber(number: productTotalQty[i], format: "0")}</td>
             </tr>
           </g:each>
 
