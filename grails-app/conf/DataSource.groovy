@@ -19,7 +19,7 @@ hibernate {
     cache.use_query_cache=true
     cache.region.factory_class = 'org.hibernate.cache.ehcache.EhCacheRegionFactory' // Hibernate 4
     singleSession = true // configure OSIV singleSession mode
-    flush.mode = 'auto' // OSIV session flush mode outside transactional context
+    flush.mode = '' // OSIV session flush mode outside transactional context
 }
 // environment specific settings
 environments {
