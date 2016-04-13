@@ -21,10 +21,9 @@
           <tr>
             <td style="vertical-align:middle">
               INNOVATIVE MEDICINES SA<br/>
-              <label>Dirección </label>
-              Juan C. Gomez 1445 Ap. 505<br/>
-              <label>Código Postal </label>
-              11100, Montevideo, Uruguay<br/>
+              Ruta 101, Km 23.500, Parque de las Ciencias<br/>
+              Edificio Selenin, Macromanzana 3C<br/>
+              14000, Canelones, Uruguay<br/>
               <label>Tel/Fax </label>
               (598 2) 917 0953<br/>
             </td>
@@ -116,9 +115,10 @@ ${proformaInstance?.patient?.firstName}, ${proformaInstance?.patient?.lastName}<
         Incoterm: Incoterms CPT. (Paraná, Brazil).<br/><br/>
         Manufacturer: APOTEKET AB <br/>
         Distributer: INNOVATIVE MEDICINES SA<br/>
-        Juan C. Gomez 1445 Ap. 505<br/>
+        Ruta 101, Km 23.500, Parque de las Ciencias<br/>
+        Edificio Selenin, Macromanzana 3C<br/>
         Tel./Fax: (+ 598 2) 917 0953<br/>
-        Montevideo - Uruguay <br/><br/>
+        14000, Canelones, Uruguay<br/><br/>
         Port of Loading/Airport of Departure: Any port of Sweden. <br/>
         Port of Discharge/Airport of destination: ${proformaInstance?.destinationAirport} <br/><br/>
         NCM 30.04.90.99<br/><br/>
@@ -132,7 +132,7 @@ ${proformaInstance?.patient?.firstName}, ${proformaInstance?.patient?.lastName}<
         Swift: BSCHUYMM<br/>
         Benef Account: C/A Nro. 64106<br/>
         Benef Name: INNOVATIVE MEDICINES S.A.Benef Name: INNOVATIVE MEDICINES S.A. <br/>
-        Benef Address: Rincón 487 oficina 403 – Montevideo – Uruguay<br/>
+        Benef Address: Ruta 101, Km 23.500, Parque de las Ciencias, Edificio Selenin, Macromanzana 3C 14000, Canelones, Uruguay<br/>
 
         <b>Corresponsal Bank<br/>
         Wells Fargo Bank,N.A. - New York</b><br/>
