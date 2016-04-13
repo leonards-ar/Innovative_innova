@@ -1,7 +1,6 @@
 package com.vitaflo.innova
 
 import grails.converters.JSON
-import org.codehaus.groovy.grails.commons.ConfigurationHolder
 
 class ProformaController extends BaseController {
 

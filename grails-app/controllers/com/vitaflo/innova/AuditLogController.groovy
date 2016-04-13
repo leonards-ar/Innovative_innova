@@ -1,5 +1,5 @@
 package com.vitaflo.innova
-import org.codehaus.groovy.grails.plugins.orm.auditable.AuditLogEvent
+
 
 class AuditLogController extends BaseController {
 

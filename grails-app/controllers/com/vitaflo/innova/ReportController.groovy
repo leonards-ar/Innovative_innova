@@ -1,8 +1,5 @@
 package com.vitaflo.innova
 
-import org.codehaus.groovy.grails.commons.ConfigurationHolder
-
-
 class ReportController {
 
   def exportService

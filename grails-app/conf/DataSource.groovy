@@ -17,19 +17,18 @@ dataSource {
 hibernate {
     cache.use_second_level_cache=true
     cache.use_query_cache=true
-    cache.provider_class='com.opensymphony.oscache.hibernate.OSCacheProvider'
+    cache.region.factory_class = 'org.hibernate.cache.ehcache.EhCacheRegionFactory' // Hibernate 4
+    singleSession = true // configure OSIV singleSession mode
+    flush.mode = 'auto' // OSIV session flush mode outside transactional context
 }
 // environment specific settings
 environments {
 	development {
 		dataSource {
-                    // dbCreate = "create-drop" // one of 'create', 'create-drop','update'
+                    logSql = true
                     dbCreate = 'update'
-                    url = "jdbc:mysql://spmdb/vitaflo_sistema?useUnicode=true&characterEncoding=utf-8"
+                    url = "jdbc:mysql://localhost/innova?useUnicode=true&characterEncoding=utf-8"
 		}
-                hibernate {
-                    show_sql=true
-                }
 	}
 	test {
 		dataSource {

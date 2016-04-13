@@ -10,9 +10,9 @@
         <div class="nav">
             <span class="menuButton"><a class="home" href="${createLinkTo(dir: '')}"><g:message code="home" default="Home" /></a></span>
             <span class="menuButton"><g:link class="list" action="list"><g:message code="user.list" default="User List" /></g:link></span>
-            <g:ifAnyGranted role="ROLE_ADMIN">
+            <sec:ifAnyGranted roles="ROLE_ADMIN">
               <span class="menuButton"><g:link class="create" action="create"><g:message code="user.new" default="New User" /></g:link></span>
-            </g:ifAnyGranted>
+            </sec:ifAnyGranted>
         </div>
         <div class="body">
             <h1><g:message code="user.show" default="Show User" /></h1>
