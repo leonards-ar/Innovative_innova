@@ -41,6 +41,7 @@ grails.project.dependency.resolution = {
         mavenRepo "http://central.maven.org/maven2/"
         mavenRepo "http://repo.spring.io/milestone"
         mavenRepo "http://repo1.maven.org/maven2"
+        mavenRepo "http://repo.grails.org/grails/core"
     }
 
     dependencies {
@@ -73,6 +74,7 @@ grails.project.dependency.resolution = {
         compile ":mail:1.0.7"
         compile ":audit-logging:1.1.0"
         compile ":dto:0.2.4"
+        compile ":export:1.6"
 
         // plugins needed at runtime but not for compilation
         runtime ":hibernate4:4.3.5.5" // or ":hibernate:3.6.10.17"

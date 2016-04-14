@@ -77,7 +77,7 @@
                                 </td>
                             </tr>
 
-                            <g:ifAllGranted role="ROLE_ADMIN">
+                            <sec:ifAllGranted roles="ROLE_ADMIN">
                               <tr class="prop">
                                   <td valign="top" class="name">
                                       <label for="countries"><g:message code="user.countries" default="Countries" />:</label>
@@ -89,9 +89,9 @@
                                             value="${userInstance?.countries?.id}" />
                                   </td>
                               </tr>
-                            </g:ifAllGranted>
+                            </sec:ifAllGranted>
 
-                            <g:ifAllGranted role="ROLE_ADMIN">
+                            <sec:ifAllGranted roles="ROLE_ADMIN">
                               <tr class="prop">
                                   <td valign="top" class="name">
                                       <label for="authorities"><g:message code="user.roles" default="Roles" />:</label>
@@ -103,7 +103,7 @@
                                             value="${userInstance?.authorities?.id}" />
                                   </td>
                               </tr>
-                            </g:ifAllGranted>
+                            </sec:ifAllGranted>
 
                             <g:if test="${userInstance.username != loggedInUserInfo(field:'username')}">
                             <tr class="prop">
