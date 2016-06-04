@@ -63,7 +63,7 @@
             <label for="email"><g:message code="client.email" default="Email"/>:</label>
           </td>
           <td valign="top" class="value ${hasErrors(bean: clientInstance, field: 'email', 'errors')}">
-            <g:textField name="email" value="${fieldValue(bean: clientInstance, field: 'email')}" maxlength="45"/>
+            <g:textField name="email" value="${fieldValue(bean: clientInstance, field: 'email')} maxlength="45"/>
 
           </td>
         </tr>

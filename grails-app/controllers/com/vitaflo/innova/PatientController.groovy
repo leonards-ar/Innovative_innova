@@ -86,7 +86,7 @@ class PatientController extends BaseController {
 		patientProductStocksToNotify.addAll(
 				
 				PatientProductStock.executeQuery(
-				"select p.product as product,max(p.runningOutOfStockDate) as runningOutOfDate from PatientProductStock p where p.next is null and p.patient.id=? group by p.product",
+				"select p.product as product,max(p.runningOutOfStockDate) as runningOutOfDate from PatientProductStock p where p.next is null and p.patient.id=? group by p.product.drug",
 				[patient.id])
 				
 				)

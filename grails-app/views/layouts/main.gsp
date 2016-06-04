@@ -15,11 +15,11 @@
 
       <p>  </p>
       <div class="welcomeBox">
-        <sec:ifLoggedIn>
-          <g:link controller="user" action="showProfile" id="${sec.loggedInUserInfo(field:'id')}"><g:message code="login.bar.profile"/></g:link> | <g:link controller="logout"><g:message code="logout"/></g:link>
+        <g:isLoggedIn>
+          <g:link controller="user" action="showProfile" id="${loggedInUserInfo(field:'id')}"><g:message code="login.bar.profile"/></g:link> | <g:link controller="logout"><g:message code="logout"/></g:link>
           <br/><br/>
-          <g:message code="login.bar.welcomeback" args="${[sec.loggedInUserInfo(field:'username')]}"/>
-        </sec:ifLoggedIn>
+          <g:message code="login.bar.welcomeback" args="${[loggedInUserInfo(field:'username')]}"/>
+        </g:isLoggedIn>
         <br/><br/>
         <g:if test="${params.controller == 'home' || params.controller == 'login'}">
        <span>

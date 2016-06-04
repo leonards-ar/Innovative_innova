@@ -9,13 +9,10 @@ class User implements Serializable {
     String firstName
     String lastName
     boolean enabled = true
-    boolean accountExpired = false
-    boolean accountLocked = false
-    boolean passwordExpired = false
     String pass = '[secret]'
 
     static hasMany = [countries:Country, authorities:Role]
-    static transients = ['pass','accountExpired','accountLocked','passwordExpired']
+    static transients = ['pass']
     static belongsTo = Role
     
     static constraints = {

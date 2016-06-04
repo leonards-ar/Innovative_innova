@@ -10,9 +10,9 @@
     <div class="nav">
       <span class="menuButton"><a class="home" href="${createLinkTo(dir: '')}"><g:message code="home" default="Home" /></a></span>
       <span class="menuButton"><g:link class="list" action="list"><g:message code="drug.list" default="Drug List" /></g:link></span>
-      <sec:ifAnyGranted roles="ROLE_ADMIN">
+      <g:ifAnyGranted role="ROLE_ADMIN">
         <span class="menuButton"><g:link class="create" action="create"><g:message code="drug.new" default="New Drug" /></g:link></span>
-      </sec:ifAnyGranted>
+      </g:ifAnyGranted>
     </div>
     <div class="body">
       <h1><g:message code="drug.show" default="Show Drug" /></h1>
@@ -43,12 +43,12 @@
             </tbody>
           </table>
         </div>
-        <sec:ifAnyGranted roles="ROLE_ADMIN">
+        <g:ifAnyGranted role="ROLE_ADMIN">
           <div class="buttons">
             <span class="button"><g:actionSubmit class="edit" action="edit" value="${message(code: 'edit', 'default': 'Edit')}" /></span>
             <span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'delete', 'default': 'Delete')}" onclick="return confirm('${message(code: 'delete.confirm', 'default': 'Are you sure?')}');" /></span>
           </div>
-        </sec:ifAnyGranted>
+        </g:ifAnyGranted>
       </g:form>
     </div>
   </body>
