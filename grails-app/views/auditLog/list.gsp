@@ -1,5 +1,5 @@
 
-<%@ page import="com.vitaflo.innova.AuditLogEvent" %>
+<%@ page import="org.codehaus.groovy.grails.plugins.orm.auditable.AuditLogEvent" %>
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />

@@ -17,18 +17,19 @@ dataSource {
 hibernate {
     cache.use_second_level_cache=true
     cache.use_query_cache=true
-    cache.region.factory_class = 'org.hibernate.cache.ehcache.EhCacheRegionFactory' // Hibernate 4
-    singleSession = true // configure OSIV singleSession mode
-    flush.mode = '' // OSIV session flush mode outside transactional context
+    cache.provider_class='com.opensymphony.oscache.hibernate.OSCacheProvider'
 }
 // environment specific settings
 environments {
 	development {
 		dataSource {
-                    logSql = true
+                    // dbCreate = "create-drop" // one of 'create', 'create-drop','update'
                     dbCreate = 'update'
-                    url = "jdbc:mysql://localhost/innova?useUnicode=true&characterEncoding=utf-8"
+                    url = "jdbc:mysql://localhost:3306/innova?useUnicode=true&characterEncoding=utf-8"
 		}
+                hibernate {
+                    show_sql=true
+                }
 	}
 	test {
 		dataSource {

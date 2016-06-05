@@ -9,9 +9,9 @@
     <body>
         <div class="nav">
             <span class="menuButton"><a class="home" href="${createLinkTo(dir: '')}"><g:message code="home" default="Home" /></a></span>
-            <sec:ifAnyGranted roles="ROLE_ADMIN">
+            <g:ifAnyGranted role="ROLE_ADMIN">
               <span class="menuButton"><g:link class="create" action="create"><g:message code="pathology.new" default="New Pathology" /></g:link></span>
-            </sec:ifAnyGranted>
+            </g:ifAnyGranted>
         </div>
         <div class="body">
             <h1><g:message code="pathology.list" default="Pathology List" /></h1>

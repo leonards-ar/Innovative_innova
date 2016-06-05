@@ -92,9 +92,9 @@
                 <label for="code"><g:message code="proforma.id" default="id" />:</label>
               </td>
               <td valign="top" class="value ${hasErrors(bean: proformaInstance, field: 'code', 'errors')}">
-              <sec:ifAllGranted roles="ROLE_ADMIN">
+              <g:ifAllGranted role="ROLE_ADMIN">
                 <g:textField name="code" value="${proformaInstance.code}" />
-              </sec:ifAllGranted>
+              </g:ifAllGranted>
               <g:ifNotGranted role="ROLE_ADMIN">
               	<g:textField name="code" value="${proformaInstance.code}" readonly="readonly"/>
               </g:ifNotGranted>
@@ -242,7 +242,7 @@
                   <label for="deliveryDate"><g:message code="proforma.deliveryDate" default="Date of delivery" />:</label>
               </td>
               <td valign="top" class="value ${hasErrors(bean: proformaInstance, field: 'deliveryDate', 'errors')}">
-                  <g:datePicker default="none" noSelection="${['':message(code:'noselect.dash')]}" name="deliveryDate" value="${proformaInstance?.deliveryDate}" precision="day" years="${2007..2015}" />
+                  <g:datePicker default="none" noSelection="${['':message(code:'noselect.dash')]}" name="deliveryDate" value="${proformaInstance?.deliveryDate}" precision="day" years="${Calendar.instance.get(Calendar.YEAR)..Calendar.instance.get(Calendar.YEAR) + 5}" />
               </td>
           </tr>          
           </tbody>

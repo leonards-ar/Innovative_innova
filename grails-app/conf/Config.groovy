@@ -32,6 +32,7 @@ grails.views.default.codec="html" // none, html, base64
 grails.views.gsp.encoding="UTF-8"
 grails.converters.encoding="UTF-8"
 
+grails.gsp.enable.reload = true
 // enabled native2ascii conversion of i18n properties files
 grails.enable.native2ascii = true
 
@@ -82,9 +83,6 @@ environments {
 // Audit log
 auditLog {
     verbose = false
-    // Added by the Audit-Logging plugin:
-    auditLog.auditDomainClassName = 'com.vitaflo.innova.AuditLogEvent'
-
 }
 
 fckeditor {
@@ -125,7 +123,7 @@ fckeditor {
 
 
 // log4j configuration
-log4j.main = {
+log4j = {
     // Example of changing the log pattern for the default console
     // appender:
     //
@@ -136,7 +134,7 @@ log4j.main = {
         console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
     }
     
-    debug 'grails.plugin.springsecurity',
+    debug 'org.acegisecurity',
           'com.vitaflo.innova'
     
     error  'org.codehaus.groovy.grails.web.servlet',  //  controllers
@@ -168,80 +166,3 @@ grails {
               "mail.smtp.socketFactory.fallback":"false"]
 
 } }
-
-
-
-grails.plugin.springsecurity.password.algorithm = 'SHA-256'
-grails.plugin.springsecurity.password.hash.iterations = 1
-grails.plugin.springsecurity.active = true
-grails.plugin.springsecurity.userLookup.userDomainClassName = "com.vitaflo.innova.User"
-grails.plugin.springsecurity.userLookup.passwordPropertyName = "passwd"
-grails.plugin.springsecurity.authority.className = "com.vitaflo.innova.Role"
-// grails.plugin.springsecurity.requestMapClass = "RequestMap"
-
-//Default User
-grails.plugin.springsecurity.security.defaultRole = "ROLE_USER"
-/**
- * useRequestMapDomainClass to false, so the application will not use the domain class
- * we’ve created
- */
-grails.plugin.springsecurity.useRequestMapDomainClass = false
-
-grails.plugin.springsecurity.controllerAnnotations.staticRules = [
-        '/home/**':['ROLE_ADMIN','ROLE_USER','ROLE_ACCOUNTANT','ROLE_REPORT'],
-        '/auditlog/list':['ROLE_ADMIN'],
-        '/user/show':['ROLE_ADMIN'],
-        '/user/edit':['ROLE_ADMIN'],
-        '/user/list':['ROLE_ADMIN'],
-        '/user/create':['ROLE_ADMIN'],
-        '/user/showprofile':['ROLE_ADMIN','ROLE_USER'],
-        '/user/editprofile':['ROLE_ADMIN','ROLE_USER'],
-        '/client/**':['ROLE_ADMIN','ROLE_USER'],
-        '/client/create':['ROLE_ADMIN','ROLE_USER'],
-        '/client/edit':['ROLE_ADMIN','ROLE_USER'],
-        '/clinicalhistory/**':['ROLE_ADMIN','ROLE_USER'],
-        '/drug/**':['ROLE_ADMIN','ROLE_USER'],
-        '/login/**':['IS_AUTHENTICATED_ANONYMOUSLY'],
-        '/pathology/**':['ROLE_USER','ROLE_ADMIN'],
-        '/pathology/create':['ROLE_ADMIN'],
-        '/pathology/edit':['ROLE_ADMIN'],
-        '/patient/**':['ROLE_ADMIN','ROLE_USER'],
-        '/patient/create':['ROLE_ADMIN','ROLE_USER'],
-        '/patient/edit':['ROLE_ADMIN','ROLE_USER'],
-        '/product/**':['ROLE_ADMIN','ROLE_USER'],
-        '/proforma/**':['ROLE_ADMIN','ROLE_USER','ROLE_ACCOUNTANT'],
-        '/proforma/create':['ROLE_ADMIN','ROLE_USER'],
-        '/proforma/edit':['ROLE_ADMIN','ROLE_USER'],
-        '/supplier/**':['ROLE_ADMIN','ROLE_USER'],
-        '/invoice/**':['ROLE_ADMIN','ROLE_USER','ROLE_ACCOUNTANT'],
-        '/invoice/create':['ROLE_ADMIN','ROLE_USER'],
-        '/invoice/edit':['ROLE_ADMIN','ROLE_USER'],
-        '/purchase/**':['ROLE_ADMIN','ROLE_USER','ROLE_ACCOUNTANT'],
-        '/purchase/create':['ROLE_ADMIN','ROLE_USER'],
-        '/purchase/edit':['ROLE_ADMIN','ROLE_USER'],
-        '/report/**':['ROLE_REPORT','ROLE_ACCOUNTANT'],
-        '/report/consolidatedreport':['ROLE_REPORT','ROLE_ACCOUNTANT'],
-        '/**/create':['ROLE_ADMIN'],
-        '/**/edit':['ROLE_ADMIN'],
-        '/emails/**':['ROLE_ADMIN','ROLE_USER'],
-        '/remotepatient/**':['permitAll'],
-        '/index': ['permitAll'],
-        '/error': ['permitAll'],
-        '/'  : ['permitAll'],
-        '/**': ['permitAll']
-]
-
-grails.plugin.springsecurity.useSecurityEventListener = true
-grails.plugin.springsecurity.onInteractiveAuthenticationSuccessEvent = {e, appCtx ->
-    com.vitaflo.innova.User.withTransaction {
-        //def user = com.vitaflo.innova.User.findByUsername(e.source.principal.username)
-        def c = com.vitaflo.innova.User.createCriteria();
-        def user = c.get{
-            fetchMode("countries", org.hibernate.FetchMode.EAGER)
-            eq('username', e.source.principal.username)
-        }
-        def attr = org.springframework.web.context.request.RequestContextHolder?.getRequestAttributes()
-        attr.session.countries = user.countries.sort {it.name}
-    }
-}
-

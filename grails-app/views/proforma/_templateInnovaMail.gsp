@@ -55,11 +55,11 @@
               <td style="vertical-align:middle">
                 INNOVATIVE MEDICINES SA<br/>
                 <label>Dirección </label>
-                Juan C. Gomez 1445 Ap. 505<br/>
-                <label>Código Postal </label>
-                11100, Montevideo, Uruguay<br/>
-                <label>Tel/Fax </label>
-                (598 2) 917 0953<br/>
+                  Ruta 101, Km 23.500, Parque de las Ciencias<br/>
+                  Edificio Selenin, Macromanzana 3C<br/>
+                  14000, Canelones, Uruguay<br/>
+                  <label>Tel/Fax </label>
+                  (598 2) 917 0953<br/>
               </td>
               <td>
                 <b>${proformaInstance?.client?.name}</b></b><br />
@@ -160,7 +160,8 @@ ${proformaInstance?.patient?.firstName}, ${proformaInstance?.patient?.lastName}<
         Swift: BSCHUYMM<br/>
         Benef Account: C/A Nro. 64106<br/>
         Benef Name: INNOVATIVE MEDICINES S.A.Benef Name: INNOVATIVE MEDICINES S.A. <br/>
-        Benef Address: Rincón 487 oficina 403 – Montevideo – Uruguay<br/>
+        Benef Address: Ruta 101, Km 23.500, Parque de las Ciencias, Edificio Selenin, Macromanzana 3C
+        14000, Canelones, Uruguay<br/>
 
         <b>Corresponsal Bank<br/>
         Wells Fargo Bank,N.A. - New York</b><br/>
