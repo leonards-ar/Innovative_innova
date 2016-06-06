@@ -106,7 +106,7 @@
                 <label for="createdAt"><g:message code="proforma.createdAt" default="Created At" />:</label>
               </td>
               <td valign="top" class="value ${hasErrors(bean: proformaInstance, field: 'createdAt', 'errors')}">
-            <g:datePicker name="createdAt" value="${proformaInstance?.createdAt}" precision="day" year="${1990..2020}" />
+            <g:datePicker name="createdAt" value="${proformaInstance?.createdAt}" precision="day" year="${1990..Calendar.instance.get(Calendar.YEAR) + 5}" />
 
             </td>
             </tr>
