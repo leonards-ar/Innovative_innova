@@ -12,6 +12,7 @@ class PatientProductStockNotifierJob {
     def timeout = 3600000l // execute job once every 1 hour
 
     def execute() {
+        if(false)
         patientProductStockService.sendPatientsProductStockNotifications();
     }
 }
