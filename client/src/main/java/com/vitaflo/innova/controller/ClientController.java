@@ -38,7 +38,7 @@ import javax.servlet.http.HttpServletResponse;
     @RequestMapping(method = RequestMethod.POST)
     public ClientDto save(@RequestBody ClientDto dto, HttpServletResponse response) {
 
-
+        dto.validate();
         Client client = clientService.save(mapper.map(dto, Client.class));
         response.setStatus(HttpServletResponse.SC_CREATED);
         return mapper.map(client, ClientDto.class);
@@ -56,6 +56,7 @@ import javax.servlet.http.HttpServletResponse;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ClientDto find(@PathVariable Long id, @RequestBody ClientDto dto, HttpServletResponse response) {
+        dto.validate();
         Client client = clientService.save(mapper.map(dto, Client.class));
         response.setStatus(HttpServletResponse.SC_NO_CONTENT);
         return mapper.map(client, ClientDto.class);
