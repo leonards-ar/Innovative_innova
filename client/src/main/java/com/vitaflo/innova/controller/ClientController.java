@@ -14,6 +14,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/api")
@@ -29,8 +32,9 @@ import javax.servlet.http.HttpServletResponse;
 
 
     @RequestMapping(method = RequestMethod.GET)
-    public Page<ClientDto> list(Pageable pageable) {
-        Page<Client> clients = clientService.list(pageable);
+    public Page<ClientDto> list(@RequestHeader String countries, @RequestParam(value="name", required=false) String name,  Pageable pageable) {
+        List<Long> countryIds = Arrays.stream(countries.split(",")).map(Long::valueOf).collect(Collectors.toList());
+        Page<Client> clients = clientService.list(countryIds, name, pageable);
 
         return new PageImpl<>(mapper.mapAsList(clients.getContent(), ClientDto.class), pageable, clients.getTotalElements());
     }

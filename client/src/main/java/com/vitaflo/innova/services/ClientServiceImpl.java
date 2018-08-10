@@ -7,14 +7,19 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ClientServiceImpl implements ClientService {
     @Autowired
     private ClientRepository clientRepository;
 
     @Override
-    public Page<Client> list(Pageable pageable) {
-        return clientRepository.findAll(pageable);
+    public Page<Client> list(List<Long> countries, String name, Pageable pageable) {
+        if(name != null){
+            return clientRepository.findAllByNameLikeAndCountryIn("%"+name+"%", countries, pageable);
+        }
+        return clientRepository.findAllByCountryIn(countries, pageable);
     }
 
     @Override
