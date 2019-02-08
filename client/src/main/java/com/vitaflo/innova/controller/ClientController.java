@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/api")
-        public class ClientController {
+public class ClientController {
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 

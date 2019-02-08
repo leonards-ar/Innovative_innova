@@ -30,8 +30,9 @@ public class Client {
     @Column(name="contact")
     private String contact;
 
-    @Column(name="country_id", nullable = false)
-    private Long country;
+    @ManyToOne
+    @JoinColumn(name="country_id", nullable = false)
+    private Country country;
 
     @Column(name="status", nullable = false)
     private String status = "Enabled";

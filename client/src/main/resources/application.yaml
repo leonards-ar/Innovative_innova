@@ -6,8 +6,9 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/innova
     username: root
-    password:
+    password: Mule1379
 
+logging.level.org.springframework.web: DEBUG
 #security:
 #  oauth2:
 #    client:

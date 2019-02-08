@@ -1,7 +1,9 @@
 package com.vitaflo.innova.services;
 
 import com.vitaflo.innova.model.Client;
+import com.vitaflo.innova.model.Country;
 import com.vitaflo.innova.repository.ClientRepository;
+import com.vitaflo.innova.repository.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,13 +15,19 @@ import java.util.List;
 public class ClientServiceImpl implements ClientService {
     @Autowired
     private ClientRepository clientRepository;
+    @Autowired
+    private CountryRepository countryRepository;
 
     @Override
     public Page<Client> list(List<Long> countries, String name, Pageable pageable) {
+
+        List<Country> mapCountries = countryRepository.findAllByIdIn(countries);
+
         if(name != null){
-            return clientRepository.findAllByNameLikeAndCountryIn("%"+name+"%", countries, pageable);
+            return clientRepository.findAllByNameLikeAndCountryIn("%"+name+"%", mapCountries, pageable);
         }
-        return clientRepository.findAllByCountryIn(countries, pageable);
+
+        return clientRepository.findAllByCountryIn(mapCountries, pageable);
     }
 
     @Override
